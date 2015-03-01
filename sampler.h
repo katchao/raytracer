@@ -6,8 +6,15 @@
 
 using namespace std;
 
+// Iterates through every pixel in the screen
+
 class Sampler {
   public:
+	int curx, cury;
+	int boundx, boundy;
+
+	Sampler();
+	Sampler(int, int);
 	bool getSample(Sample* sample);
 };
 

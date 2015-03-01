@@ -4,6 +4,8 @@
 #include <iostream>
 #include <cmath>
 #include "vector.h"
+#include "sampler.h"
+#include "sample.h"
 
 using namespace std;
 

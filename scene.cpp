@@ -12,5 +12,16 @@ Scene::Scene(Vector eye, int x, int y) {
 	dim_y = y;
 }
 
-void render() {
+void Scene::render() {
+	Sampler sampler = Sampler(dim_x, dim_y);
+	Sample sample = Sample();
+
+	while (sampler.getSample(&sample)) {
+	}
+}
+
+int main() {
+	Scene scene = Scene(Vector(), 2, 2);
+	scene.render();
+	return 0;
 }
