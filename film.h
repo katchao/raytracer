@@ -23,6 +23,9 @@ class Film {
 	  	The ints are the positons of the pixels the color will be set at.*/
 	  	void writeSamples(Vector, int, int);
 
+		/* write image to file */
+		void writeImage();
+
 	  	//Possible 2D "Bucket" array
 	  	//array[x][y] = color_vector
 	  	<int>buckets;
