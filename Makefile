@@ -1,7 +1,7 @@
 CC = g++
 CFLAGS = -Wall
-DEPS = vector.h ray.h scene.h sample.h sampler.h color.h
-OBJ = vector.o ray.o scene.o sample.o sampler.o color.o
+DEPS = vector.h ray.h scene.h sample.h sampler.h color.h film.h
+OBJ = vector.o ray.o scene.o sample.o sampler.o color.o film.o
 
 %.o: %.c $(DEPS)
 	$(CC) $(CFLAGS) -c -o $@ $<
