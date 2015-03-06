@@ -2,6 +2,7 @@
 #define FILM_H
 
 #include <iostream>
+#include <fstream>
 #include <cmath>
 #include <vector>
 #include "vector.h"

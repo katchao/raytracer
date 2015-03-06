@@ -29,7 +29,7 @@ void Scene::render() {
 }
 
 int main() {
-	Scene scene = Scene(Vector(), 2, 2);
+	Scene scene = Scene(Vector(), 20, 20);
 	scene.render();
 
 	//want to print out the size of the buckets
