@@ -2,6 +2,7 @@
 #define FILM_H
 
 #include <iostream>
+#include <fstream>
 #include <cmath>
 #include <vector>
 #include "vector.h"
@@ -23,10 +24,6 @@ class Film {
 
 		/*Adds the colors to the sample's bucket in the buckets array*/
 	  	void storeSamples(Vector, int, int);
-
-	  	/*Averages over the current sample.
-	  	* Takes in a vector of colors.*/
-	  	void sampleAverage(vector<Vector>);
 
 		/* write image to file */
 		void writeImage();
