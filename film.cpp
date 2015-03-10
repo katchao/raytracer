@@ -40,9 +40,10 @@ void Film::writeImage(){
 		//cout << "size of Y dimention: " << buckets[i].size() << "\n";
 		for (int j=0; j<=dim_y;j++) {
 			Color color = buckets[i][j];
-			//cout << "My Color (" << color.x << "," << color.y << "," << color.z <<")\n";
-			fprintf(output, "%f %f %f ", color.r, color.g, color.b);
+			cout << "My Color Bucket (" << color.r2 << "," << color.g2 << "," << color.b2 << ") at " << i << ", " << j << ")\n";
+			fprintf(output, "%d %d %d     ", color.r2, color.g2, color.b2);
 		}
+		fprintf(output, "\n");
 	}
 
 	fclose(output);

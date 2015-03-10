@@ -8,9 +8,11 @@ using namespace std;
 class Color {
   public:
 	float r, g, b;
+	int r2, g2, b2;
 
 	Color();
 	Color(float, float, float);
+	Color(int, int, int);
 };
 
 #endif

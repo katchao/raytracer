@@ -33,12 +33,12 @@ void Scene::render() {
 	Sampler sampler = Sampler(dim_x, dim_y);
 	Sample sample = Sample();
 	Ray ray = Ray();
-	Color color = Color(0.0, 0.0, 0.0);
+	Color color = Color(0.0f, 0.0f, 0.0f);
 	Film film = Film(dim_x, dim_y);
 	Camera camera = Camera(eye_position);
 	Raytracer raytracer = Raytracer();
 
-	Sphere sphere = Sphere(Vector(0,0,-2), 5);
+	Sphere sphere = Sphere(Vector(0,0,-10), 1);
 
 	raytracer.list_primitives.push_back(sphere);
 	
@@ -46,12 +46,13 @@ void Scene::render() {
 		camera.generateRay(sample, &ray);
 		raytracer.trace(ray, 0, &color);
 		film.storeSamples(color, sample);
+		cout << "My Color Scene (" << color.r << "," << color.g << "," << color.b  << ") at (" << sample.x << ", " << sample.y << ")\n";
 	}
 	film.writeImage();
 }
 
 int main() {
-	Scene scene = Scene(Vector(), 100, 100);
+	Scene scene = Scene(Vector(0, 0, 50), 10, 10);
 	scene.render();
 
 	//want to print out the size of the buckets
