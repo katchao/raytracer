@@ -11,8 +11,8 @@ using namespace std;
 
 class Ray {
   public:
-	  Vector pos;
-	  Vector dir;
+	  Vector start;
+	  Vector dir; // start - position on viewport
 	  float t_min, t_max;
 
 	  Ray();

@@ -16,10 +16,9 @@ class Scene {
 	Vector UL;
 	Vector LL;
 	Vector UR;
-	Vector LR; 
+	Vector LR;
 	int dim_x, dim_y;
 
-	Scene();
 	Scene(Vector, int, int);
 
     void render();

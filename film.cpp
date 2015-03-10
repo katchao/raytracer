@@ -33,11 +33,11 @@ void Film::writeImage(){
 	fprintf(output, "255\n ");
 
 	for(int i=0; i<=dim_x; i++) {
-		cout << "size of Y dimention: " << buckets[i].size() << "\n";
+		//cout << "size of Y dimention: " << buckets[i].size() << "\n";
 		for (int j=0; j<=dim_y;j++) {
 			Vector color = buckets[i][j];
-			cout << "My Color (" << color.x << "," << color.y << "," << color.z <<")\n";
-			fprintf(output, "%d %d %d ", 255, 0, 255 );
+			//cout << "My Color (" << color.x << "," << color.y << "," << color.z <<")\n";
+			fprintf(output, "%d %d %d ", color.x, color.y, color.z);
 		}
 	}
 

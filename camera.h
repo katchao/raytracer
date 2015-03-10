@@ -12,7 +12,9 @@ using namespace std;
 
 class Camera {
   public:
-	  Camera();
+	  Vector eye; //eye position
+	  Vector p; //sample.x, sample.y
+	  Camera(Vector);
 	  void generateRay(Sample& sample, Ray* ray);
 };
 
