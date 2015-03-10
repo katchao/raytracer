@@ -16,6 +16,7 @@ class Ray {
 	  float t_min, t_max;
 
 	  Ray();
+	  Ray(Vector, Vector);
 };
 
 #endif
