@@ -1,8 +1,8 @@
 #include "sample.h"
 
 Sample::Sample() {
-	x = 0;
-	y = 0;
+	x = 0.0;
+	y = 0.0;
 }
 
 Sample::Sample(float ix, float iy) {

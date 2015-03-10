@@ -19,18 +19,18 @@ Sampler::Sampler(int x, int y) {
 bool Sampler::getSample(Sample* sample) {
 
 	if(curx > boundx) { //end of line, go to the next line
-		cury++;
+		cury = cury + 1.0f;
 		if(cury > boundy) { // out of bounds
 			return false;
 		}
-		curx = 0.5; //set x back to beginning if the function didn't return false (new line case)
+		curx = 0.5f; //set x back to beginning if the function didn't return false (new line case)
 	}
 
 	*sample = Sample(curx, cury); // new sample
 	//cout << "Sample: (" << sample->x << ", " << sample->y << ")";
 	//cout << "Cur: (" << curx << ", " << cury << ")" << endl;
 
-	curx++;
+	curx = curx + 1.0f;
 	return true;
 
 }

@@ -5,6 +5,7 @@
 #include <fstream>
 #include <cmath>
 #include "vector.h"
+#include "ray.h"
 
 using namespace std;
 
@@ -15,6 +16,7 @@ class Sphere {
 
 		Sphere();
 		Sphere(Vector, int);
+		bool intersect(Ray&);
 };
 
 #endif

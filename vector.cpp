@@ -47,6 +47,10 @@ void Vector::normalize() {
 	}
 }
 
+float Vector::dot_product(Vector v) {
+	return x * v.x + y * v.y + z * v.z;
+}
+
 // prints out vectors in the form of <x, y, z>
 std::ostream& operator<<(std::ostream &strm, Vector v) {
   return strm << "<" << v.x << ", " << v.y << ", " << v.z << ">";

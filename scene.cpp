@@ -39,6 +39,8 @@ void Scene::render() {
 	Raytracer raytracer = Raytracer();
 
 	Sphere sphere = Sphere(Vector(0,0,-2), 5);
+
+	raytracer.list_primitives.push_back(sphere);
 	
 	while (sampler.getSample(&sample)) {
 		camera.generateRay(sample, &ray);
