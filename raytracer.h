@@ -4,12 +4,15 @@
 #include <iostream>
 #include <cmath>
 #include "vector.h"
+#include "ray.h"
+#include "color.h"
 
 using namespace std;
 
 class Raytracer {
   public:
-	  void trace(Ray&, int, Vector);
+	  Raytracer();
+	  void trace(Ray&, int, Color*);
 };
 
 #endif

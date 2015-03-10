@@ -5,6 +5,7 @@
 #include "camera.h"
 #include "color.h"
 #include "sphere.h"
+#include "raytracer.h"
 #include <vector>
 
 Scene::Scene(Vector eye, int x, int y) {
@@ -36,9 +37,11 @@ void Scene::render() {
 	Film film = Film(dim_x, dim_y);
 	Camera camera = Camera(eye_position);
 	Sphere sphere = Sphere(Vector(0,0,0), 5);
+	Raytracer raytracer = Raytracer();
 	
 	while (sampler.getSample(&sample)) {
 		camera.generateRay(sample, &ray);
+		raytracer.trace(ray, 0, &color);
 		film.storeSamples(color, sample);
 	}
 	film.writeImage();
