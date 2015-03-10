@@ -8,10 +8,10 @@ using namespace std;
 
 class Sample {
   public:
-	int x, y;
+	float x, y;
 
 	Sample();
-	Sample(int, int);
+	Sample(float, float);
 };
 
 #endif

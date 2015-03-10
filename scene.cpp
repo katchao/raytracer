@@ -36,8 +36,9 @@ void Scene::render() {
 	Color color = Color(0.0, 0.0, 0.0);
 	Film film = Film(dim_x, dim_y);
 	Camera camera = Camera(eye_position);
-	Sphere sphere = Sphere(Vector(0,0,0), 5);
 	Raytracer raytracer = Raytracer();
+
+	Sphere sphere = Sphere(Vector(0,0,-2), 5);
 	
 	while (sampler.getSample(&sample)) {
 		camera.generateRay(sample, &ray);

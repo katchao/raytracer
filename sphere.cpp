@@ -9,3 +9,4 @@ Sphere::Sphere(Vector icenter, int iradius) {
 	center = icenter;
 	radius = iradius;
 }
+

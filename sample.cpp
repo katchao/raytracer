@@ -5,7 +5,7 @@ Sample::Sample() {
 	y = 0;
 }
 
-Sample::Sample(int ix, int iy) {
+Sample::Sample(float ix, float iy) {
 	x = ix;
 	y = iy;
 }
