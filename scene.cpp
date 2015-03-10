@@ -3,6 +3,8 @@
 #include "film.h"
 #include "ray.h"
 #include "camera.h"
+#include "color.h"
+#include "sphere.h"
 #include <vector>
 
 Scene::Scene(Vector eye, int x, int y) {
@@ -30,14 +32,14 @@ void Scene::render() {
 	Sampler sampler = Sampler(dim_x, dim_y);
 	Sample sample = Sample();
 	Ray ray = Ray();
-	Vector color = Vector(0, 0, 0);
+	Color color = Color(0.0, 0.0, 0.0);
 	Film film = Film(dim_x, dim_y);
 	Camera camera = Camera(eye_position);
 	Sphere sphere = Sphere(Vector(0,0,0), 5);
 	
 	while (sampler.getSample(&sample)) {
 		camera.generateRay(sample, &ray);
-		film.storeSamples(color, sample.x, sample.y);
+		film.storeSamples(color, sample);
 	}
 	film.writeImage();
 }

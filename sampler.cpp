@@ -1,4 +1,5 @@
 #include "sampler.h"
+#include "color.h"
 
 Sampler::Sampler() {
 	curx = 0;

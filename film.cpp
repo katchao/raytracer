@@ -1,6 +1,7 @@
 #include <vector>
 #include "film.h"
 #include "vector.h"
+#include "color.h"
 
 /* You will make one Film class for each rendered image.
 ** The Film object will take in the dimentions of the image.
@@ -11,15 +12,18 @@ Film::Film(int x, int y) {
 	dim_x = x; dim_y = y;
 }
 
-vector<vector<Vector> > buckets;
+vector<vector<Color> > buckets;
 
-void Film::storeSamples(Vector color, int x, int y){
+void Film::storeSamples(Color &color, Sample& sample){
 	//make an array to store the pixel samples
+	Color new_color = Color(color.r, color.g, color.b);
+	int x = sample.x;
+	int y = sample.y;
 	if (x < buckets.size()) {
-		buckets[x].push_back(color);
+		buckets[x].push_back(new_color);
 	 }
-	vector<Vector> tempX;
-	tempX.push_back(color);
+	vector<Color> tempX;
+	tempX.push_back(new_color);
 	buckets.push_back(tempX);
 	//maybe delete tempY
 
@@ -35,9 +39,9 @@ void Film::writeImage(){
 	for(int i=0; i<=dim_x; i++) {
 		//cout << "size of Y dimention: " << buckets[i].size() << "\n";
 		for (int j=0; j<=dim_y;j++) {
-			Vector color = buckets[i][j];
+			Color color = buckets[i][j];
 			//cout << "My Color (" << color.x << "," << color.y << "," << color.z <<")\n";
-			fprintf(output, "%d %d %d ", color.x, color.y, color.z);
+			fprintf(output, "%f %f %f ", color.r, color.g, color.b);
 		}
 	}
 

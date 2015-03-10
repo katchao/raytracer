@@ -6,6 +6,8 @@
 #include <cmath>
 #include <vector>
 #include "vector.h"
+#include "color.h"
+#include "sample.h"
 
 //#include "sample.h"
 
@@ -23,13 +25,13 @@ class Film {
 	  	Film(int, int);
 
 		/*Adds the colors to the sample's bucket in the buckets array*/
-	  	void storeSamples(Vector, int, int);
+	  	void storeSamples(Color&, Sample&);
 
 		/* write image to file */
 		void writeImage();
 
 		/*Stores the samples*/
-	  	vector<vector<Vector> >buckets;	
+	  	vector<vector<Color> >buckets;	
 };
 
 #endif
