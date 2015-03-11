@@ -32,7 +32,7 @@ void Film::storeSamples(Color &color, Sample& sample){
 void Film::writeImage(){
 
 	FILE *output = fopen("output.ppm", "wb");
-	fprintf(output, "P3\n");
+	fprintf(output, "P6\n");
 	fprintf(output, "%d %d\n", dim_x, dim_y);
 	fprintf(output, "255\n ");
 

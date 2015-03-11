@@ -2,15 +2,15 @@
 #include "color.h"
 
 Sampler::Sampler() {
-	curx = 0.5;
-	cury = 0.5;
+	curx = 0.5f;
+	cury = 0.5f;
 	boundx = 0;
 	boundy = 0;
 }
 
 Sampler::Sampler(int x, int y) {
-	curx = 0.5;
-	cury = 0.5;
+	curx = 0.5f;
+	cury = 0.5f;
 	boundx = x;
 	boundy = y;
 }

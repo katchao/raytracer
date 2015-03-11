@@ -12,6 +12,7 @@ Scene::Scene(Vector eye, int x, int y) {
 	eye_position = eye;
 	dim_x = x;
 	dim_y = y;
+	//dim_z = z;
 	UL = Vector(-1,  1, -1);
 	UR = Vector( 1,  1, -1);
 	LR = Vector( 1, -1, -1);
@@ -35,10 +36,10 @@ void Scene::render() {
 	Ray ray = Ray();
 	Color color = Color(0.0f, 0.0f, 0.0f);
 	Film film = Film(dim_x, dim_y);
-	Camera camera = Camera(eye_position);
+	Camera camera = Camera(eye_position, UL, UR, LL, LR, dim_x, dim_y);
 	Raytracer raytracer = Raytracer();
 
-	Sphere sphere = Sphere(Vector(0,0,-10), 1);
+	Sphere sphere = Sphere(Vector(0,0,-2), 1);
 
 	raytracer.list_primitives.push_back(sphere);
 	
@@ -52,7 +53,7 @@ void Scene::render() {
 }
 
 int main() {
-	Scene scene = Scene(Vector(0, 0, 50), 10, 10);
+	Scene scene = Scene(Vector(0, 0, 0), 10, 10);
 	scene.render();
 
 	//want to print out the size of the buckets
