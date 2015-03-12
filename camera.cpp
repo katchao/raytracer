@@ -3,15 +3,13 @@
 // Main function: generate rays
 
 Camera::Camera(Vector ieye, Vector ul, Vector ur, Vector ll, Vector lr, int boundx, int boundy) {
-	eye = ieye;
-	UL = ul;
-	UR = ur;
-	LL = ll;
-	LR = lr;
-	l = UL.x;
-	r = UR.x;
-	top = UL.y;
+	eye = ieye; 
+	UL = ul; UR = ur; LL = ll; LR = lr;
+	l = UL.x; 
+	r = UR.x; 
+	top = UL.y; 
 	bottom = LL.y;
+	//this is the z coordinate for the near clipping plane
 	n = UL.z;
 	//Pixels in the x direction
 	nx = boundx;

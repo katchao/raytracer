@@ -32,15 +32,15 @@ void Film::storeSamples(Color &color, Sample& sample){
 void Film::writeImage(){
 
 	FILE *output = fopen("output.ppm", "wb");
-	fprintf(output, "P6\n");
+	fprintf(output, "P3\n");
 	fprintf(output, "%d %d\n", dim_x, dim_y);
 	fprintf(output, "255\n ");
 
-	for(int i=0; i<=dim_x; i++) {
+	for(int i=0; i<dim_x; i++) {
 		//cout << "size of Y dimention: " << buckets[i].size() << "\n";
-		for (int j=0; j<=dim_y;j++) {
-			Color color = buckets[i][j];
-			cout << "My Color Bucket (" << color.r2 << "," << color.g2 << "," << color.b2 << ") at " << i << ", " << j << ")\n";
+		for (int j=0; j<dim_y;j++) {
+			Color color = buckets[j][i];
+			cout << "My Color Bucket (" << color.r2 << "," << color.g2 << "," << color.b2 << ") at " << i << ", " << j  << ")\n";
 			fprintf(output, "%d %d %d     ", color.r2, color.g2, color.b2);
 		}
 		fprintf(output, "\n");

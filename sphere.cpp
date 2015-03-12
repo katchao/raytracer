@@ -19,32 +19,23 @@ bool Sphere::intersect(Ray &ray) {
 	Vector e_c = Vector();
 	e_c.subtract(e, c);
 	float d_dot_d = d.dot_product(d);
-	//cout << "d dot e-c = " << d.dot_product(e_c) << "\n"; 
-	float first_part = pow(d.dot_product(e_c), 2);
-	//cout << "first part = " << first_part << "\n";
-	float second_part = d_dot_d * (e_c.dot_product(e_c) - pow(r,2));
-	//cout << "second_part = " << second_part << "\n";
-	float discriminant = first_part - second_part;
-	//cout << "discriminant = " << discriminant << "\n";
+	float discriminant = pow(d.dot_product(e_c), 2) - (d_dot_d * (e_c.dot_product(e_c) - pow(r,2)));
 	if (discriminant < 0) { // the ray doesn't intersect the polygon (imaginary number)
 		return false;
 	} else {
 		float det = sqrt(discriminant);
-		//cout << "det not less than zero";
-
-		//cout << "det = " << det << "\n";
-
 		Vector minus_d = Vector();
 		minus_d.scalar_multiply(d, -1.0);
 		float t1 = (minus_d.dot_product(e_c) + det)/d_dot_d;
 		float t2 = (minus_d.dot_product(e_c) - det)/d_dot_d;
-
+		return true;
+	/* This doen't work at the moment...*/
 		// if(t1 > ray.t_max || t2 > ray.t_max || t1 < ray.t_min || t2 < ray.t_min) {
-		// 	return false;
-		// }
+		//  	return false;
+		//  }
 		// else {
-			return true;
-		//}
+		// 	return true;
+		// }
 
 	}
 
