@@ -35,10 +35,8 @@ void Camera::generateRay(Sample& sample, Ray* ray) {
 	Vector direction = Vector();
 
 	newU.scalar_multiply(u, us);
-	//cout << "U: ( " << newU.x << "," << newU.y << "," << newU.z << ")\n";
-
 	newV.scalar_multiply(v, vs);
-	//	cout << "V: ( " << newV.x << "," << newV.y << "," << newV.z << "\n";
+	/* s = e + us*U + vs*V +ws*W */ 
 	s.add(eye, newU); s.add(s, newV); s.add(s, w);
 	direction.subtract(s, eye);
 

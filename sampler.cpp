@@ -17,7 +17,6 @@ Sampler::Sampler(int x, int y) {
 
 // get the next pixel in the screen
 bool Sampler::getSample(Sample* sample) {
-
 	if(curx > boundx) { //end of line, go to the next line
 		cury = cury + 1.0f;
 		if(cury > boundy) { // out of bounds

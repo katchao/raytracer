@@ -14,8 +14,8 @@ Scene::Scene(Vector eye, int x, int y) {
 	dim_y = y;
 	//dim_z = z;
 	UL = Vector(-1,  1, -1);
-	UR = Vector( 1,  1, -1);
-	LR = Vector( 1, -1, -1);
+	UR = Vector( 1,  1, -2);
+	LR = Vector( 1, -1, -2);
 	LL = Vector(-1, -1, -1);
 }
 
@@ -46,9 +46,6 @@ void Scene::render() {
 	while (sampler.getSample(&sample)) {
 		camera.generateRay(sample, &ray);
 		raytracer.trace(ray, 0, &color);
-		if (((sample.x < 50) && (sample.x > 44)) && (sample.y == 50)) {
-			color = Color(0.0f, 1.0f, 0.0f);
-		}
 		film.storeSamples(color, sample);
 		cout << "My Color Scene (" << color.r << "," << color.g << "," << color.b  << ") at (" << sample.x << ", " << sample.y << ")\n";
 	}
@@ -56,7 +53,7 @@ void Scene::render() {
 }
 
 int main() {
-	Scene scene = Scene(Vector(0, 0, 0), 100, 100);
+	Scene scene = Scene(Vector(0, 0, 0), 10, 100);
 	scene.render();
 
 	//want to print out the size of the buckets
