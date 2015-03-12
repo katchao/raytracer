@@ -36,7 +36,7 @@ void Camera::generateRay(Sample& sample, Ray* ray) {
 
 	newU.scalar_multiply(u, us);
 	newV.scalar_multiply(v, vs);
-	/* s = e + us*U + vs*V +ws*W */ 
+	/* s = e + us*U + vs*V + ws*W */ 
 	s.add(eye, newU); s.add(s, newV); s.add(s, w);
 	direction.subtract(s, eye);
 

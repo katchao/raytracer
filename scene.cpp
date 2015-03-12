@@ -42,18 +42,21 @@ void Scene::render() {
 	Sphere sphere = Sphere(Vector(0,0,-2), 1);
 
 	raytracer.list_primitives.push_back(sphere);
-
+	int counter = 0;
 	while (sampler.getSample(&sample)) {
 		camera.generateRay(sample, &ray);
-		raytracer.trace(ray, 0, &color);
+		raytracer.trace(ray, counter, &color);
 		film.storeSamples(color, sample);
+		counter++;
 		cout << "My Color Scene (" << color.r << "," << color.g << "," << color.b  << ") at (" << sample.x << ", " << sample.y << ")\n";
 	}
+	cout << "Computing Complete.\n";
 	film.writeImage();
+	cout << "Rendering Complete.\n";
 }
 
 int main() {
-	Scene scene = Scene(Vector(0, 0, 0), 10, 100);
+	Scene scene = Scene(Vector(0, 0, 0), 20, 10);
 	scene.render();
 
 	//want to print out the size of the buckets
