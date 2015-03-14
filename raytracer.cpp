@@ -39,8 +39,6 @@ void Raytracer::trace(Ray& ray, int depth, Color *color) {
 
 		color->add(shading(local, brdf, lray, lcolor, list_lights[i]));
 	}
-	cout << "List_lights.size(): " << list_lights.size() << endl;
-	cout << "Color = r:" << color->r << " g:" << color->g << " b:" << color->b << endl;
 
 }
 
@@ -69,9 +67,8 @@ Color Raytracer::shading(LocalGeo& local, BRDF& brdf, Ray& lray, Color& lcolor, 
 		// 	diffuse light - l = xyz input from command line
 		// multiple lights = calculate l vector for each light, compute diffuse term for each light, and then add it all together for final diffuse value
 
+		lray.dir.normalize();
 		if(light.type == 1) { // if point light
-			lray.dir.normalize();
-
 			float dotProdln = lray.dir.dot_product(local.normal);
 			float maxdotProd = max(dotProdln, 0.0f);
 
@@ -79,23 +76,19 @@ Color Raytracer::shading(LocalGeo& local, BRDF& brdf, Ray& lray, Color& lcolor, 
 			diffuse.g = brdf.kd.g * lcolor.g * maxdotProd;
 			diffuse.b = brdf.kd.b * lcolor.b * maxdotProd;
 		}
-		/*
-		for (int q = 0; q < dl_list.size(); q++) {
-			Light light = dl_list[q];
-			light.pos[0] = light.pos[0]*radius*-1;
-			light.pos[1] = light.pos[1]*radius*-1;
-			light.pos[2] = light.pos[2]*radius*-1;
-			light.pos = normalize(light.pos);
+		
+		if(light.type == 0) { // if directional light
+			Vector lightPosDiffuse = Vector();
+			lightPosDiffuse.scalar_multiply(light.pos, -1.0f);
+			lightPosDiffuse.normalize();
 
-			float dotProdln = dot_product(light.pos, n);
+			float dotProdln = lightPosDiffuse.dot_product(local.normal);
 			float maxdotProd = max(dotProdln, 0.0f);
 
-			diffuse[0] += kd[0] * light.color[0] * maxdotProd;
-			diffuse[1] += kd[1] * light.color[1] * maxdotProd;
-			diffuse[2] += kd[2] * light.color[2] * maxdotProd;
-		}*/
-
-
+			diffuse.r = brdf.kd.r * lcolor.r * maxdotProd;
+			diffuse.g = brdf.kd.g * lcolor.g * maxdotProd;
+			diffuse.b = brdf.kd.b * lcolor.b * maxdotProd;
+		}
 
 		//Specular term = ks* I * max(r*v, 0)^p
 		//r = reflected direction, r = -l + 2(l*n)n
@@ -113,54 +106,38 @@ Color Raytracer::shading(LocalGeo& local, BRDF& brdf, Ray& lray, Color& lcolor, 
 			r.add(lray.dir, term2);
 			r.normalize();
 
-			/*
-			vector<float> r;
-			r.push_back(-light.pos[0] + 2*(dot_product(light.pos, n))*n[0]);
-			r.push_back(-light.pos[1] + 2*(dot_product(light.pos, n))*n[1]);
-			r.push_back(-light.pos[2] + 2*(dot_product(light.pos, n))*n[2]);
-
-			r = normalize(r);
-			*/
-
-			float dotProdrv = r.dot_product(eye);
+			float dotProdrv = r.dot_product(Vector(0, 0, -1)); // TO DO: right now we're hardcoding the eye :(
 			float dotProdrvmax = pow(max(dotProdrv, 0.0f), brdf.sp);
+
+			//cout << "r: " << r.x << " " << r.y << " " << r.z << endl;
+			//cout << "dotProdrv: " << dotProdrv << endl;
 
 			specular.r = brdf.ks.r * lcolor.r * dotProdrvmax;
 			specular.g = brdf.ks.g * lcolor.g * dotProdrvmax;
 			specular.b = brdf.ks.b * lcolor.b * dotProdrvmax;
 
-
+			//cout << "specular: " << specular.r << " " << specular.g << " " << specular.b << endl;
 		}
 
-		/*
-		for (int q = 0; q < dl_list.size(); q++) {
-			Light light = dl_list[q];
-			light.pos[0] = light.pos[0] * -1;
-			light.pos[1] = light.pos[1] * -1;
-			light.pos[2] = light.pos[2] * -1;
+		if(light.type == 0) { // if directional light
+			Vector neg_lightpos = Vector();
+			neg_lightpos.scalar_multiply(lray.dir, -1.0);
 
-			vector<float> r;
-			r.push_back(-light.pos[0] + 2*(dot_product(light.pos, n))*n[0]);
-			r.push_back(-light.pos[1] + 2*(dot_product(light.pos, n))*n[1]);
-			r.push_back(-light.pos[2] + 2*(dot_product(light.pos, n))*n[2]);
-			r[0] = -r[0];
-			r[1] = -r[1];
-			r[2] = -r[2];
-			r = normalize(r);
+			// calculate r
+			Vector r = Vector();
+			float dotprodln = neg_lightpos.dot_product(local.normal);
+			Vector term2 = Vector(); term2.scalar_multiply(local.normal, 2.0f * dotprodln);
+			r.add(lray.dir, term2);
+			r.scalar_multiply(r, -1.0f);
+			r.normalize();
 
-			float dotProdrv = dot_product(r, v);
-			float dotProdrvmax = pow(max(dotProdrv, 0.0f), sp);
+			float dotProdrv = r.dot_product(Vector(0, 0, -1)); // TO DO: right now we're hardcoding the eye :(
+			float dotProdrvmax = pow(max(dotProdrv, 0.0f), brdf.sp);
 
-			specular[0] += ks[0] * light.color[0] * dotProdrvmax;
-			specular[1] += ks[1] * light.color[1] * dotProdrvmax;
-			specular[2] += ks[2] * light.color[2] * dotProdrvmax;
-		// std::cout << "directional light Light Postion " << q << ":";
-		// std::cout << light.pos[0] << " " << light.pos[1] << " " << light.pos[2];
-		// std::cout << std::endl;
-		// std::cout << "viewer position " << q << ":";
-		// std::cout << v[0] << " " << v[1] << " " << v[2];
-		// std::cout << std::endl;
-		}*/
+			specular.r = brdf.ks.r * lcolor.r * dotProdrvmax;
+			specular.g = brdf.ks.g * lcolor.g * dotProdrvmax;
+			specular.b = brdf.ks.b * lcolor.b * dotProdrvmax;
+		}
 		color.add(diffuse); color.add(specular);
 		return color;
 

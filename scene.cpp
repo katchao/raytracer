@@ -46,9 +46,12 @@ void Scene::render() {
 	raytracer.list_primitives.push_back(sphere);
 
 	//lights
-	PointLight pl1 = PointLight(Vector(2, 2, 2), Color(1.0f, 1.0f, 1.0f));
+	PointLight pl1 = PointLight(Vector(2, 2, 2), Color(1.0f, 0.0f, 0.0f));
+	PointLight pl2 = PointLight(Vector(-2, 2, 2), Color(0.0f, 1.0f, 0.0f));
+	PointLight pl3 = PointLight(Vector(0, -2, 2), Color(0.0f, 0.0f, 1.0f));
 	raytracer.list_lights.push_back(pl1);
-
+	raytracer.list_lights.push_back(pl2);
+	raytracer.list_lights.push_back(pl3);
 
 	int counter = 0;
 	while (sampler.getSample(&sample)) {
@@ -64,7 +67,7 @@ void Scene::render() {
 }
 
 int main() {
-	Scene scene = Scene(Vector(0, 0, 0), 100, 100);
+	Scene scene = Scene(Vector(0.0f, 0.0f, 0.0f), 100, 100);
 	scene.render();
 
 	//want to print out the size of the buckets
