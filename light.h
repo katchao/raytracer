@@ -23,20 +23,16 @@ class Light {
         *  the position stored in local to the position of the light source.
         *  For directional light, the origin of the ray is the same, and the 
         *  ray points to the light direction, however, t_max is infinity.*/
-		Ray* generateLightRay(Vector&, Ray*, Color*);
-
-		
+		Ray* generateLightRay(Vector&, Ray*, Color*);		
 };
 
 class DirLight : public Light {
 	// the pos vector is the direction 
-
 };
 
 class PointLight : public Light {
 	//for point light the pos is the position of the light
 
 };
-
 
 #endif
