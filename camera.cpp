@@ -41,7 +41,7 @@ void Camera::generateRay(Sample& sample, Ray* ray) {
 
 	P.add(add1, add2);
 
-	Vector direction = Vector(); direction.subtract(P, eye);
+	Vector direction = Vector(); direction.subtract(P, eye); // <0, 0, -2>
 
 	*ray = Ray(eye, direction);
 }

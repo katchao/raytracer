@@ -10,7 +10,7 @@ Sphere::Sphere(Vector icenter, int iradius) {
 	radius = iradius;
 }
 
-bool Sphere::intersect(Ray &ray, float* thit) {
+bool Sphere::intersect(Ray &ray, float* thit, LocalGeo* local) {
 	Vector e = ray.start;
 	Vector c = center;
 	Vector d = ray.dir;
@@ -28,8 +28,27 @@ bool Sphere::intersect(Ray &ray, float* thit) {
 	minus_d.scalar_multiply(d, -1.0);
 	float t1 = (minus_d.dot_product(e_c) + det)/d_dot_d;
 	float t2 = (minus_d.dot_product(e_c) - det)/d_dot_d;
+	
+	// get the smallest thit value
+	if(t1 < t2) {
+		*thit = t1;
+	}
+	else {
+		*thit = t2;
+	}
 
-	*thit = t1;
+	// build localGeo
+	// currPos = e + thit *d
+	Vector currPos = Vector();
+	Vector prod = Vector(); prod.scalar_multiply(d, *thit);
+	currPos.add(e, prod);
+	// normal = 2(p - c)/R
+	Vector normal = Vector();
+	normal.subtract(currPos, c);
+	normal.scalar_multiply(normal, 2.0f);
+	//normal.scalar_divide(normal, r);
+
+	*local = LocalGeo(currPos, normal);
 	return true;
 	/* This doen't work at the moment...*/
 		/*

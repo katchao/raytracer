@@ -6,6 +6,7 @@
 #include <cmath>
 #include "vector.h"
 #include "ray.h"
+#include "localgeo.h"
 
 using namespace std;
 
@@ -16,7 +17,7 @@ class Sphere {
 
 		Sphere();
 		Sphere(Vector, int);
-		bool intersect(Ray&, float*);
+		bool intersect(Ray&, float*, LocalGeo*);
 
 };
 
