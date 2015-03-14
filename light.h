@@ -27,4 +27,14 @@ class Light {
 		
 };
 
+class DirLight : public Light {
+	public:
+		float t_max;
+};
+
+class PointLight : public Light {
+
+};
+
+
 #endif
