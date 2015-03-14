@@ -17,8 +17,9 @@ class Raytracer {
   public:
 	  vector<Sphere> list_primitives;
 	  vector<Light> list_lights;
+	  Vector eye;
 
-	  Raytracer();
+	  Raytracer(Vector);
 	  void trace(Ray&, int, Color*);
 	  Color shading(LocalGeo&, BRDF&, Ray&, Color&, Light&);
 };

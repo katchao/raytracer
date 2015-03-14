@@ -39,7 +39,7 @@ void Scene::render() {
 	Film film = Film(dim_x, dim_y);
 	Camera camera = Camera(eye_position, UL, UR, LL, LR, dim_x, dim_y);
 
-	Raytracer raytracer = Raytracer();
+	Raytracer raytracer = Raytracer(eye_position);
 	
 	//objects
 	Sphere sphere = Sphere(Vector(0,0,-2), 1);

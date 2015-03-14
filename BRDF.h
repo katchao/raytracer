@@ -11,8 +11,9 @@ using namespace std;
 class BRDF {
   public:
 	Color kd, ks, ka, kr;
+	float sp;
 
-	BRDF(Color, Color, Color, Color);
+	BRDF(Color, Color, Color, Color, float);
 };
 
 #endif
