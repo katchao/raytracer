@@ -16,7 +16,7 @@ class Light {
 		Vector pos;
 		Color color;
 		/*Light takes in position, color, and if it is directional or not*/
-		Light(Vector, float, Color);
+		Light(Vector, Color);
 
 		/* This is an abstract class that will generate a ray starting from
         *  the position stored in local to the position of the light source.

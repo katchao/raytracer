@@ -8,7 +8,7 @@
 #include "raytracer.h"
 #include <vector>
 
-Light::Light(Vector ipos, float Dintensity, Color rgb) {
+Light::Light(Vector ipos, Color rgb) {
 	pos = ipos;
 	color = rgb;
 }
