@@ -12,10 +12,11 @@ Scene::Scene(Vector eye, int x, int y) {
 	eye_position = eye;
 	dim_x = x;
 	dim_y = y;
-	UL = Vector(-1,  1, -1);
-	UR = Vector( 1,  1, -1);
-	LR = Vector( 1, -1, -1);
-	LL = Vector(-1, -1, -1);
+	//dim_z = z;
+	UL = Vector(-1,  1, 0);
+	UR = Vector( 1,  1, -2);
+	LR = Vector( 1, -1, -2);
+	LL = Vector(-1, -1, 0);
 }
 
 /*
@@ -35,24 +36,27 @@ void Scene::render() {
 	Ray ray = Ray();
 	Color color = Color(0.0f, 0.0f, 0.0f);
 	Film film = Film(dim_x, dim_y);
-	Camera camera = Camera(eye_position);
-	Raytracer raytracer = Raytracer();
+	Camera camera = Camera(eye_position, UL, UR, LL, LR, dim_x, dim_y);
 
-	Sphere sphere = Sphere(Vector(0,0,-10), 1);
+	Raytracer raytracer = Raytracer();
+	Sphere sphere = Sphere(Vector(0,0,-2), 1);
 
 	raytracer.list_primitives.push_back(sphere);
-	
+	int counter = 0;
 	while (sampler.getSample(&sample)) {
 		camera.generateRay(sample, &ray);
-		raytracer.trace(ray, 0, &color);
+		raytracer.trace(ray, counter, &color);
 		film.storeSamples(color, sample);
-		cout << "My Color Scene (" << color.r << "," << color.g << "," << color.b  << ") at (" << sample.x << ", " << sample.y << ")\n";
+		counter++;
+		//cout << "My Color Scene (" << color.r << "," << color.g << "," << color.b  << ") at (" << sample.x << ", " << sample.y << ")\n";
 	}
+	cout << "Computing Complete.\n";
 	film.writeImage();
+	cout << "Rendering Complete.\n";
 }
 
 int main() {
-	Scene scene = Scene(Vector(0, 0, 0), 20, 20);
+	Scene scene = Scene(Vector(0, 0, 0), 200, 100);
 	scene.render();
 
 	//want to print out the size of the buckets

@@ -10,7 +10,7 @@ using namespace std;
 
 class Sampler {
   public:
-	int curx, cury;
+	float curx, cury;
 	int boundx, boundy;
 
 	Sampler();
