@@ -13,10 +13,10 @@ Scene::Scene(Vector eye, int x, int y) {
 	dim_x = x;
 	dim_y = y;
 	//dim_z = z;
-	UL = Vector(-1,  1, 0);
-	UR = Vector( 1,  1, -2);
-	LR = Vector( 1, -1, -2);
-	LL = Vector(-1, -1, 0);
+	UL = Vector(-1,  1, -1);
+	UR = Vector( 1,  1, -1);
+	LR = Vector( 1, -1, -1);
+	LL = Vector(-1, -1, -1);
 }
 
 /*
