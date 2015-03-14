@@ -5,6 +5,7 @@ Raytracer::Raytracer() {
 
 void Raytracer::trace(Ray& ray, int depth, Color *color) {
 	Sphere sphere = list_primitives[0];
+
 	float thit;
 	bool has_intersected = sphere.intersect(ray, &thit);
 
