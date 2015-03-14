@@ -15,6 +15,7 @@ class Light {
 	public:
 		Vector pos;
 		Color color;
+		bool type;
 		/*Light takes in position, color, and if it is directional or not*/
 		Light(Vector, Color);
 
@@ -28,11 +29,12 @@ class Light {
 };
 
 class DirLight : public Light {
-	public:
-		float t_max;
+	// the pos vector is the direction 
+
 };
 
 class PointLight : public Light {
+	//for point light the pos is the position of the light
 
 };
 

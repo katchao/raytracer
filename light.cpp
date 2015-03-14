@@ -19,8 +19,9 @@ Light::Light(Vector ipos, Color rgb) {
 *  For directional light, the origin of the ray is the same, and the 
 *  ray points to the light direction, however, t_max is infinity.*/
 Ray* Light::generateLightRay(Vector& pos, Ray* lray, Color* Lcolor) {
-	
 	return lray;
 
 }
+
+
 
