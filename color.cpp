@@ -4,6 +4,10 @@ Color::Color() {
 	r = 0.0f;
 	g = 0.0f;
 	b = 0.0f;
+
+	r2 = 0;
+	g2 = 0;
+	b2 = 0;
 }
 
 Color::Color(float ir, float ig, float ib) {
@@ -11,9 +15,9 @@ Color::Color(float ir, float ig, float ib) {
 	g = ig;
 	b = ib;
 
-	r2 = int(r * 255);
-	g2 = int(g * 255);
-	b2 = int(b * 255);
+	r2 = min(int(r * 255), 255);
+	g2 = min(int(g * 255), 255);
+	b2 = min(int(b * 255), 255);
 }
 
 Color::Color(int ir, int ig, int ib) {
