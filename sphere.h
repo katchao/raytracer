@@ -16,7 +16,8 @@ class Sphere {
 
 		Sphere();
 		Sphere(Vector, int);
-		bool intersect(Ray&);
+		bool intersect(Ray&, float*);
+
 };
 
 #endif
