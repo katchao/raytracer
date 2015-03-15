@@ -4,7 +4,7 @@
 #include <iostream>
 #include <cmath>
 #include <vector>
-#include "sphere.h"
+#include "primitive.h"
 #include "ray.h"
 #include "intersection.h"
 
@@ -12,10 +12,10 @@ using namespace std;
 
 class AggregatePrimitive {
   public:
-	  vector<Sphere*> list_primitives;
+	  vector<Primitive*> list_primitives;
 
 	  AggregatePrimitive();
-	  AggregatePrimitive(vector<Sphere*> list);
+	  AggregatePrimitive(vector<Primitive*> list);
 	  bool intersect(Ray& ray, float* thit, Intersection* in);
 	  bool intersectP(Ray& ray);
 };

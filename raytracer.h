@@ -7,7 +7,7 @@
 #include "vector.h"
 #include "ray.h"
 #include "color.h"
-#include "sphere.h"
+#include "primitive.h"
 #include "BRDF.h"
 #include "light.h"
 #include "intersection.h"
@@ -17,7 +17,7 @@ using namespace std;
 
 class Raytracer {
   public:
-	  vector<Sphere> list_primitives;
+	  vector<Primitive> list_primitives;
 	  vector<Light> list_lights;
 	  Vector eye;
 

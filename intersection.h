@@ -4,18 +4,18 @@
 #include <iostream>
 #include <cmath>
 #include "localgeo.h"
-#include "sphere.h"
+#include "primitive.h"
 
 using namespace std;
-class Sphere;
+class Primitive;
 
 class Intersection {
   public:
 	  LocalGeo local;
-      Sphere* primitive;
+      Primitive* primitive;
 
 	  Intersection();
-	  Intersection(LocalGeo, Sphere*);
+	  Intersection(LocalGeo, Primitive*);
 };
 
 #endif
