@@ -4,7 +4,7 @@ AggregatePrimitive::AggregatePrimitive() {
 }
 
 
-AggregatePrimitive::AggregatePrimitive(vector<Sphere*> ilist) {
+AggregatePrimitive::AggregatePrimitive(vector<Primitive*> ilist) {
 	list_primitives = ilist;
 }
 
@@ -13,7 +13,7 @@ bool AggregatePrimitive::intersect(Ray& ray, float* thit, Intersection* in) {
 	float min_hit = INFINITY;
 	bool intersected = false;
 	for(int i = 0; i < list_primitives.size(); i++) {
-		Sphere* shape = list_primitives[i];
+		Primitive* shape = list_primitives[i];
 
 		if(shape->intersect(ray, &current_hit, in)) {
 			if(current_hit < min_hit) {
@@ -30,7 +30,7 @@ bool AggregatePrimitive::intersect(Ray& ray, float* thit, Intersection* in) {
 bool AggregatePrimitive::intersectP(Ray& ray) {
 	bool intersected = false;
 	for(int i = 0; i < list_primitives.size(); i++) {
-		Sphere* shape = list_primitives[i];
+		Primitive* shape = list_primitives[i];
 
 		if(shape->intersectP(ray)) {
 			intersected = true;

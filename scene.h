@@ -10,9 +10,9 @@
 #include "ray.h"
 #include "camera.h"
 #include "color.h"
-#include "sphere.h"
 #include "raytracer.h"
 #include "light.h"
+#include "primitive.h"
 #include "aggregateprimitive.h"
 #include <vector>
 

@@ -5,14 +5,13 @@ Raytracer::Raytracer(Vector ieye) {
 }
 
 void Raytracer::trace(Ray& ray, int depth, Color *color) {
-	Sphere sphere = list_primitives[0];
 	float thit;
 	Intersection in = Intersection();
 
 	// create aggregate primitives
-	vector<Sphere*> primitives;
+	vector<Primitive*> primitives;
 	for(int k = 0; k < list_primitives.size(); k++) {
-		Sphere* shape = &list_primitives[k];
+		Primitive* shape = list_primitives[k];
 		primitives.push_back(shape);
 	}
 	AggregatePrimitive group = AggregatePrimitive(primitives);
@@ -44,8 +43,8 @@ void Raytracer::trace(Ray& ray, int depth, Color *color) {
 		list_lights[i].generateLightRay(in.local, &lray, &lcolor);
 
 		//cout << "lray start: "; lray.start.print(); cout << endl;
-
-		if (!group.intersectP(lray)) { // If not blocked by anything
+		
+		if (!in.primitive->intersectP(lray)) { // If not blocked by anything
 			color->add(shading(in.local, brdf, lray, lcolor, list_lights[i]));
 		}
 		else {

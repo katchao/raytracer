@@ -7,8 +7,6 @@
 #include "vector.h"
 #include "ray.h"
 #include "color.h"
-#include "sphere.h"
-#include "localgeo.h"
 #include "localgeo.h"
 
 using namespace std;
