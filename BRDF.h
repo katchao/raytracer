@@ -13,6 +13,7 @@ class BRDF {
 	Color kd, ks, ka, kr;
 	float sp;
 
+	BRDF();
 	BRDF(Color, Color, Color, Color, float);
 };
 

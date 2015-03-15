@@ -35,11 +35,11 @@ void Scene::render() {
 	//objects
 	Sphere sphere = Sphere(Vector(0.0f, 0.0f, -5.0f), 1.0f); raytracer.list_primitives.push_back(sphere);
 	Sphere sphere2 = Sphere(Vector(1.0f, 1.0f, -1.2f), 0.3f); raytracer.list_primitives.push_back(sphere2);
-	Sphere sphere3 = Sphere(Vector(-1.0f, 1.0f, -1.2f), 0.3f); raytracer.list_primitives.push_back(sphere3);
+	Sphere sphere3 = Sphere(Vector(-0.3f, 0.3f, -1.1f), 0.5f); raytracer.list_primitives.push_back(sphere3);
 
 	//lights
-	PointLight pl1 = PointLight(Vector(2, 2, 2), Color(1.0f, 0.0f, 0.0f));
-	PointLight pl2 = PointLight(Vector(-2, 2, 2), Color(0.0f, 1.0f, 0.0f));
+	PointLight pl1 = PointLight(Vector(2, 2, 2), Color(1.0f, 0.0f, 1.0f));
+	PointLight pl2 = PointLight(Vector(-2, 2, 2), Color(1.0f, 1.0f, 0.0f));
 	PointLight pl3 = PointLight(Vector(0, -2, 2), Color(0.0f, 0.0f, 1.0f));
 	raytracer.list_lights.push_back(pl1);
 	raytracer.list_lights.push_back(pl2);
@@ -58,7 +58,7 @@ void Scene::render() {
 }
 
 int main() {
-	Scene scene = Scene(Vector(0.0f, 0.0f, 0.0f), 100, 100);
+	Scene scene = Scene(Vector(0.0f, 0.0f, 0.0f), 400, 400);
 	scene.render();
 
 	//want to print out the size of the buckets
