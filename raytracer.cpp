@@ -49,7 +49,7 @@ void Raytracer::trace(Ray& ray, int depth, Color *color) {
 			color->add(shading(in.local, brdf, lray, lcolor, list_lights[i]));
 		}
 		else {
-			color->add(brdf.ka); //add the ambient light for shadows
+			*color = brdf.ka; //add the ambient light for shadows
 		}
 	}
 
