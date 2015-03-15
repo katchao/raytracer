@@ -7,6 +7,7 @@
 #include "vector.h"
 #include "ray.h"
 #include "intersection.h"
+#include "primitive.h"
 
 using namespace std;
 
