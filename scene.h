@@ -13,6 +13,7 @@
 #include "sphere.h"
 #include "raytracer.h"
 #include "light.h"
+#include "aggregateprimitive.h"
 #include <vector>
 
 using namespace std;

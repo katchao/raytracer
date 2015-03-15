@@ -34,7 +34,9 @@ void Scene::render() {
 	
 	//objects
 	Sphere sphere = Sphere(Vector(0,0,-2), 1);
+	Sphere sphere2 = Sphere(Vector(0.5,0.5,-2), 1);
 	raytracer.list_primitives.push_back(sphere);
+	raytracer.list_primitives.push_back(sphere2);
 
 	//lights
 	PointLight pl1 = PointLight(Vector(2, 2, 2), Color(1.0f, 0.0f, 0.0f));

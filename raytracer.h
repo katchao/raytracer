@@ -11,6 +11,7 @@
 #include "BRDF.h"
 #include "light.h"
 #include "intersection.h"
+#include "aggregateprimitive.h"
 
 using namespace std;
 
