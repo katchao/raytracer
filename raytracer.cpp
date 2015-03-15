@@ -7,16 +7,22 @@ Raytracer::Raytracer(Vector ieye) {
 void Raytracer::trace(Ray& ray, int depth, Color *color) {
 	float thit;
 	Intersection in = Intersection();
+	//Primitive triangle = list_primitives[0];
+	Triangle triangle = list_primitives[0];
 
+	/*
 	// create aggregate primitives
 	vector<Primitive*> primitives;
 	for(int k = 0; k < list_primitives.size(); k++) {
 		Primitive* shape = &list_primitives[k];
 		primitives.push_back(shape);
+		cout << shape->type << endl;
 	}
-	AggregatePrimitive group = AggregatePrimitive(primitives);
+	AggregatePrimitive group = AggregatePrimitive(primitives);*/
 
-	bool has_intersected = group.intersect(ray, &thit, &in);
+	//bool has_intersected = group.intersect(ray, &thit, &in);
+	bool has_intersected = triangle.intersect(ray, &thit, &in);
+	cout << "has_intersected: " << has_intersected << endl;
 
 	// miss
 	if(!has_intersected) {
@@ -42,9 +48,9 @@ void Raytracer::trace(Ray& ray, int depth, Color *color) {
 	for(int i = 0; i < list_lights.size(); i++) {
 		list_lights[i].generateLightRay(in.local, &lray, &lcolor);
 
-		//cout << "lray start: "; lray.start.print(); cout << endl;
-
-		if (!group.intersectP(lray)) { // If not blocked by anything
+		//if (!group.intersectP(lray)) { // If not blocked by anything
+		if(!triangle.intersectP(lray)) {
+			cout << "this happened";
 			color->add(shading(in.local, brdf, lray, lcolor, list_lights[i]));
 		}
 		else {

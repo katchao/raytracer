@@ -14,6 +14,7 @@
 #include "light.h"
 #include "primitive.h"
 #include "aggregateprimitive.h"
+#include "triangle.h"
 #include <vector>
 
 using namespace std;

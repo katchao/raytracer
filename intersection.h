@@ -5,17 +5,21 @@
 #include <cmath>
 #include "localgeo.h"
 #include "primitive.h"
+#include "triangle.h"
 
 using namespace std;
-class Primitive;
+//class Primitive;
+class Triangle;
 
 class Intersection {
   public:
 	  LocalGeo local;
-      Primitive* primitive;
+      //Primitive* primitive;
+	  Triangle* primitive;
 
 	  Intersection();
-	  Intersection(LocalGeo, Primitive*);
+	  //Intersection(LocalGeo, Primitive*);
+	  Intersection(LocalGeo, Triangle*);
 };
 
 #endif

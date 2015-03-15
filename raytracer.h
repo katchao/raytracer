@@ -12,12 +12,14 @@
 #include "light.h"
 #include "intersection.h"
 #include "aggregateprimitive.h"
+#include "triangle.h"
 
 using namespace std;
 
 class Raytracer {
   public:
-	  vector<Primitive> list_primitives;
+	  //vector<Primitive> list_primitives;
+	  vector<Triangle> list_primitives;
 	  vector<Light> list_lights;
 	  Vector eye;
 
