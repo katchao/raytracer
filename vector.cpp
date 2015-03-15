@@ -7,6 +7,12 @@ Vector::Vector() {
 }
 
 Vector::Vector(int ix, int iy, int iz) {
+	x = (float) ix;
+	y = (float) iy;
+	z = (float) iz;
+}
+
+Vector::Vector(float ix, float iy, float iz) {
 	x = ix;
 	y = iy;
 	z = iz;
@@ -49,6 +55,10 @@ void Vector::normalize() {
 
 float Vector::dot_product(Vector v) {
 	return x * v.x + y * v.y + z * v.z;
+}
+
+void Vector::print() {
+	cout << "<" << x << ", " << y << ", " << z << ">";
 }
 
 // prints out vectors in the form of <x, y, z>

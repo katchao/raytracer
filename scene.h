@@ -21,6 +21,7 @@ using namespace std;
 class Scene {
   public:
 	Vector eye_position;
+
 	/* for corners of image */
 	Vector UL;
 	Vector LL;

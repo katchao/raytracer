@@ -14,8 +14,10 @@ class AggregatePrimitive {
   public:
 	  vector<Sphere*> list_primitives;
 
+	  AggregatePrimitive();
 	  AggregatePrimitive(vector<Sphere*> list);
 	  bool intersect(Ray& ray, float* thit, Intersection* in);
+	  bool intersectP(Ray& ray);
 };
 
 #endif

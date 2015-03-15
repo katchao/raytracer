@@ -12,6 +12,7 @@ class Vector {
 
 	Vector();
 	Vector(int, int, int);
+	Vector(float, float, float);
 
     void add (Vector, Vector);
 	void subtract (Vector, Vector);
@@ -19,6 +20,7 @@ class Vector {
 	void scalar_divide (Vector, float);
 	void normalize();
 	float dot_product(Vector);
+	void print();
 	//Vector subtract_two_points(Point, Point);
 };
 

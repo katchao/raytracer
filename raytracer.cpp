@@ -6,10 +6,18 @@ Raytracer::Raytracer(Vector ieye) {
 
 void Raytracer::trace(Ray& ray, int depth, Color *color) {
 	Sphere sphere = list_primitives[0];
-
 	float thit;
 	Intersection in = Intersection();
-	bool has_intersected = sphere.intersect(ray, &thit, &in);
+
+	// create aggregate primitives
+	vector<Sphere*> primitives;
+	for(int k = 0; k < list_primitives.size(); k++) {
+		Sphere* shape = &list_primitives[k];
+		primitives.push_back(shape);
+	}
+	AggregatePrimitive group = AggregatePrimitive(primitives);
+
+	bool has_intersected = group.intersect(ray, &thit, &in);
 
 	// miss
 	if(!has_intersected) {
@@ -35,9 +43,14 @@ void Raytracer::trace(Ray& ray, int depth, Color *color) {
 	for(int i = 0; i < list_lights.size(); i++) {
 		list_lights[i].generateLightRay(in.local, &lray, &lcolor);
 
-		// TO DO: Check to see if it's blocked
+		//cout << "lray start: "; lray.start.print(); cout << endl;
 
-		color->add(shading(in.local, brdf, lray, lcolor, list_lights[i]));
+		if (!group.intersectP(lray)) { // If not blocked by anything
+			color->add(shading(in.local, brdf, lray, lcolor, list_lights[i]));
+		}
+		else {
+			color->add(brdf.ka); //add the ambient light for shadows
+		}
 	}
 
 }
@@ -109,14 +122,9 @@ Color Raytracer::shading(LocalGeo& local, BRDF& brdf, Ray& lray, Color& lcolor, 
 			float dotProdrv = r.dot_product(Vector(0, 0, -1)); // TO DO: right now we're hardcoding the eye :(
 			float dotProdrvmax = pow(max(dotProdrv, 0.0f), brdf.sp);
 
-			//cout << "r: " << r.x << " " << r.y << " " << r.z << endl;
-			//cout << "dotProdrv: " << dotProdrv << endl;
-
 			specular.r = brdf.ks.r * lcolor.r * dotProdrvmax;
 			specular.g = brdf.ks.g * lcolor.g * dotProdrvmax;
 			specular.b = brdf.ks.b * lcolor.b * dotProdrvmax;
-
-			//cout << "specular: " << specular.r << " " << specular.g << " " << specular.b << endl;
 		}
 
 		if(light.type == 0) { // if directional light

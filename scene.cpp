@@ -31,12 +31,10 @@ void Scene::render() {
 	Camera camera = Camera(eye_position, UL, UR, LL, LR, dim_x, dim_y);
 
 	Raytracer raytracer = Raytracer(eye_position);
-	
+
 	//objects
-	Sphere sphere = Sphere(Vector(0,0,-2), 1);
-	Sphere sphere2 = Sphere(Vector(0.5,0.5,-2), 1);
-	raytracer.list_primitives.push_back(sphere);
-	raytracer.list_primitives.push_back(sphere2);
+	Sphere sphere = Sphere(Vector(0.0f, 0.0f, -2.0f), 1.0f); raytracer.list_primitives.push_back(sphere);
+	Sphere sphere2 = Sphere(Vector(0.5f, 0.5f, -1.2f), 0.3f); raytracer.list_primitives.push_back(sphere2);
 
 	//lights
 	PointLight pl1 = PointLight(Vector(2, 2, 2), Color(1.0f, 0.0f, 0.0f));
@@ -52,7 +50,6 @@ void Scene::render() {
 		raytracer.trace(ray, counter, &color);
 		film.storeSamples(color, sample);
 		counter++;
-		//cout << "My Color Scene (" << color.r << "," << color.g << "," << color.b  << ") at (" << sample.x << ", " << sample.y << ")\n";
 	}
 	cout << "Computing Complete.\n";
 	film.writeImage();

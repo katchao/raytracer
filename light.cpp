@@ -29,6 +29,7 @@ void Light::generateLightRay(LocalGeo& local, Ray* lray, Color* lcolor) {
 	//create light ray from current position (on object) to light source
 	Vector currPos = local.pos;
 	lray->start = currPos;
+
 	// direction of light ray = currentPos - source of light
 	Vector direction = Vector();
 	direction.subtract(pos, currPos);

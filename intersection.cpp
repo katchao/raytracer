@@ -3,7 +3,7 @@
 Intersection::Intersection() {
 }
 
-Intersection::Intersection(LocalGeo ilocal, Sphere* isphere) {
+Intersection::Intersection(LocalGeo ilocal, Sphere* iprimitive) {
 	local = ilocal;
-	sphere = isphere;
+	primitive = iprimitive;
 }

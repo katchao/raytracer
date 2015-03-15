@@ -15,11 +15,12 @@ class Intersection;
 class Sphere {
 	public:
 	  	Vector center; 
-	  	int radius;
+	  	float radius;
 
 		Sphere();
-		Sphere(Vector, int);
+		Sphere(Vector, float);
 		bool intersect(Ray&, float*, Intersection*);
+		bool intersectP(Ray&);
 
 };
 

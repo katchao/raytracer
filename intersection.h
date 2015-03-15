@@ -12,7 +12,7 @@ class Sphere;
 class Intersection {
   public:
 	  LocalGeo local;
-      Sphere* sphere;
+      Sphere* primitive;
 
 	  Intersection();
 	  Intersection(LocalGeo, Sphere*);
