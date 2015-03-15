@@ -10,7 +10,7 @@ Sphere::Sphere(Vector icenter, int iradius) {
 	radius = iradius;
 }
 
-bool Sphere::intersect(Ray &ray, float* thit, LocalGeo* local) {
+bool Sphere::intersect(Ray &ray, float* thit, Intersection* in) {
 	Vector e = ray.start;
 	Vector c = center;
 	Vector d = ray.dir;
@@ -48,7 +48,8 @@ bool Sphere::intersect(Ray &ray, float* thit, LocalGeo* local) {
 	normal.scalar_multiply(normal, 2.0f);
 	//normal.scalar_divide(normal, r);
 
-	*local = LocalGeo(currPos, normal);
+	LocalGeo local = LocalGeo(currPos, normal);
+	*in = Intersection(local, this);
 	return true;
 	/* This doen't work at the moment...*/
 		/*

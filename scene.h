@@ -6,6 +6,14 @@
 #include "vector.h"
 #include "sampler.h"
 #include "sample.h"
+#include "film.h"
+#include "ray.h"
+#include "camera.h"
+#include "color.h"
+#include "sphere.h"
+#include "raytracer.h"
+#include "light.h"
+#include <vector>
 
 using namespace std;
 

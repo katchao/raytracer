@@ -1,13 +1,4 @@
 #include "scene.h"
-#include "vector.h"
-#include "film.h"
-#include "ray.h"
-#include "camera.h"
-#include "color.h"
-#include "sphere.h"
-#include "raytracer.h"
-#include "light.h"
-#include <vector>
 
 Scene::Scene(Vector eye, int x, int y) {
 	eye_position = eye;

@@ -8,8 +8,8 @@ void Raytracer::trace(Ray& ray, int depth, Color *color) {
 	Sphere sphere = list_primitives[0];
 
 	float thit;
-	LocalGeo local = LocalGeo(); /* WORK ON THIS */
-	bool has_intersected = sphere.intersect(ray, &thit, &local);
+	Intersection in = Intersection();
+	bool has_intersected = sphere.intersect(ray, &thit, &in);
 
 	// miss
 	if(!has_intersected) {
@@ -33,11 +33,11 @@ void Raytracer::trace(Ray& ray, int depth, Color *color) {
 
 	// loop through all the lights
 	for(int i = 0; i < list_lights.size(); i++) {
-		list_lights[i].generateLightRay(local, &lray, &lcolor);
+		list_lights[i].generateLightRay(in.local, &lray, &lcolor);
 
 		// TO DO: Check to see if it's blocked
 
-		color->add(shading(local, brdf, lray, lcolor, list_lights[i]));
+		color->add(shading(in.local, brdf, lray, lcolor, list_lights[i]));
 	}
 
 }

@@ -10,6 +10,7 @@
 #include "sphere.h"
 #include "BRDF.h"
 #include "light.h"
+#include "intersection.h"
 
 using namespace std;
 
