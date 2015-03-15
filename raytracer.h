@@ -8,14 +8,20 @@
 #include "ray.h"
 #include "color.h"
 #include "sphere.h"
+#include "BRDF.h"
+#include "light.h"
 
 using namespace std;
 
 class Raytracer {
   public:
 	  vector<Sphere> list_primitives;
-	  Raytracer();
+	  vector<Light> list_lights;
+	  Vector eye;
+
+	  Raytracer(Vector);
 	  void trace(Ray&, int, Color*);
+	  Color shading(LocalGeo&, BRDF&, Ray&, Color&, Light&);
 };
 
 #endif

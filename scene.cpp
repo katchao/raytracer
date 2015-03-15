@@ -6,7 +6,10 @@
 #include "color.h"
 #include "sphere.h"
 #include "raytracer.h"
+#include "light.h"
+#include "objparser.h"
 #include <vector>
+#include <fstream>
 
 Scene::Scene(Vector eye, int x, int y) {
 	eye_position = eye;
@@ -38,10 +41,20 @@ void Scene::render() {
 	Film film = Film(dim_x, dim_y);
 	Camera camera = Camera(eye_position, UL, UR, LL, LR, dim_x, dim_y);
 
-	Raytracer raytracer = Raytracer();
+	Raytracer raytracer = Raytracer(eye_position);
+	
+	//objects
 	Sphere sphere = Sphere(Vector(0,0,-2), 1);
-
 	raytracer.list_primitives.push_back(sphere);
+
+	//lights
+	PointLight pl1 = PointLight(Vector(2, 2, 2), Color(1.0f, 0.0f, 0.0f));
+	PointLight pl2 = PointLight(Vector(-2, 2, 2), Color(0.0f, 1.0f, 0.0f));
+	PointLight pl3 = PointLight(Vector(0, -2, 2), Color(0.0f, 0.0f, 1.0f));
+	raytracer.list_lights.push_back(pl1);
+	raytracer.list_lights.push_back(pl2);
+	raytracer.list_lights.push_back(pl3);
+
 	int counter = 0;
 	while (sampler.getSample(&sample)) {
 		camera.generateRay(sample, &ray);
@@ -56,8 +69,11 @@ void Scene::render() {
 }
 
 int main() {
-	Scene scene = Scene(Vector(0, 0, 0), 200, 100);
-	scene.render();
+	ObjParser parser = ObjParser("simplesquare.obj");
+	parser.parse();
+
+	//Scene scene = Scene(Vector(0.0f, 0.0f, 0.0f), 100, 100);
+	//scene.render();
 
 	//want to print out the size of the buckets
 	return 0;
