@@ -45,6 +45,17 @@ void Scene::render() {
 
 	}
 
+	//materials
+	// hardcoded BRDF for now
+	Color ka = Color(0.05f, 0.05f, 0.05f); Color kd = Color(1.0f, 1.0f, 1.0f); Color ks = Color(1.0f, 1.0f, 1.0f); Color kr = Color(0.0f, 0.0f, 0.0f); float sp = 64.0f;
+	BRDF brdf = BRDF(ka, kd, ks, kr, sp);
+	Material mat1 = Material(brdf);
+
+	//-ka 0.05 0.05 0.05 -kd 1 1 1 -ks 1 1 1 -sp 64
+	Color ka2 = Color(0.05f, 0.05f, 0.05f); Color kd2 = Color(0.6f, 0.5f, 1.0f); Color ks2 = Color(0.2f, 0.0f, 1.0f); Color kr2 = Color(0.0f, 0.0f, 0.0f); float sp2 = 84.0f;
+	BRDF brdf2 = BRDF(ka, kd, ks, kr, sp);
+	Material mat2 = Material(brdf2);
+
 	//objects
 	// Sphere sphere = Sphere(Vector(0.0f, 0.0f, -5.0f), 1.0f); raytracer.list_primitives.push_back(&sphere);
 	// Sphere sphere2 = Sphere(Vector(1.0f, 1.0f, -1.2f), 0.3f); raytracer.list_primitives.push_back(&sphere2);
@@ -54,7 +65,7 @@ void Scene::render() {
 	//lights
 	PointLight pl1 = PointLight(Vector(2, 2, 2), Color(1.0f, 0.0f, 0.0f));
 	PointLight pl2 = PointLight(Vector(-2, 2, 2), Color(0.0f, 1.0f, 0.0f));
-	PointLight pl3 = PointLight(Vector(0, -2, 2), Color(0.0f, 0.0f, 1.0f));
+	DirLight pl3 = DirLight(Vector(0, -2, 2), Color(0.0f, 0.0f, 1.0f));
 	raytracer.list_lights.push_back(pl1);
 	raytracer.list_lights.push_back(pl2);
 	raytracer.list_lights.push_back(pl3);

@@ -24,16 +24,9 @@ void Raytracer::trace(Ray& ray, int depth, Color *color) {
 		return;
 	}
 
+	BRDF brdf = in.primitive->mat->constantBRDF;
+
 	// hit
-
-	// hardcoded BRDF for now
-	Color ka = Color(0.05f, 0.05f, 0.05f);
-	Color kd = Color(1.0f, 1.0f, 1.0f);
-	Color ks = Color(1.0f, 1.0f, 1.0f);
-	Color kr = Color(0.0f, 0.0f, 0.0f);
-	float sp = 64.0f;
-	BRDF brdf = BRDF(ka, kd, ks, kr, sp);
-
 	Ray lray = Ray();
 	Color lcolor = Color(0.0f, 0.0f, 0.0f);
 	*color = Color(0.0f, 0.0f, 0.0f); //reset color

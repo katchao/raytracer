@@ -28,6 +28,12 @@ Sphere::Sphere(Vector icenter, float iradius) : Primitive() {
 	radius = iradius;
 }
 
+Sphere::Sphere(Vector icenter, float iradius, Material* imat) : Primitive() {
+	center = icenter;
+	radius = iradius;
+	mat = imat;
+}
+
 bool Sphere::intersect(Ray &ray, float* thit, Intersection* in) {
 	Vector e = ray.start;
 	Vector c = center;
@@ -109,6 +115,14 @@ Triangle::Triangle(Vector iv1, Vector iv2, Vector iv3) : Primitive() {
 	v2 = iv2;
 	v3 = iv3;
 	type = 1;
+}
+
+Triangle::Triangle(Vector iv1, Vector iv2, Vector iv3, Material* imat) : Primitive() {
+	v1 = iv1;
+	v2 = iv2;
+	v3 = iv3;
+	type = 1;
+	mat = imat;
 }
 
 bool Triangle::intersect(Ray &ray, float* thit, Intersection* in) {

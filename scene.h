@@ -14,6 +14,9 @@
 #include "light.h"
 #include "primitive.h"
 #include "aggregateprimitive.h"
+#include "material.h"
+#include "BRDF.h"
+#include "material.h"
 #include <vector>
 #include "objparser.h"
 
