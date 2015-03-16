@@ -15,6 +15,7 @@
 #include "primitive.h"
 #include "aggregateprimitive.h"
 #include <vector>
+#include "objparser.h"
 
 using namespace std;
 
@@ -28,6 +29,7 @@ class Scene {
 	Vector UR;
 	Vector LR;
 	int dim_x, dim_y;
+	vector<Primitive*> primitives;
 
 	Scene(Vector, int, int);
 

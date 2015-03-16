@@ -1,6 +1,7 @@
 #include "scene.h"
 
 Scene::Scene(Vector eye, int x, int y) {
+	//vector<Primitive*> primitives;
 	eye_position = eye;
 	dim_x = x;
 	dim_y = y;
@@ -31,12 +32,24 @@ void Scene::render() {
 	Camera camera = Camera(eye_position, UL, UR, LL, LR, dim_x, dim_y);
 
 	Raytracer raytracer = Raytracer(eye_position);
+	cout << "I made a raytracer homie" << endl;
+	raytracer.list_primitives = primitives;
+	cout << "I set primitives homie. But is it correct?" << endl;
+
+	for (int k = 0; k<raytracer.list_primitives.size(); k++) {
+		Primitive* triangle = raytracer.list_primitives[k];
+		cout << "Triangle Number" << k + 1 << endl;
+		cout << "Vertex Num 1" << " : (" << triangle->v1.x << ", " << raytracer.list_primitives[k]->v1.x << ", " << raytracer.list_primitives[k]->v1.x << ")" << endl;
+		cout << "Vertex Num 2" << " : (" << triangle->v2.x << ", " << raytracer.list_primitives[k]->v2.y << ", " << raytracer.list_primitives[k]->v2.z << ")" << endl;
+		cout << "Vertex Num 3" << " : (" << raytracer.list_primitives[k]->v3.x << ", " << raytracer.list_primitives[k]->v3.y << ", " << raytracer.list_primitives[k]->v3.z << ")" << endl;
+
+	}
 
 	//objects
-	Sphere sphere = Sphere(Vector(0.0f, 0.0f, -5.0f), 1.0f); raytracer.list_primitives.push_back(&sphere);
-	Sphere sphere2 = Sphere(Vector(1.0f, 1.0f, -1.2f), 0.3f); raytracer.list_primitives.push_back(&sphere2);
-	Sphere sphere3 = Sphere(Vector(-0.5f, 0.3f, -1.1f), 0.5f); raytracer.list_primitives.push_back(&sphere3);
-	Triangle triangle1 = Triangle(Vector(1.0f, -1.0f, -5.0f), Vector(-1.0f, -1.0f, -5.0f), Vector(1.0f, 1.0f, -5.0f)); raytracer.list_primitives.push_back(&triangle1);
+	// Sphere sphere = Sphere(Vector(0.0f, 0.0f, -5.0f), 1.0f); raytracer.list_primitives.push_back(&sphere);
+	// Sphere sphere2 = Sphere(Vector(1.0f, 1.0f, -1.2f), 0.3f); raytracer.list_primitives.push_back(&sphere2);
+	// Sphere sphere3 = Sphere(Vector(-0.5f, 0.3f, -1.1f), 0.5f); raytracer.list_primitives.push_back(&sphere3);
+	// Triangle triangle1 = Triangle(Vector(1.0f, -1.0f, -5.0f), Vector(-1.0f, -1.0f, -5.0f), Vector(1.0f, 1.0f, -5.0f)); raytracer.list_primitives.push_back(&triangle1);
 
 	//lights
 	PointLight pl1 = PointLight(Vector(2, 2, 2), Color(1.0f, 0.0f, 0.0f));
@@ -59,8 +72,13 @@ void Scene::render() {
 }
 
 int main() {
+	//vector<Primitive*> primitives;
 	Scene scene = Scene(Vector(0.0f, 0.0f, 0.0f), 200, 200);
+	ObjParser parser = ObjParser("simplesquare.obj");
+	scene.primitives = parser.parse();
+	cout << " I am about to render homie." << endl;
 	scene.render();
+
 
 	//want to print out the size of the buckets
 	return 0;
