@@ -5,12 +5,6 @@
 Camera::Camera(Vector ieye, Vector ul, Vector ur, Vector ll, Vector lr, int boundx, int boundy) {
 	eye = ieye; 
 	UL = ul; UR = ur; LL = ll; LR = lr;
-	l = UL.x; 
-	r = UR.x; 
-	top = UL.y; 
-	bottom = LL.y;
-	//this is the z coordinate for the near clipping plane
-	n = UL.z;
 	//Pixels in the x direction
 	nx = boundx;
 	//Pixels in the y direction
@@ -30,9 +24,7 @@ void Camera::generateRay(Sample& sample, Ray* ray) {
 	Vector prod1 = Vector(); prod1.scalar_multiply(LL, v);
 	Vector prod2 = Vector(); prod2.scalar_multiply(UL, (1-v));
 	Vector add1 = Vector(); add1.add(prod1, prod2); // <(-1, 0, -2)>
-	//cout << "add1: " << add1.x << " " << add1.y << " " << add1.z << endl;
 	add1.scalar_multiply(add1, u);
-	//cout << "add1: " << add1.x << " " << add1.y << " " << add1.z << endl;
 
 	Vector prod3 = Vector(); prod3.scalar_multiply(LR, v);
 	Vector prod4 = Vector(); prod4.scalar_multiply(UR, (1-v));

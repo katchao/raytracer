@@ -5,15 +5,17 @@
 #include <fstream>
 #include <cmath>
 #include <vector>
+#include <exception>
 #include <cstring>
+#include <string>
+#include <cstdlib>
 #include "vector.h"
 #include "primitive.h"
 #include "raytracer.h"
-#include "primitive.h"
-
 
 
 using namespace std;
+
 
 class ObjParser {
 public:

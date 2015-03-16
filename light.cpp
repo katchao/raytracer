@@ -27,15 +27,18 @@ PointLight::PointLight(Vector ipos, Color irgb) : Light() {
 *  ray points to the light direction, however, t_max is infinity.*/
 void Light::generateLightRay(LocalGeo& local, Ray* lray, Color* lcolor) {
 	//create light ray from current position (on object) to light source
-	Vector currPos = local.pos;
-	lray->start = currPos;
+	// local.pos = current position
+	lray->start = local.pos;
 
 	// direction of light ray = currentPos - source of light
 	Vector direction = Vector();
-	direction.subtract(pos, currPos);
+	direction.subtract(pos, local.pos);
 	lray->dir = direction;
 
-	//lcolor = light color
+	if(type == 0) {
+		lray->t_max = INFINITY;
+	}
+
 	*lcolor = color;
 }
 

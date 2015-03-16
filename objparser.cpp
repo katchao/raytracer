@@ -27,6 +27,8 @@ ObjParser::ObjParser(string ifile) {
 
 vector<Primitive*> ObjParser::parse() {
 	vector<Primitive*>  triangles; 
+
+	/*
 	ifstream infile;
 	infile.open(file);
 	const int num_line_chars = 50;
@@ -50,8 +52,9 @@ vector<Primitive*> ObjParser::parse() {
 
 				if (linecontents[i] == ' ') {
 					try {
-						vertex.push_back(stof(currflt));
-					} catch (const std::invalid_argument& e) {
+						vertex.push_back(atof(currflt.c_str()));
+					} catch (int e) {
+						continue;
 					}
 			 		currflt = "";
 				} else {
@@ -59,7 +62,7 @@ vector<Primitive*> ObjParser::parse() {
 				}
 			}
 			//cout << "last Elem = " << currflt << endl;
-			vertex.push_back(stof(currflt));// this gets the last element
+			vertex.push_back(atof(currflt.c_str()));// this gets the last element
 			cout << "Vertex " << verticies.size() + 1 << ": ( " << vertex[0] << ", " << vertex[1] << ", " << vertex[2] << ")" << endl;
 			verticies.push_back(vertex);
 
@@ -74,9 +77,9 @@ vector<Primitive*> ObjParser::parse() {
 				if (linecontents[i] == '/') {
 					
 					try {
-						int index = stoi(currflt) - 1;
+						int index = atoi(currflt.c_str()) - 1;
 						face.push_back(verticies[index]);
-					} catch (const std::invalid_argument& e) {
+					} catch (int e) {
 					}
 					
 					//skip to the next white space
@@ -89,9 +92,9 @@ vector<Primitive*> ObjParser::parse() {
 			 	//If this is the value that we want
 				} else if (linecontents[i] == ' ') {
 					try {
-						int index = stoi(currflt) - 1;
+						int index = atoi(currflt.c_str()) - 1;
 						face.push_back(verticies[index]);
-					} catch (const std::invalid_argument& e) {
+					} catch (int e) {
 					}
 			 		currflt = "";
 
@@ -102,9 +105,9 @@ vector<Primitive*> ObjParser::parse() {
 			
 			// Adding the last vertex to the current face vector
 			try {
-				int index = stoi(currflt) - 1;
+				int index = atoi(currflt.c_str()) - 1;
 				face.push_back(verticies[index]);// this gets the last element
-			} catch (const std::invalid_argument& e) {			
+			} catch (int e) {			
 			}
 
 			//push this face to the list of faces
@@ -129,6 +132,7 @@ vector<Primitive*> ObjParser::parse() {
 	infile.close();
 	cout << "Total Number of Triangles = " << triangles.size() << endl;
 	cout << "I get there homie." << endl;
+	*/
 	return triangles;
 }
 

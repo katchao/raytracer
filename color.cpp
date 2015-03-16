@@ -31,3 +31,7 @@ void Color::add(Color toAdd) {
 	g2 += toAdd.g2;
 	b2 += toAdd.b2;
 }
+
+void Color::print() {
+	cout << "r:" << r << " g:" << g << " b:" << b << endl;
+}

@@ -56,6 +56,10 @@ bool Sphere::intersect(Ray &ray, float* thit, Intersection* in) {
 	// get the smallest thit value
 	*thit = min(t1, t2);
 
+	if(*thit < 0.00004) { // shadow bias
+		return false;
+	}
+
 	// build localGeo
 	// currPos = e + thit *d
 	Vector currPos = Vector();
@@ -150,12 +154,15 @@ bool Triangle::intersect(Ray &ray, float* thit, Intersection* in) {
 
 	*thit = t;
 	
-
+	if(t < 0.00004) { // shadow bias
+		return false;
+	}
 	// currPos = e + thit *d
 	Vector currPos = Vector();
 	Vector prod = Vector(); prod.scalar_multiply(ray.dir, *thit);
 	currPos.add(ray.start, prod);
 
+	
 	// normal = cross(v2 - v1, v3 - v1);
 	Vector normal = Vector();
 	Vector V = Vector(); V.subtract(v2, v1);
@@ -194,7 +201,7 @@ bool Triangle::intersectP(Ray &ray) {
 	float beta = (j*(e*i - h*f) + k*(g*f - d*i) + l*(d*h - e*g))/M;
 	if(beta < 0 || beta > (1-gamma)) { return false; }
 
-	if(t < 0.004) { // shadow bias
+	if(t < 0.00004) { // shadow bias
 		return false;
 	}
 

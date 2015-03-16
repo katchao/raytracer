@@ -10,6 +10,7 @@ class Color {
 	float r, g, b;
 	int r2, g2, b2;
 	void add (Color);
+	void print();
 
 	Color();
 	Color(float, float, float);
