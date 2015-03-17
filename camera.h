@@ -14,6 +14,8 @@ class Camera {
   public:
 	  Vector eye, UL, UR, LL, LR; //eye position
 	  int nx, ny;
+
+	  Camera();
 	  Camera(Vector, Vector, Vector, Vector, Vector, int, int);
 	  void generateRay(Sample& sample, Ray* ray);
 };

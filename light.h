@@ -22,8 +22,7 @@ class Light {
         *  For directional light, the origin of the ray is the same, and the 
         *  ray points to the light direction, however, t_max is infinity.*/
 		void generateLightRay(LocalGeo&, Ray*, Color*);
-
-		
+		void print();
 };
 
 class DirLight : public Light {
@@ -36,6 +35,7 @@ class DirLight : public Light {
 class PointLight : public Light {
 	//for point light the pos is the position of the light
 	public:
+		float falloff;
 		PointLight(Vector, Color);
 };
 

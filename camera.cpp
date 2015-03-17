@@ -2,6 +2,9 @@
 
 // Main function: generate rays
 
+Camera::Camera() {
+}
+
 Camera::Camera(Vector ieye, Vector ul, Vector ur, Vector ll, Vector lr, int boundx, int boundy) {
 	eye = ieye; 
 	UL = ul; UR = ur; LL = ll; LR = lr;

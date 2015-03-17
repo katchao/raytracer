@@ -11,3 +11,7 @@ Material::Material(BRDF ibrdf) {
 void BRDF::getBRDF(LocalGeo& local, BRDF* brdf) {
 }
 */
+
+void Material::print() {
+	constantBRDF.print();
+}

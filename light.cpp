@@ -1,5 +1,8 @@
 #include "light.h"
 
+void Light::print() {
+	cout << "Light pos: "; pos.print(); cout << " color: "; color.print(); cout << endl;
+}
 
 /*
 Light::Light(Vector ipos, Color rgb) {
