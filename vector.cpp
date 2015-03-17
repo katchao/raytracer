@@ -42,6 +42,54 @@ void Vector::scalar_divide(Vector v, float scalar) {
 	z = v.z / scalar;
 }
 
+Vector Vector::operator+(const Vector& v) {
+	Vector result;
+	result.x = this->x + v.x;
+	result.y = this->y + v.y;
+	result.z = this->z + v.z;
+	return result;
+}
+
+Vector Vector::operator-(const Vector& v) {
+	Vector result;
+	result.x = this->x - v.x;
+	result.y = this->y - v.y;
+	result.z = this->z - v.z;
+	return result;
+}
+
+Vector Vector::operator*(const Vector& v) {
+	Vector result;
+	result.x = this->x * v.x;
+	result.y = this->y * v.y;
+	result.z = this->z * v.z;
+	return result;
+}
+
+Vector Vector::operator*(float scalar) {
+	Vector result;
+	result.x = this->x * scalar;
+	result.y = this->y * scalar;
+	result.z = this->z * scalar;
+	return result;
+}
+
+Vector Vector::operator/(const Vector& v) {
+	Vector result;
+	result.x = this->x / v.x;
+	result.y = this->y / v.y;
+	result.z = this->z / v.z;
+	return result;
+}
+
+Vector Vector::operator/(float scalar) {
+	Vector result;
+	result.x = this->x / scalar;
+	result.y = this->y / scalar;
+	result.z = this->z / scalar;
+	return result;
+}
+
 void Vector::normalize() {
 	float magnitude = pow(x, 2) + pow(y, 2) + pow(z, 2);
 	magnitude = sqrt(magnitude);
@@ -61,11 +109,6 @@ void Vector::print() {
 	cout << "<" << x << ", " << y << ", " << z << ">";
 }
 
-// prints out vectors in the form of <x, y, z>
-std::ostream& operator<<(std::ostream &strm, const Vector &v) {
-  return strm << "<" << v.x << ", " << v.y << ", " << v.z << ">";
+float dot_product(Vector v1, Vector v2) {
+	return v1.x * v2.x + v1.y * v2.y + v1.z * v2.z;
 }
-/*
-std::ostream& operator<<(std::ostream &strm, Vector v) {
-  return strm << "<" << v.x << ", " << v.y << ", " << v.z << ">";
-}*/

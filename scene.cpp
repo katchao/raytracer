@@ -98,6 +98,22 @@ void Scene::render() {
 
 
 int main(int argc, const char* argv[]) {
+	/* Vector Debugging */
+	Vector test = Vector(1.0f, 2.0f, 3.0f);
+	Vector add = test + test;
+	cout << "add rseult: "; add.print(); cout << endl;
+	Vector sub = test - test;
+	cout << "sub rseult: "; sub.print(); cout << endl;
+	Vector mult = test * test;
+	cout << "mult rseult: "; mult.print(); cout << endl;
+	Vector mult_f = test * 2.0f;
+	cout << "mult rseult: "; mult_f.print(); cout << endl;
+	Vector div = test / add;
+	cout << "div rseult: "; div.print(); cout << endl;
+	Vector div_f = test / 2.0f;
+	cout << "div float rseult: "; div_f.print(); cout << endl;
+	float dot_prod = dot_product(add, mult);
+	cout << "dot prod rseult: "<< dot_prod << endl;
 	//ObjParser parser = ObjParser("simplesquare.obj");
 	Scene scene = Scene();
 
