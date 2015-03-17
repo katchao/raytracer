@@ -33,7 +33,7 @@ void Scene::render() {
 	raytracer.list_lights = list_lights;
 	raytracer.list_primitives = list_primitives;
 	
-	
+	/*
 	// Sphere1
 	Color ka = Color(0.1f, 0.1f, 0.1f); Color kd = Color(1.0f, 0.0f, 1.0f); Color ks = Color(1.0f, 1.0f, 1.0f); Color kr = Color(0.0f, 0.0f, 0.0f); float sp = 50.0f;
 	BRDF brdf = BRDF(ka, kd, ks, kr, sp);
@@ -65,6 +65,7 @@ void Scene::render() {
 	raytracer.list_lights.push_back(&dl1);
 	raytracer.list_lights.push_back(&dl2);
 	raytracer.amb = AmbientLight(Color(0.3f, 0.0f, 0.0f));
+	*/
 
 	/////// DEBUGGING
 	cout << "Eye Position: "; raytracer.eye.print(); cout << endl;
@@ -146,8 +147,6 @@ void Scene::parse_input(const char* input_file) {
 
 		// process tokens
 		for (int i = 0; i < n; i++) { // n = #of tokens
-			//cout << "Token[" << i << "] = " << token[i] << endl;
-		
 			if(strcmp(token[i], "cam") == 0) { //cam ex ey ez llx lly llz lrx lry lrz ulx uly ulz urx ury urz
 				eye = Vector((float) atof(token[i+1]), (float) atof(token[i+2]), (float) atof(token[i+3]));
 				LL = Vector((float) atof(token[i+4]), (float) atof(token[i+5]), (float) atof(token[i+6]));
@@ -177,15 +176,39 @@ void Scene::parse_input(const char* input_file) {
 				list_lights.push_back((Light*) pl);
 			}
 
+			else if(strcmp(token[i], "ltd") == 0) { //ltp px py pz r g b [falloff]
+				Vector pos = Vector((float) atof(token[i+1]), (float) atof(token[i+2]), (float) atof(token[i+3]));
+				Color intensity = Color((float) atof(token[i+4]), (float) atof(token[i+5]), (float) atof(token[i+6]));
+				DirLight* dl = new DirLight(pos, intensity);
+
+				list_lights.push_back((Light*) dl);
+			}
+
+			else if(strcmp(token[i], "lta") == 0) { //lta r g b 
+				Color intensity = Color((float) atof(token[i+1]), (float) atof(token[i+2]), (float) atof(token[i+3]));
+				AmbientLight* al = new AmbientLight(intensity);
+
+				list_lights.push_back((Light*) al);
+			}
+
 			else if(strcmp(token[i], "sph") == 0) { //sph cx cy cz r
 				Vector center = Vector((float) atof(token[i+1]), (float) atof(token[i+2]), (float) atof(token[i+3]));
 				float radius = (float) atof(token[i+4]);
 				if(list_materials.size() > 0) {
 					Sphere* sphere = new Sphere(center, radius, list_materials[list_materials.size()-1]);
 					list_primitives.push_back(sphere);
-				}						
+				}
+			}
+
+			else if(strcmp(token[i], "tri") == 0) { //tri ax ay az bx by bz cx cy cz 
+				Vector v1 = Vector((float) atof(token[i+1]), (float) atof(token[i+2]), (float) atof(token[i+3]));
+				Vector v2 = Vector((float) atof(token[i+4]), (float) atof(token[i+5]), (float) atof(token[i+6]));
+				Vector v3 = Vector((float) atof(token[i+7]), (float) atof(token[i+8]), (float) atof(token[i+9]));
+				if(list_materials.size() > 0) {
+					Triangle* triangle = new Triangle(v1, v2, v3, list_materials[list_materials.size()-1]);
+					list_primitives.push_back(triangle);
+				}
 			}
 		}
-		cout << endl;
 	}
 }

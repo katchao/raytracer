@@ -20,7 +20,6 @@ class Raytracer {
 	  vector<Primitive*> list_primitives;
 	  vector<Light*> list_lights;
 	  Vector eye;
-	  AmbientLight amb;
 
 	  Raytracer(Vector);
 	  void trace(Ray&, int, Color*);

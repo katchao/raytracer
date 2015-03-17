@@ -2,7 +2,6 @@
 
 Raytracer::Raytracer(Vector ieye) {
 	eye = ieye;
-	amb = AmbientLight();
 }
 
 void Raytracer::trace(Ray& ray, int depth, Color *color) {
@@ -35,7 +34,6 @@ void Raytracer::trace(Ray& ray, int depth, Color *color) {
 		else {
 			//add the ambient light for shadows
 			*color = brdf.ka;
-			//cout << "shadows triggered" << endl;
 		}
 	}
 
@@ -65,8 +63,9 @@ Color Raytracer::shading(LocalGeo& local, BRDF& brdf, Ray& lray, Color& lcolor, 
 	neg_lightPos.normalize();
 
 	// add ambient term if ambient light
-	if(amb.color.sum()) {
-		color.add(brdf.ka);
+	if(light.type == 2) {
+		Color ambient = Color(lcolor.r * brdf.ka.r, lcolor.g * brdf.ka.g, lcolor.b * brdf.ka.b);
+		color.add(ambient);
 	}
 
 	//   Diffuse term = kd*I*max(l*n, 0)
