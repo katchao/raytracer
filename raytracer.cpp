@@ -7,28 +7,7 @@ Raytracer::Raytracer(Vector ieye) {
 void Raytracer::trace(Ray& ray, int depth, Color *color) {
 	float thit;
 	Intersection in = Intersection();
-
-	// create aggregate primitives
-	vector<Primitive*> primitives;
-	for(int k = 0; k < list_primitives.size(); k++) {
-		Primitive* shape = list_primitives[k];
-		primitives.push_back(shape);
-	}
-	AggregatePrimitive group = AggregatePrimitive(primitives);
-
-	/*
-	//////// ALL THE DEBUGGING
-	cout << "Eye Position: "; eye.print(); cout << endl;
-	for(int i = 0; i < list_primitives.size(); i++) {
-		group.list_primitives[i]->print();
-	}
-	for(int i = 0; i < list_lights.size(); i++) {
-		list_lights[i].print();
-	}
-	cout << endl;
-	///////////////////////////
-	*/
-
+	AggregatePrimitive group = AggregatePrimitive(list_primitives);
 	bool has_intersected = group.intersect(ray, &thit, &in);
 
 	// miss
@@ -37,11 +16,11 @@ void Raytracer::trace(Ray& ray, int depth, Color *color) {
 		return;
 	}
 
-	BRDF brdf = in.primitive->mat->constantBRDF;
+	BRDF brdf = *in.primitive->mat->constantBRDF;
 
 	// hit
 	Ray lray = Ray();
-	Color lcolor = Color(0.0f, 0.0f, 0.0f);
+	Color lcolor = Color();
 	*color = Color(0.0f, 0.0f, 0.0f); //reset color
 
 	// loop through all the lights
@@ -131,32 +110,6 @@ Color Raytracer::shading(LocalGeo& local, BRDF& brdf, Ray& lray, Color& lcolor, 
 		specular.r = brdf.ks.r * lcolor.r * dotProdrvmax;
 		specular.g = brdf.ks.g * lcolor.g * dotProdrvmax;
 		specular.b = brdf.ks.b * lcolor.b * dotProdrvmax;
-
-			//cout << "specular: "; specular.print();
-
-			/*
-					for (int q = 0; q < dl_list.size(); q++) {
-			Light light = dl_list[q];
-			light.pos[0] = light.pos[0] * -1;
-			light.pos[1] = light.pos[1] * -1;
-			light.pos[2] = light.pos[2] * -1;
-
-			vector<float> r;
-			r.push_back(-light.pos[0] + 2*(dot_product(light.pos, n))*n[0]);
-			r.push_back(-light.pos[1] + 2*(dot_product(light.pos, n))*n[1]);
-			r.push_back(-light.pos[2] + 2*(dot_product(light.pos, n))*n[2]);
-			r[0] = -r[0];
-			r[1] = -r[1];
-			r[2] = -r[2];
-			r = normalize(r);
-
-			float dotProdrv = dot_product(r, v);
-			float dotProdrvmax = pow(max(dotProdrv, 0.0f), sp);
-
-			specular[0] += ks[0] * light.color[0] * dotProdrvmax;
-			specular[1] += ks[1] * light.color[1] * dotProdrvmax;
-			specular[2] += ks[2] * light.color[2] * dotProdrvmax;
-		}*/
 		color.add(diffuse); color.add(specular);
 		return color;
 
