@@ -7,6 +7,7 @@ Raytracer::Raytracer(Vector ieye) {
 void Raytracer::trace(Ray& ray, int depth, Color *color) {
 	float thit;
 	Intersection in = Intersection();
+	const int MAX_DEPTH = 2;
 
 	// create aggregate primitives
 	vector<Primitive*> primitives;
@@ -52,21 +53,16 @@ void Raytracer::trace(Ray& ray, int depth, Color *color) {
 		if (!group.intersectP(lray)) { // If not blocked by anything
 			color->add(shading(in.local, brdf, lray, lcolor, list_lights[i]));
 			// lray.start is current position on the sphere
-			if (!(group->kr.r == 0.0) && !(group->kr.g == 0.0) && !(group->kr.b == 0.0) && (depth < 1))  {
-				//start is the current position
-				//direction is the r reflected vector 
-				Vector r = Vector();
-				float dotprodln = neg_lightPos.dot_product(local.normal);
-				Vector term2 = Vector(); term2.scalar_multiply(local.normal, 2.0f * dotprodln);
-				r.add(light.pos, term2);
-				Ray reflectRay = ()
-				color->add(trace(lray, depth + 1, color));
-			}
-		}
-		else {
+		} else {
 			*color = brdf.ka; //add the ambient light for shadows
 		}
 	}
+	//Reflections: if the current Primitive is reflective
+	//CHECK!!!!! May not be group->kr!!
+	//Add an isReflective group to the primitives
+
+		//start is the current position
+		//direction is the r reflected vector
 
 }
 
@@ -172,56 +168,3 @@ Color Raytracer::shading(LocalGeo& local, BRDF& brdf, Ray& lray, Color& lcolor, 
 		return color;
 
 }
-
-Color Raytracer::reflections(Ray& ray, int depth, Color *color) {
-	float thit;
-	Intersection in = Intersection();
-
-	// create aggregate primitives
-	vector<Primitive*> primitives;
-	for(int k = 0; k < list_primitives.size(); k++) {
-		Primitive* shape = list_primitives[k];
-		primitives.push_back(shape);
-	}
-	AggregatePrimitive group = AggregatePrimitive(primitives);
-
-	bool has_intersected = group.intersect(ray, &thit, &in);
-
-	// miss
-	if(!has_intersected) {
-		*color = Color(0.0f, 0.0f, 0.0f);
-		return;
-	}
-
-	BRDF brdf = in.primitive->mat->constantBRDF;
-
-	// hit
-	Ray lray = Ray();
-	Color lcolor = Color(0.0f, 0.0f, 0.0f);
-	*color = Color(0.0f, 0.0f, 0.0f); //reset color
-
-	// loop through all the lights
-	for(int i = 0; i < list_lights.size(); i++) {
-		list_lights[i].generateLightRay(in.local, &lray, &lcolor);
-		
-		//if (!in.primitive->intersectP(lray)) { // If not blocked by anything
-		if (!group.intersectP(lray)) { // If not blocked by anything
-			// color->add(shading(in.local, brdf, lray, lcolor, list_lights[i]));
-			// // lray.start is current position on the sphere
-		if (!(group->kr.r == 0.0) && !(group->kr.g == 0.0) && !(group->kr.b == 0.0) && (depth < 1))  {
-			color->add(trace(lray, depth + 1, color));
-		}
-		}
-		else {
-			*color = brdf.ka; //add the ambient light for shadows
-		}
-	}
-
-}
-
-	Color reflection = Color();
-
-	return reflection.add(relections, ray, counter + 1);
-}
-
-
