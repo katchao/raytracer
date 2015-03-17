@@ -37,6 +37,13 @@ class PointLight : public Light {
 	public:
 		float falloff;
 		PointLight(Vector, Color);
+		PointLight(Vector, Color, float);
+};
+
+class AmbientLight : public Light {
+	public:
+		AmbientLight();
+		AmbientLight(Color);
 };
 
 

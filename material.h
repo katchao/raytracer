@@ -12,10 +12,10 @@ using namespace std;
 
 class Material {
   public:
-	BRDF constantBRDF;
+	BRDF* constantBRDF;
 
 	Material();
-	Material(BRDF);
+	Material(BRDF*);
 	//void getBRDF(LocalGeo&, BRDF*);
 	void print();
 };
