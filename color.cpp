@@ -32,6 +32,10 @@ void Color::add(Color toAdd) {
 	b2 += toAdd.b2;
 }
 
+float Color::sum() {
+	return r + g + b;
+}
+
 void Color::print() {
 	cout << "(" << r << ", " << g << ", " << b << ") ";
 }

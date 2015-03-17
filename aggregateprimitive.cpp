@@ -31,8 +31,10 @@ bool AggregatePrimitive::intersectP(Ray& ray) {
 	bool intersected = false;
 	for(int i = 0; i < list_primitives.size(); i++) {
 		Primitive* shape = list_primitives[i];
+		//cout << "shape->intersect P is " << list_primitives[i]->intersectP(ray) << endl;
 
 		if(shape->intersectP(ray)) {
+			//cout << "intersection happened." << endl;
 			intersected = true;
 		}
 	}

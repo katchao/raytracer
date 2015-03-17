@@ -2,6 +2,7 @@
 
 Raytracer::Raytracer(Vector ieye) {
 	eye = ieye;
+	amb = AmbientLight();
 }
 
 void Raytracer::trace(Ray& ray, int depth, Color *color) {
@@ -32,7 +33,9 @@ void Raytracer::trace(Ray& ray, int depth, Color *color) {
 			color->add(shading(in.local, brdf, lray, lcolor, *list_lights[i]));
 		}
 		else {
-			*color = brdf.ka; //add the ambient light for shadows
+			//add the ambient light for shadows
+			*color = brdf.ka;
+			//cout << "shadows triggered" << endl;
 		}
 	}
 
@@ -49,7 +52,6 @@ void Raytracer::trace(Ray& ray, int depth, Color *color) {
 Color Raytracer::shading(LocalGeo& local, BRDF& brdf, Ray& lray, Color& lcolor, Light& light) {
 	// lray.start = current position on sphere
 	// lray.dir = vector to the light position
-
 	Color color = Color();
 	Color diffuse = Color();
 	Color specular = Color();
@@ -62,8 +64,10 @@ Color Raytracer::shading(LocalGeo& local, BRDF& brdf, Ray& lray, Color& lcolor, 
 	neg_lightPos.scalar_multiply(light.pos, -1.0f);
 	neg_lightPos.normalize();
 
-	// add ambient term
-	color.add(brdf.ka);
+	// add ambient term if ambient light
+	if(amb.color.sum()) {
+		color.add(brdf.ka);
+	}
 
 	//   Diffuse term = kd*I*max(l*n, 0)
 		// l = direction of light, lray.dir vector
@@ -88,6 +92,8 @@ Color Raytracer::shading(LocalGeo& local, BRDF& brdf, Ray& lray, Color& lcolor, 
 			diffuse.g = brdf.kd.g * lcolor.g * maxdotProd;
 			diffuse.b = brdf.kd.b * lcolor.b * maxdotProd;
 		}
+		
+		//cout << "Diffuse light: "; diffuse.print(); cout << endl;
 
 		//Specular term = ks* I * max(r*v, 0)^p
 		//r = reflected direction, r = -l + 2(l*n)n

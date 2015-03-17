@@ -8,6 +8,7 @@ bool Primitive::intersect(Ray& ray, float* thit, Intersection* in) {
 }
 
 bool Primitive::intersectP(Ray& ray) {
+	cout << "test";
 }
 
 void Primitive::print() {
@@ -97,10 +98,14 @@ bool Sphere::intersectP(Ray &ray) {
 	minus_d.scalar_multiply(d, -1.0);
 	float t1 = (minus_d.dot_product(e_c) + det)/d_dot_d;
 	float t2 = (minus_d.dot_product(e_c) - det)/d_dot_d;
+
+	//cout << "discriminant: " << discriminant << " ";
+	//cout << "t1: " << t1 << " ";
+	//cout << "t2: " << t2 << " ";
 	
 	// get the smallest thit value
-	min_t = min(t1, t1);
-	
+	min_t = min(t1, t2);
+	//cout << "min_t: " << min_t << " ";
 	if(min_t < 0.004) { // shadow bias
 		return false;
 	}

@@ -22,6 +22,25 @@ PointLight::PointLight(Vector ipos, Color irgb) : Light() {
 	type = 1;
 }
 
+PointLight::PointLight(Vector ipos, Color irgb, float ifalloff) : Light() {
+	pos = ipos;
+	color = irgb;
+	type = 1;
+	falloff = ifalloff;
+}
+
+AmbientLight::AmbientLight() : Light() {
+	pos = Vector();
+	color =  Color();
+	type = 2;
+}
+
+AmbientLight::AmbientLight(Color irgb) : Light() {
+	pos = Vector();
+	color = irgb;
+	type = 2;
+}
+
 
 
 /* This is an abstract class that will generate a ray starting from
