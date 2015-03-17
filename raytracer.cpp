@@ -46,11 +46,11 @@ void Raytracer::trace(Ray& ray, int depth, Color *color) {
 
 	// loop through all the lights
 	for(int i = 0; i < list_lights.size(); i++) {
-		list_lights[i].generateLightRay(in.local, &lray, &lcolor);
+		list_lights[i]->generateLightRay(in.local, &lray, &lcolor);
 		
 		//if (!in.primitive->intersectP(lray)) { // If not blocked by anything
 		if (!group.intersectP(lray)) { // If not blocked by anything
-			color->add(shading(in.local, brdf, lray, lcolor, list_lights[i]));
+			color->add(shading(in.local, brdf, lray, lcolor, *list_lights[i]));
 		}
 		else {
 			*color = brdf.ka; //add the ambient light for shadows

@@ -18,7 +18,7 @@ using namespace std;
 class Raytracer {
   public:
 	  vector<Primitive*> list_primitives;
-	  vector<Light> list_lights;
+	  vector<Light*> list_lights;
 	  Vector eye;
 
 	  Raytracer(Vector);

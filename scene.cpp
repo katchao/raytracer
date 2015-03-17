@@ -25,18 +25,6 @@ void Scene::render() {
 	camera = Camera(eye_position, UL, UR, LL, LR, dim_x, dim_y);
 
 	Raytracer raytracer = Raytracer(eye_position);
-	cout << "I made a raytracer homie" << endl;
-	//raytracer.list_primitives = primitives;
-	cout << "I set primitives homie. But is it correct?" << endl;
-
-	/*
-	for (int k = 0; k<scene.primitives.size(); k++) {
-		Triangle* triangle = scene.primitives[k];
-		cout << "Triangle Number" << k + 1 << endl;
-		cout << "Vertex Num 1" << " : (" << triangle->v1.x << ", " << triangle->v1.x << ", " << raytracer.list_primitives[k]->v1.x << ")" << endl;
-		cout << "Vertex Num 2" << " : (" << triangle->v2.x << ", " << raytracer.list_primitives[k]->v2.y << ", " << raytracer.list_primitives[k]->v2.z << ")" << endl;
-		cout << "Vertex Num 3" << " : (" << raytracer.list_primitives[k]->v3.x << ", " << raytracer.list_primitives[k]->v3.y << ", " << raytracer.list_primitives[k]->v3.z << ")" << endl;
-	}*/
 
 	
 	// Sphere1
@@ -66,8 +54,9 @@ void Scene::render() {
 	// Lights
 	DirLight dl1 = DirLight(Vector(0.57735027f, -0.57735027f, -0.57735027f), Color(1.0f, 1.0f, 1.0f));
 	DirLight dl2 = DirLight(Vector(0.57735027f, 0.57735027f, -0.57735027f), Color(0.0f, 0.0f, 1.0f));
-	raytracer.list_lights.push_back(dl1);
-	raytracer.list_lights.push_back(dl2);
+	raytracer.list_lights.push_back(&dl1);
+	raytracer.list_lights.push_back(&dl2);
+	
 
 	int counter = 0;
 	while (sampler.getSample(&sample)) {
