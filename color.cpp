@@ -33,5 +33,5 @@ void Color::add(Color toAdd) {
 }
 
 void Color::print() {
-	cout << "r:" << r << " g:" << g << " b:" << b << endl;
+	cout << "(" << r << ", " << g << ", " << b << ") ";
 }

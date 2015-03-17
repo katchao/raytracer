@@ -16,6 +16,19 @@ void Raytracer::trace(Ray& ray, int depth, Color *color) {
 	}
 	AggregatePrimitive group = AggregatePrimitive(primitives);
 
+	/*
+	//////// ALL THE DEBUGGING
+	cout << "Eye Position: "; eye.print(); cout << endl;
+	for(int i = 0; i < list_primitives.size(); i++) {
+		group.list_primitives[i]->print();
+	}
+	for(int i = 0; i < list_lights.size(); i++) {
+		list_lights[i].print();
+	}
+	cout << endl;
+	///////////////////////////
+	*/
+
 	bool has_intersected = group.intersect(ray, &thit, &in);
 
 	// miss

@@ -25,6 +25,7 @@ using namespace std;
 class Scene {
   public:
 	Vector eye_position;
+	Camera camera;
 
 	/* for corners of image */
 	Vector UL;
@@ -32,11 +33,15 @@ class Scene {
 	Vector UR;
 	Vector LR;
 	int dim_x, dim_y;
-	vector<Primitive*> primitives;
+	vector<Primitive*> list_primitives;
+	vector<Light*> list_lights;
+	vector<Material*> list_materials;
 
+	Scene();
 	Scene(Vector, int, int);
 
     void render();
+	void parse_input(const char* input_file);
 };
 
 #endif

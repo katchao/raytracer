@@ -17,6 +17,7 @@ class Material {
 	Material();
 	Material(BRDF);
 	//void getBRDF(LocalGeo&, BRDF*);
+	void print();
 };
 
 #endif

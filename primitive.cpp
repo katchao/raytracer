@@ -5,11 +5,12 @@ Primitive::~Primitive() {
 
 
 bool Primitive::intersect(Ray& ray, float* thit, Intersection* in) {
-	//cout << "p";
 }
 
 bool Primitive::intersectP(Ray& ray) {
-	//cout << "p_p";
+}
+
+void Primitive::print() {
 }
 
 /************************************************/
@@ -104,6 +105,10 @@ bool Sphere::intersectP(Ray &ray) {
 		return false;
 	}
 	return true;
+}
+
+void Sphere::print() {
+	cout << "Sphere Center: "; center.print(); cout << " Radius: " << radius << "  Material: "; mat->print(); cout << endl;
 }
 
 
@@ -206,4 +211,8 @@ bool Triangle::intersectP(Ray &ray) {
 	}
 
 	return true;
+}
+
+void Triangle::print() {
+	cout << "Triangle v1: "; v1.print(); cout << " v2: "; v2.print(); cout << " v3: "; v3.print(); cout << endl;
 }

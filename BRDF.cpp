@@ -12,3 +12,7 @@ BRDF::BRDF(Color ika, Color ikd, Color iks, Color ikr, float isp) {
 	kr = ikr;
 	sp = isp;
 }
+
+void BRDF::print() {
+	cout << "ka: "; ka.print(); cout << "kd: "; kd.print(); cout << "ks: "; ks.print();
+}

@@ -15,6 +15,7 @@ class BRDF {
 
 	BRDF();
 	BRDF(Color, Color, Color, Color, float);
+	void print();
 };
 
 #endif

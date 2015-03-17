@@ -21,6 +21,7 @@ class Primitive {
 	  Material* mat;
 	  virtual bool intersect(Ray& ray, float* thit, Intersection* in);
 	  virtual bool intersectP(Ray& ray);
+	  virtual void print();
 };
 
 class Sphere : public Primitive {
@@ -33,6 +34,7 @@ class Sphere : public Primitive {
 		Sphere(Vector, float, Material*);
 		bool intersect(Ray&, float*, Intersection*);
 		bool intersectP(Ray&);
+		void print();
 
 };
 
@@ -46,6 +48,7 @@ class Triangle : public Primitive {
 		Triangle(Vector, Vector, Vector, Material*);
 		bool intersect(Ray&, float*, Intersection*);
 		bool intersectP(Ray&);
+		void print();
 
 };
 
