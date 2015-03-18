@@ -7,8 +7,9 @@ Raytracer::Raytracer(Vector ieye) {
 void Raytracer::trace(Ray& ray, int depth, Color *color) {
 	float thit;
 	Intersection in = Intersection();
+	const int MAX_DEPTH = 300;
 	AggregatePrimitive group = AggregatePrimitive(list_primitives);
-	
+
 	bool has_intersected = group.intersect(ray, &thit, &in);
 
 	// miss
@@ -25,12 +26,17 @@ void Raytracer::trace(Ray& ray, int depth, Color *color) {
 	*color = Color(0.0f, 0.0f, 0.0f); //reset color
 
 	// loop through all the lights
+	// cout << "Number of Lights in trace = " << list_lights.size() << endl;
+	// for (int k = 0; k < list_lights.size(); k++) {
+	// 	cout << "Light Num = " << k + 1 << endl;
+	// 	cout << "Light Type = " << list_lights[k]->type << endl;
+	// 	cout << "Light Color (" << list_lights[k]->color.r << ", " << list_lights[k]->color.g << ", " << list_lights[k]->color.b << ")" << endl;
+	// }
 	for(int i = 0; i < list_lights.size(); i++) {
 		list_lights[i]->generateLightRay(in.local, &lray, &lcolor);
 		
 		//if (!in.primitive->intersectP(lray)) { // If not blocked by anything
 		if (!group.intersectP(lray)) { // If not blocked by anything
-
 			color->add(shading(in.local, brdf, lray, lcolor, *list_lights[i]));
 		}
 		else {
@@ -38,12 +44,42 @@ void Raytracer::trace(Ray& ray, int depth, Color *color) {
 			*color = brdf.ka;
 		}
 	}
+
 	//Reflections: if the current Primitive is reflective
 	//CHECK!!!!! May not be group->kr!!
+	//start is the current position
+	//direction is the r reflected vector
+
+	if ((brdf.kr.r + brdf.kr.g + brdf.kr.b != 0.0) && (depth < MAX_DEPTH)) {
+		// cout << "BRDF of curr shape = (" << brdf.kr.r << ", " << brdf.kr.g << ", " <<  brdf.kr.b << ")" << endl;
+	//At max Depth = 1
+	// Max Depth not yet been reached
+		// cout << "My Max depth has not been reached" << endl;
+		Color* reflColor = new Color();
+		//r = d - 2*(d dot n)*n
+		Vector n_normal = Vector(); n_normal.scalar_multiply(in.local.normal, 1.0f);
+		n_normal.normalize();
+		float d_dot_n = n_normal.dot_product(eye); //eye is the viewer angle (may need to mult by neg1)
+		Vector term2 = Vector(); term2.scalar_multiply(n_normal, 2.0f * d_dot_n);
+		Vector r = Vector(); r.subtract(eye, term2);
+		//const double ERR = 1e-12; // - Need to offset the reflection rays
+		
+		Vector currPos = Vector(); currPos.subtract(in.local.normal, lray.start);
+		Ray newRay = Ray(currPos, r);
+		
+		//recursive step
+		trace(newRay, depth + 1, reflColor);
+		
+		reflColor->r = reflColor->r * brdf.ks.r;
+		reflColor->g = reflColor->r * brdf.ks.g;
+		reflColor->b = reflColor->r * brdf.ks.b;
+		// cout << "Color BEFORE the add. = (" << color->r << ", " << color->b << ", " << color->g << ") " << endl;
+		color->add(*reflColor);
+		// cout << "Color AFTER the add. = (" << color->r << ", " << color->b << ", " << color->g << ") " << endl;
+
+	}
 	//Add an isReflective group to the primitives
 
-		//start is the current position
-		//direction is the r reflected vector
 
 }
 
@@ -67,6 +103,7 @@ Color Raytracer::shading(LocalGeo& local, BRDF& brdf, Ray& lray, Color& lcolor, 
 
 	// add ambient term if ambient light
 	if(light.type == 2) {
+		//cout << "Always false" << endl;
 		Color ambient = Color(lcolor.r * brdf.ka.r, lcolor.g * brdf.ka.g, lcolor.b * brdf.ka.b);
 		color.add(ambient);
 	}
@@ -77,6 +114,7 @@ Color Raytracer::shading(LocalGeo& local, BRDF& brdf, Ray& lray, Color& lcolor, 
 		// 	diffuse light - l = xyz input from command line
 
 	if(light.type != 2) { // same computation for directional and point light?
+
 		float dotProdln = dot_product(local.normal, light.pos);
 		float maxdotProd = max(dotProdln, 0.0f);
 
