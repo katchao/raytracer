@@ -1,12 +1,13 @@
 #include "scene.h"
 
 Scene::Scene() {
-	dim_x = 300;
-	dim_y = 300;
+	dim_x = 200;
+	dim_y = 200;
 	UL = Vector(-1,  1, -3);
 	UR = Vector( 1,  1, -3);
 	LR = Vector( 1, -1, -3);
 	LL = Vector(-1, -1, -3);
+	containsObjFile = false;
 	
 }
 
@@ -18,6 +19,7 @@ Scene::Scene(int x, int y) {
 	UR = Vector( 1,  1, -3);
 	LR = Vector( 1, -1, -3);
 	LL = Vector(-1, -1, -3);
+	containsObjFile = false;
 }
 
 
@@ -32,40 +34,52 @@ void Scene::render() {
 	Raytracer raytracer = Raytracer(camera.eye);
 	raytracer.list_lights = list_lights;
 	raytracer.list_primitives = list_primitives;
+	cout << "Triangles in List Primitives in Render :" << endl;
+	Triangle* triangle = (Triangle*) list_primitives[0];
+	cout << "Vertex Num 1" << " : (" << triangle->v1.x << ", " << triangle->v1.y << ", " << triangle->v1.z << ")" << endl;
+	cout << "Vertex Num 2" << " : (" << triangle->v2.x << ", " << triangle->v2.y << ", " << triangle->v2.z << ")" << endl;
+	cout << "Vertex Num 3" << " : (" << triangle->v3.x << ", " << triangle->v3.y << ", " << triangle->v3.z << ")" << endl;
+	
+	cout << "Triangles in RayTracer List Primitives in Scene Render :" << endl;
+	Triangle* triangle1 = (Triangle*) raytracer.list_primitives[0];
+	cout << "Vertex Num 1" << " : (" << triangle1->v1.x << ", " << triangle1->v1.y << ", " << triangle1->v1.z << ")" << endl;
+	cout << "Vertex Num 2" << " : (" << triangle1->v2.x << ", " << triangle1->v2.y << ", " << triangle1->v2.z << ")" << endl;
+	cout << "Vertex Num 3" << " : (" << triangle1->v3.x << ", " << triangle1->v3.y << ", " << triangle1->v3.z << ")" << endl;
 	
 	
-	// Sphere1
-	Color ka = Color(0.1f, 0.1f, 0.1f); Color kd = Color(1.0f, 0.0f, 1.0f); Color ks = Color(1.0f, 1.0f, 1.0f); Color kr = Color(0.0f, 0.0f, 0.0f); float sp = 50.0f;
-	BRDF brdf = BRDF(ka, kd, ks, kr, sp);
-	Material mat1 = Material(&brdf);
-	Sphere sphere1 = Sphere(Vector(0.0f, 0.0f, -20.0f), 3.0f, &mat1); raytracer.list_primitives.push_back(&sphere1);
+	
+	// // Sphere1
+	// Color ka = Color(0.1f, 0.1f, 0.1f); Color kd = Color(1.0f, 0.0f, 1.0f); Color ks = Color(1.0f, 1.0f, 1.0f); Color kr = Color(0.0f, 0.0f, 0.0f); float sp = 50.0f;
+	// BRDF brdf = BRDF(ka, kd, ks, kr, sp);
+	// Material mat1 = Material(&brdf);
+	// Sphere sphere1 = Sphere(Vector(0.0f, 0.0f, -20.0f), 3.0f, &mat1); raytracer.list_primitives.push_back(&sphere1);
 
-	// Sphere2
-	Color ka2 = Color(0.1f, 0.1f, 0.1f); Color kd2 = Color(1.0f, 1.0f, 0.0f); Color ks2 = Color(1.0f, 1.0f, 1.0f); Color kr2 = Color(0.0f, 0.0f, 0.0f); float sp2 = 50.0f;
-	BRDF brdf2 = BRDF(ka2, kd2, ks2, kr2, sp2);
-	Material mat2 = Material(&brdf2);
-	Sphere sphere2 = Sphere(Vector(-2.0f, 2.0f, -15.0f), 1.0f, &mat2); raytracer.list_primitives.push_back(&sphere2);
+	// // Sphere2
+	// Color ka2 = Color(0.1f, 0.1f, 0.1f); Color kd2 = Color(1.0f, 1.0f, 0.0f); Color ks2 = Color(1.0f, 1.0f, 1.0f); Color kr2 = Color(0.0f, 0.0f, 0.0f); float sp2 = 50.0f;
+	// BRDF brdf2 = BRDF(ka2, kd2, ks2, kr2, sp2);
+	// Material mat2 = Material(&brdf2);
+	// Sphere sphere2 = Sphere(Vector(-2.0f, 2.0f, -15.0f), 1.0f, &mat2); raytracer.list_primitives.push_back(&sphere2);
 
-	// Sphere3
-	Color ka3 = Color(0.1f, 0.1f, 0.1f); Color kd3 = Color(0.0f, 1.0f, 1.0f); Color ks3 = Color(1.0f, 1.0f, 1.0f); Color kr3 = Color(0.0f, 0.0f, 0.0f); float sp3 = 50.0f;
-	BRDF brdf3 = BRDF(ka3, kd3, ks3, kr3, sp3);
-	Material mat3 = Material(&brdf3);
-	Sphere sphere3 = Sphere(Vector(-2.0f, -2.0f, -15.0f), 1.0f, &mat3); raytracer.list_primitives.push_back(&sphere3);
+	// // Sphere3
+	// Color ka3 = Color(0.1f, 0.1f, 0.1f); Color kd3 = Color(0.0f, 1.0f, 1.0f); Color ks3 = Color(1.0f, 1.0f, 1.0f); Color kr3 = Color(0.0f, 0.0f, 0.0f); float sp3 = 50.0f;
+	// BRDF brdf3 = BRDF(ka3, kd3, ks3, kr3, sp3);
+	// Material mat3 = Material(&brdf3);
+	// Sphere sphere3 = Sphere(Vector(-2.0f, -2.0f, -15.0f), 1.0f, &mat3); raytracer.list_primitives.push_back(&sphere3);
 
-	// Triangle
-	Color ka4 = Color(0.1f, 0.1f, 0.1f); Color kd4 = Color(0.1f, 0.1f, 0.1f); Color ks4 = Color(1.0f, 1.0f, 1.0f); Color kr4 = Color(0.0f, 0.0f, 0.0f); float sp4 = 50.0f;
-	BRDF brdf4 = BRDF(ka4, kd4, ks4, kr4, sp4);
-	Material mat4 = Material(&brdf4);
-	Triangle triangle1 = Triangle(Vector(5.0f, 5.0f, -17.0f), Vector(1.0f, 4.0f, -20.0f), Vector(6.0f, -1.0f, -20.0f), &mat4); raytracer.list_primitives.push_back(&triangle1);
+	// // Triangle
+	// Color ka4 = Color(0.1f, 0.1f, 0.1f); Color kd4 = Color(0.1f, 0.1f, 0.1f); Color ks4 = Color(1.0f, 1.0f, 1.0f); Color kr4 = Color(1.0f, 1.0f, 1.0f); float sp4 = 50.0f;
+	// BRDF brdf4 = BRDF(ka4, kd4, ks4, kr4, sp4);
+	// Material mat4 = Material(&brdf4);
+	// Triangle triangle1 = Triangle(Vector(5.0f, 5.0f, -17.0f), Vector(1.0f, 4.0f, -20.0f), Vector(6.0f, -1.0f, -20.0f), &mat4); raytracer.list_primitives.push_back(&triangle1);
 	
 
-	// Lights
-	DirLight dl1 = DirLight(Vector(0.57735027f, -0.57735027f, -0.57735027f), Color(1.0f, 1.0f, 1.0f));
-	DirLight dl2 = DirLight(Vector(0.57735027f, 0.57735027f, -0.57735027f), Color(0.0f, 0.0f, 1.0f));
-	raytracer.list_lights.push_back(&dl1);
-	raytracer.list_lights.push_back(&dl2);
-	AmbientLight amb = AmbientLight(Color(1.0f, 1.0f, 1.0f));
-	raytracer.list_lights.push_back(&amb);
+	// // Lights
+	// DirLight dl1 = DirLight(Vector(0.57735027f, -0.57735027f, -0.57735027f), Color(1.0f, 1.0f, 1.0f));
+	// DirLight dl2 = DirLight(Vector(0.57735027f, 0.57735027f, -0.57735027f), Color(0.0f, 0.0f, 1.0f));
+	// raytracer.list_lights.push_back(&dl1);
+	// raytracer.list_lights.push_back(&dl2);
+	// AmbientLight amb = AmbientLight(Color(1.0f, 1.0f, 1.0f));
+	// raytracer.list_lights.push_back(&amb);
 	
 
 	/////// DEBUGGING
@@ -122,6 +136,32 @@ int main(int argc, const char* argv[]) {
 	if(argc == 2) {
 		scene.parse_input(argv[1]);
 	}
+	//if there is a file then parse the file
+	if (scene.containsObjFile) {
+		ObjParser objparser = ObjParser("simple_obj_1.obj");
+		vector<Primitive*> objparser_triangles;
+		objparser_triangles = objparser.parse();
+
+		for (int k = 0; k<objparser_triangles.size();k++) {
+		Triangle* triangle1 = (Triangle*) objparser_triangles[k];
+		Vector vert1 = Vector(); vert1.x = triangle1->v1.x; vert1.y = triangle1->v1.y; vert1.z = triangle1->v1.z;
+		Vector vert2 = Vector(); vert2.x = triangle1->v2.x; vert2.y = triangle1->v2.y; vert2.z = triangle1->v2.z;
+		Vector vert3 = Vector(); vert3.x = triangle1->v3.x; vert3.y = triangle1->v3.y; vert3.z = triangle1->v3.z;
+		Triangle triangle = Triangle(vert1, vert2, vert3, scene.list_materials[scene.list_materials.size() - 1]);
+		
+		scene.list_primitives.push_back(&triangle);
+
+		}
+	}
+
+
+	cout << "Triangles in main :" << endl;
+	Triangle* triangle = (Triangle*) scene.list_primitives[0];
+	cout << "Is it grabbing this triangle?" << endl;
+	cout << "Vertex Num 1" << " : (" << triangle->v1.x << ", " << triangle->v1.y << ", " << triangle->v1.z << ")" << endl;
+	cout << "Vertex Num 2" << " : (" << triangle->v2.x << ", " << triangle->v2.y << ", " << triangle->v2.z << ")" << endl;
+	cout << "Vertex Num 3" << " : (" << triangle->v3.x << ", " << triangle->v3.y << ", " << triangle->v3.z << ")" << endl;
+	
 	scene.render();
 
 	return 0;
@@ -225,6 +265,11 @@ void Scene::parse_input(const char* input_file) {
 					Triangle* triangle = new Triangle(v1, v2, v3, list_materials[list_materials.size()-1]);
 					list_primitives.push_back(triangle);
 				}
+			}
+
+			else if (strcmp(token[i], "obj") == 0) { // obj file_name
+				file = token[i+1];
+				containsObjFile = true;
 			}
 		}
 	}

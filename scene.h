@@ -36,6 +36,8 @@ class Scene {
 	vector<Primitive*> list_primitives;
 	vector<Light*> list_lights;
 	vector<Material*> list_materials;
+	string file;
+	bool containsObjFile;
 
 	Scene();
 	Scene(int, int);

@@ -115,12 +115,9 @@ Color Raytracer::shading(LocalGeo& local, BRDF& brdf, Ray& lray, Color& lcolor, 
 		// 	point light - l = location of light - current location on sphere (ijz)
 		// 	diffuse light - l = xyz input from command line
 
-<<<<<<< HEAD
-	if(light.type != 2) { // same computation for directional and point light?
+	 // same computation for directional and point light?
 
-=======
 	//if(light.type != 2) { // same computation for directional and point light?
->>>>>>> 2b975e30bf09b5989b31fa846ead130472471cab
 		float dotProdln = dot_product(local.normal, light.pos);
 		float maxdotProd = max(dotProdln, 0.0f);
 
