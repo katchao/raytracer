@@ -33,7 +33,7 @@ void Scene::render() {
 	raytracer.list_lights = list_lights;
 	raytracer.list_primitives = list_primitives;
 	
-	/*
+	
 	// Sphere1
 	Color ka = Color(0.1f, 0.1f, 0.1f); Color kd = Color(1.0f, 0.0f, 1.0f); Color ks = Color(1.0f, 1.0f, 1.0f); Color kr = Color(0.0f, 0.0f, 0.0f); float sp = 50.0f;
 	BRDF brdf = BRDF(ka, kd, ks, kr, sp);
@@ -64,8 +64,9 @@ void Scene::render() {
 	DirLight dl2 = DirLight(Vector(0.57735027f, 0.57735027f, -0.57735027f), Color(0.0f, 0.0f, 1.0f));
 	raytracer.list_lights.push_back(&dl1);
 	raytracer.list_lights.push_back(&dl2);
-	raytracer.amb = AmbientLight(Color(0.3f, 0.0f, 0.0f));
-	*/
+	AmbientLight amb = AmbientLight(Color(1.0f, 1.0f, 1.0f));
+	raytracer.list_lights.push_back(&amb);
+	
 
 	/////// DEBUGGING
 	cout << "Eye Position: "; raytracer.eye.print(); cout << endl;

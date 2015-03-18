@@ -24,13 +24,13 @@ void Camera::generateRay(Sample& sample, Ray* ray) {
 	float u = sample.x/nx;
 
 	Vector P = Vector();
-	Vector prod1 = Vector(); prod1.scalar_multiply(LL, v);
-	Vector prod2 = Vector(); prod2.scalar_multiply(UL, (1-v));
+	Vector prod1 = Vector(); prod1.scalar_multiply(LR, v);
+	Vector prod2 = Vector(); prod2.scalar_multiply(UR, (1-v));
 	Vector add1 = Vector(); add1.add(prod1, prod2); // <(-1, 0, -2)>
 	add1.scalar_multiply(add1, u);
 
-	Vector prod3 = Vector(); prod3.scalar_multiply(LR, v);
-	Vector prod4 = Vector(); prod4.scalar_multiply(UR, (1-v));
+	Vector prod3 = Vector(); prod3.scalar_multiply(LL, v);
+	Vector prod4 = Vector(); prod4.scalar_multiply(UL, (1-v));
 	Vector add2 = Vector(); add2.add(prod3, prod4); // <(1, 0, -2>
 	add2.scalar_multiply(add2, (1.0f-u));
 
