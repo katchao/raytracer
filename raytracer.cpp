@@ -57,17 +57,22 @@ void Raytracer::trace(Ray& ray, int depth, Color *color) {
 	//At max Depth = 1
 	// Max Depth not yet been reached
 		// cout << "My Max depth has not been reached" << endl;
+		cout << "Point on shape (" << in.local.pos.x << ", " << in.local.pos.y << ", " << in.local.pos.z << ")\n";
 		Color* reflColor = new Color();
 		//r = d - 2*(d dot n)*n
 		Vector n_normal = Vector(); n_normal.scalar_multiply(in.local.normal, 1.0f);
-		n_normal.normalize();
+		n_normal.normalize(); eye.normalize();
 		float d_dot_n = n_normal.dot_product(eye); //eye is the viewer angle (may need to mult by neg1)
 		Vector term2 = Vector(); term2.scalar_multiply(n_normal, 2.0f * d_dot_n);
 		Vector r = Vector(); r.subtract(eye, term2);
 		//const double ERR = 1e-12; // - Need to offset the reflection rays
 		
-		Vector currPos = Vector(); currPos.subtract(in.local.normal, lray.start);
+		Vector currPos = Vector(); currPos.subtract(in.local.normal, lray.start); currPos.scalar_multiply(currPos, -1.0f);
+		r.normalize();
 		Ray newRay = Ray(currPos, r);
+		cout << "Ray origin (" << newRay.start.x << ", " << newRay.start.y << ", " << newRay.start.z << ")\n";
+		cout << "Ray Direction (" << newRay.dir.x << ", " << newRay.dir.y << ", " << newRay.dir.z << ") \n";
+
 		
 		//recursive step
 		trace(newRay, depth + 1, reflColor);
