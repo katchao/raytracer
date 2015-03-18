@@ -33,6 +33,8 @@ void Raytracer::trace(Ray& ray, int depth, Color *color) {
 		}
 		else {
 			//add the ambient light for shadows
+			//cout << "shadows";
+			//*color = Color(0.0f, 0.0f, 0.0f);
 			*color = brdf.ka;
 		}
 	}
@@ -68,23 +70,25 @@ Color Raytracer::shading(LocalGeo& local, BRDF& brdf, Ray& lray, Color& lcolor, 
 		// 	point light - l = location of light - current location on sphere (ijz)
 		// 	diffuse light - l = xyz input from command line
 
-	if(light.type != 2) { // same computation for directional and point light?
+	//if(light.type != 2) { // same computation for directional and point light?
 		float dotProdln = dot_product(local.normal, light.pos);
 		float maxdotProd = max(dotProdln, 0.0f);
 
 		diffuse.r = brdf.kd.r * lcolor.r * maxdotProd;
 		diffuse.g = brdf.kd.g * lcolor.g * maxdotProd;
 		diffuse.b = brdf.kd.b * lcolor.b * maxdotProd;
-	}
+	//}
 
 	//   Specular term = ks* I * max(r*v, 0)^p
 		// n = local.normal
 		// v = eye
 	Vector neg_lightPos = light.pos * -1.0f;
+	Vector viewer = local.pos - eye;
+	viewer.normalize();
 
 	// calculate r = reflected direction, r = -l + 2(l*n)n
 	// l = lray.dir or light.pos?
-	Vector r = (lray.dir * 1.0f) + local.normal*(2*dot_product(lray.dir, local.normal));
+	Vector r = (neg_lightPos * -1.0f) + local.normal*(2*dot_product(neg_lightPos, local.normal));
 	/*
 		Vector r = Vector();
 		float dotprodln = dot_product(lray.dir, local.normal);
@@ -94,8 +98,8 @@ Color Raytracer::shading(LocalGeo& local, BRDF& brdf, Ray& lray, Color& lcolor, 
 			r.scalar_multiply(r, -1.0f);
 		}
 		r.normalize();
-
-		float dotProdrv = r.dot_product(light.pos); // TO DO: right now we're hardcoding the eye :(
+		
+		float dotProdrv = r.dot_product(viewer); // TO DO: right now we're hardcoding the eye :(
 		float dotProdrvmax = pow(max(dotProdrv, 0.0f), brdf.sp);
 
 	specular.r = brdf.ks.r * lcolor.r * dotProdrvmax;

@@ -53,9 +53,11 @@ void Light::generateLightRay(LocalGeo& local, Ray* lray, Color* lcolor) {
 	lray->start = local.pos;
 
 	// direction of light ray = currentPos - source of light
-	Vector direction = Vector();
-	direction.subtract(pos, local.pos);
+	Vector direction = pos - local.pos;
 	lray->dir = direction;
+	if(type == 1) { // if directional light, multiply by -1
+		lray->dir = direction * -1.0f;
+	}
 
 	if(type == 0) {
 		lray->t_max = INFINITY;

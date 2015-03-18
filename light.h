@@ -15,7 +15,7 @@ class Light {
 	public:
 		Vector pos;
 		Color color;
-		bool type; /* 0 for directional, 1 for point light */
+		int type; /* 0 for directional, 1 for point light */
 
 		/* This is an abstract class that will generate a ray starting from
         *  the position stored in local to the position of the light source.
