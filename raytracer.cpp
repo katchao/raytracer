@@ -7,7 +7,7 @@ Raytracer::Raytracer(Vector ieye) {
 void Raytracer::trace(Ray& ray, int depth, Color *color) {
 	float thit;
 	Intersection in = Intersection();
-	const int MAX_DEPTH = 300;
+	const int MAX_DEPTH = 3;
 	AggregatePrimitive group = AggregatePrimitive(list_primitives);
 
 	bool has_intersected = group.intersect(ray, &thit, &in);
@@ -36,15 +36,15 @@ void Raytracer::trace(Ray& ray, int depth, Color *color) {
 		list_lights[i]->generateLightRay(in.local, &lray, &lcolor);
 		
 		//if (!in.primitive->intersectP(lray)) { // If not blocked by anything
-		if (!group.intersectP(lray)) { // If not blocked by anything
+		//if (!group.intersectP(lray)) { // If not blocked by anything
 			color->add(shading(in.local, brdf, lray, lcolor, *list_lights[i]));
-		}
-		else {
-			//add the ambient light for shadows
-			//cout << "shadows";
-			//*color = Color(0.0f, 0.0f, 0.0f);
-			*color = brdf.ka;
-		}
+		// }
+		// else {
+		// 	//add the ambient light for shadows
+		// 	//cout << "shadows";
+		// 	//*color = Color(0.0f, 0.0f, 0.0f);
+		// 	*color = brdf.ka;
+		// }
 	}
 
 	//Reflections: if the current Primitive is reflective
@@ -60,15 +60,15 @@ void Raytracer::trace(Ray& ray, int depth, Color *color) {
 		cout << "Point on shape (" << in.local.pos.x << ", " << in.local.pos.y << ", " << in.local.pos.z << ")\n";
 		Color* reflColor = new Color();
 		//r = d - 2*(d dot n)*n
-		Vector n_normal = Vector(); n_normal.scalar_multiply(in.local.normal, 1.0f);
-		n_normal.normalize(); eye.normalize();
-		float d_dot_n = n_normal.dot_product(eye); //eye is the viewer angle (may need to mult by neg1)
+		//n - normal to current point
+		Vector n_normal = Vector(); n_normal.scalar_multiply(in.local.normal, 1.0f); n_normal.normalize();
+		Vector d = Vector(); d.scalar_multiply(lray.dir, 1.0f); d.normalize();
+		float d_dot_n = n_normal.dot_product(d); 
 		Vector term2 = Vector(); term2.scalar_multiply(n_normal, 2.0f * d_dot_n);
-		Vector r = Vector(); r.subtract(eye, term2);
-		//const double ERR = 1e-12; // - Need to offset the reflection rays
+		Vector r = Vector(); r.subtract(d, term2);
 		
-		Vector currPos = Vector(); currPos.subtract(in.local.normal, lray.start); currPos.scalar_multiply(currPos, -1.0f);
-		r.normalize();
+		//const double ERR = 1e-12; // - Need to offset the reflection rays
+		Vector currPos = Vector(); currPos.add(n_normal, lray.start);
 		Ray newRay = Ray(currPos, r);
 		cout << "Ray origin (" << newRay.start.x << ", " << newRay.start.y << ", " << newRay.start.z << ")\n";
 		cout << "Ray Direction (" << newRay.dir.x << ", " << newRay.dir.y << ", " << newRay.dir.z << ") \n";
@@ -77,9 +77,9 @@ void Raytracer::trace(Ray& ray, int depth, Color *color) {
 		//recursive step
 		trace(newRay, depth + 1, reflColor);
 		
-		reflColor->r = reflColor->r * brdf.ks.r;
-		reflColor->g = reflColor->r * brdf.ks.g;
-		reflColor->b = reflColor->r * brdf.ks.b;
+		reflColor->r = reflColor->r * brdf.kr.r;
+		reflColor->g = reflColor->g * brdf.kr.g;
+		reflColor->b = reflColor->b * brdf.kr.b;
 		// cout << "Color BEFORE the add. = (" << color->r << ", " << color->b << ", " << color->g << ") " << endl;
 		color->add(*reflColor);
 		// cout << "Color AFTER the add. = (" << color->r << ", " << color->b << ", " << color->g << ") " << endl;

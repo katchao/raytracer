@@ -1,8 +1,8 @@
 #include "scene.h"
 
 Scene::Scene() {
-	dim_x = 200;
-	dim_y = 200;
+	dim_x = 500;
+	dim_y = 500;
 	UL = Vector(-1,  1, -3);
 	UR = Vector( 1,  1, -3);
 	LR = Vector( 1, -1, -3);
@@ -64,11 +64,11 @@ void Scene::render() {
 	// Material mat3 = Material(&brdf3);
 	// Sphere sphere3 = Sphere(Vector(-2.0f, -2.0f, -15.0f), 1.0f, &mat3); raytracer.list_primitives.push_back(&sphere3);
 
-	// // Triangle
-	// Color ka4 = Color(0.1f, 0.1f, 0.1f); Color kd4 = Color(0.1f, 0.1f, 0.1f); Color ks4 = Color(1.0f, 1.0f, 1.0f); Color kr4 = Color(1.0f, 1.0f, 1.0f); float sp4 = 50.0f;
-	// BRDF brdf4 = BRDF(ka4, kd4, ks4, kr4, sp4);
-	// Material mat4 = Material(&brdf4);
-	// Triangle triangle1 = Triangle(Vector(5.0f, 5.0f, -17.0f), Vector(1.0f, 4.0f, -20.0f), Vector(6.0f, -1.0f, -20.0f), &mat4); raytracer.list_primitives.push_back(&triangle1);
+	// Triangle
+	Color ka4 = Color(0.1f, 0.1f, 0.1f); Color kd4 = Color(0.1f, 0.1f, 0.1f); Color ks4 = Color(1.0f, 1.0f, 1.0f); Color kr4 = Color(1.0f, 1.0f, 1.0f); float sp4 = 50.0f;
+	BRDF brdf4 = BRDF(ka4, kd4, ks4, kr4, sp4);
+	Material mat4 = Material(&brdf4);
+	Triangle triangle1 = Triangle(Vector(5.0f, 5.0f, -17.0f), Vector(1.0f, 4.0f, -20.0f), Vector(6.0f, -1.0f, -20.0f), &mat4); raytracer.list_primitives.push_back(&triangle1);
 	
 
 	// // Lights
