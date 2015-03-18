@@ -116,23 +116,17 @@ vector<Primitive*> ObjParser::parse() {
 				triangles.push_back(&triangle);
 				//faces.push_back(face);
 
-				cout << endl;
-				cout << "Triangle " << triangles.size() << ": " << endl;
-	//			for(int k = 0; k<.size(); k++) {
-				cout << "Vertex Num 1" << " : (" << triangle.v1.x << ", " << triangle.v1.y << ", " << triangle.v1.z << ")" << endl;
-				cout << "Vertex Num 2" << " : (" << triangle.v2.x << ", " << triangle.v2.y << ", " << triangle.v2.z << ")" << endl;
-				cout << "Vertex Num 3" << " : (" << triangle.v3.x << ", " << triangle.v3.y << ", " << triangle.v3.z << ")" << endl;
-				//}
+	// 			cout << endl;
+	// 			cout << "Triangle " << triangles.size() << ": " << endl;
+	// //			for(int k = 0; k<.size(); k++) {
+	// 			cout << "Vertex Num 1" << " : (" << triangle.v1.x << ", " << triangle.v1.y << ", " << triangle.v1.z << ")" << endl;
+	// 			cout << "Vertex Num 2" << " : (" << triangle.v2.x << ", " << triangle.v2.y << ", " << triangle.v2.z << ")" << endl;
+	// 			cout << "Vertex Num 3" << " : (" << triangle.v3.x << ", " << triangle.v3.y << ", " << triangle.v3.z << ")" << endl;
 			}
 
 		}
-		cout <<"Not Segfaulted yaejknd" << endl;
 	}
-	// while not end of file
 	infile.close();
-	cout << "Total Number of Triangles = " << triangles.size() << endl;
-	cout << "I get there homie." << endl;
-	
 	return triangles;
 }
 

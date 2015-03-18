@@ -37,13 +37,12 @@ class Scene {
 	vector<Light*> list_lights;
 	vector<Material*> list_materials;
 	string file;
-	bool containsObjFile;
 
 	Scene();
 	Scene(int, int);
 
     void render();
-	void parse_input(const char* input_file);
+	void parse_input(const char* input_file, bool&);
 };
 
 #endif

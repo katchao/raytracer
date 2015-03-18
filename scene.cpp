@@ -7,7 +7,6 @@ Scene::Scene() {
 	UR = Vector( 1,  1, -3);
 	LR = Vector( 1, -1, -3);
 	LL = Vector(-1, -1, -3);
-	containsObjFile = false;
 	
 }
 
@@ -19,7 +18,6 @@ Scene::Scene(int x, int y) {
 	UR = Vector( 1,  1, -3);
 	LR = Vector( 1, -1, -3);
 	LL = Vector(-1, -1, -3);
-	containsObjFile = false;
 }
 
 
@@ -34,17 +32,17 @@ void Scene::render() {
 	Raytracer raytracer = Raytracer(camera.eye);
 	raytracer.list_lights = list_lights;
 	raytracer.list_primitives = list_primitives;
-	cout << "Triangles in List Primitives in Render :" << endl;
-	Triangle* triangle = (Triangle*) list_primitives[0];
-	cout << "Vertex Num 1" << " : (" << triangle->v1.x << ", " << triangle->v1.y << ", " << triangle->v1.z << ")" << endl;
-	cout << "Vertex Num 2" << " : (" << triangle->v2.x << ", " << triangle->v2.y << ", " << triangle->v2.z << ")" << endl;
-	cout << "Vertex Num 3" << " : (" << triangle->v3.x << ", " << triangle->v3.y << ", " << triangle->v3.z << ")" << endl;
+	// cout << "Triangles in List Primitives in Render :" << endl;
+	// Triangle* triangle = (Triangle*) list_primitives[0];
+	// cout << "Vertex Num 1" << " : (" << triangle->v1.x << ", " << triangle->v1.y << ", " << triangle->v1.z << ")" << endl;
+	// cout << "Vertex Num 2" << " : (" << triangle->v2.x << ", " << triangle->v2.y << ", " << triangle->v2.z << ")" << endl;
+	// cout << "Vertex Num 3" << " : (" << triangle->v3.x << ", " << triangle->v3.y << ", " << triangle->v3.z << ")" << endl;
 	
-	cout << "Triangles in RayTracer List Primitives in Scene Render :" << endl;
-	Triangle* triangle1 = (Triangle*) raytracer.list_primitives[0];
-	cout << "Vertex Num 1" << " : (" << triangle1->v1.x << ", " << triangle1->v1.y << ", " << triangle1->v1.z << ")" << endl;
-	cout << "Vertex Num 2" << " : (" << triangle1->v2.x << ", " << triangle1->v2.y << ", " << triangle1->v2.z << ")" << endl;
-	cout << "Vertex Num 3" << " : (" << triangle1->v3.x << ", " << triangle1->v3.y << ", " << triangle1->v3.z << ")" << endl;
+	// cout << "Triangles in RayTracer List Primitives in Scene Render :" << endl;
+	// Triangle* triangle1 = (Triangle*) raytracer.list_primitives[0];
+	// cout << "Vertex Num 1" << " : (" << triangle1->v1.x << ", " << triangle1->v1.y << ", " << triangle1->v1.z << ")" << endl;
+	// cout << "Vertex Num 2" << " : (" << triangle1->v2.x << ", " << triangle1->v2.y << ", " << triangle1->v2.z << ")" << endl;
+	// cout << "Vertex Num 3" << " : (" << triangle1->v3.x << ", " << triangle1->v3.y << ", " << triangle1->v3.z << ")" << endl;
 	
 	
 	
@@ -102,7 +100,6 @@ void Scene::render() {
 		camera.generateRay(sample, &ray);
 		raytracer.trace(ray, counter, &color);
 		film.storeSamples(color, sample);
-		counter++;
 	}
 	cout << "Computing Complete.\n";
 	film.writeImage();
@@ -129,16 +126,16 @@ int main(int argc, const char* argv[]) {
 	cout << "div float rseult: "; div_f.print(); cout << endl;
 	float dot_prod = dot_product(add, mult);
 	cout << "dot prod rseult: "<< dot_prod << endl;
-	//ObjParser parser = ObjParser("simplesquare.obj");
-	Scene scene = Scene();
 
+	Scene scene = Scene();
+	bool fileExists = false;
 	// parse input file
 	if(argc == 2) {
-		scene.parse_input(argv[1]);
+		scene.parse_input(argv[1], fileExists);
 	}
 	//if there is a file then parse the file
-	if (scene.containsObjFile) {
-		ObjParser objparser = ObjParser("simple_obj_1.obj");
+	if (fileExists) {
+		ObjParser objparser = ObjParser(scene.file);
 		vector<Primitive*> objparser_triangles;
 		objparser_triangles = objparser.parse();
 
@@ -153,23 +150,17 @@ int main(int argc, const char* argv[]) {
 
 		}
 	}
-
-
-	cout << "Triangles in main :" << endl;
-	Triangle* triangle = (Triangle*) scene.list_primitives[0];
-	cout << "Is it grabbing this triangle?" << endl;
-	cout << "Vertex Num 1" << " : (" << triangle->v1.x << ", " << triangle->v1.y << ", " << triangle->v1.z << ")" << endl;
-	cout << "Vertex Num 2" << " : (" << triangle->v2.x << ", " << triangle->v2.y << ", " << triangle->v2.z << ")" << endl;
-	cout << "Vertex Num 3" << " : (" << triangle->v3.x << ", " << triangle->v3.y << ", " << triangle->v3.z << ")" << endl;
+	if (!scene.list_primitives.empty()) { scene.render();}
 	
-	scene.render();
+	else {cout << "There is nothing to render." << endl;}
+
 
 	return 0;
 }
 
 
 
-void Scene::parse_input(const char* input_file) {
+void Scene::parse_input(const char* input_file, bool& isFile) {
 	const int MAX_CHARS_PER_LINE = 512;
 	const int MAX_TOKENS_PER_LINE = 20;
 	const char* const DELIMITER = " ";
@@ -269,8 +260,13 @@ void Scene::parse_input(const char* input_file) {
 
 			else if (strcmp(token[i], "obj") == 0) { // obj file_name
 				file = token[i+1];
-				containsObjFile = true;
+				isFile = true;
 			}
+
+			// else if (token[i]) { // the warning messages for if this string is not something supported
+			// 	cerr << "I don't understand. This feature is unsupported." << token[i] << endl;
+			// 	break;
+			// }
 		}
 	}
 }
