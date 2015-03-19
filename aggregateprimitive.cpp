@@ -35,7 +35,7 @@ bool AggregatePrimitive::intersectP(Ray& ray, Primitive* currShape) {
 		Primitive* shape = list_primitives[i];
 
 		if(shape != currShape && shape->intersectP(ray)) {
-			cout << "lray2: "; ray.print(); cout << endl; cout << "currShape: "; currShape->print(); cout << "intersected shape: "; shape->print();
+			//cout << "lray2: "; ray.print(); cout << endl; cout << "currShape: "; currShape->print(); cout << "intersected shape: "; shape->print();
 			return true;
 		}
 	}

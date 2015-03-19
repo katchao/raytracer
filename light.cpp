@@ -55,9 +55,9 @@ void Light::generateLightRay(LocalGeo& local, Ray* lray, Color* lcolor) {
 	if(type == 0) { // if directional light, multiply by -1
 		lray->dir = direction * -1.0f;
 	}
-	if(type == 0) {
-		lray->t_max = INFINITY;
-	}
+	//if(type == 0) {
+	//	lray->t_max = INFINITY;
+	//}
 	//cout << "Lray1: "; lray->print(); cout << endl;
 	*lcolor = color;
 }

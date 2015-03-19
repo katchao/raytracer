@@ -1,8 +1,8 @@
 #include "scene.h"
 
 Scene::Scene() {
-	dim_x = 50;
-	dim_y = 50;
+	dim_x = 300;
+	dim_y = 300;
 	UL = Vector(-1,  1, -3);
 	UR = Vector( 1,  1, -3);
 	LR = Vector( 1, -1, -3);
@@ -31,6 +31,13 @@ void Scene::render() {
 	Raytracer raytracer = Raytracer(camera.eye);
 	raytracer.list_lights = list_lights;
 	raytracer.list_primitives = list_primitives;
+
+	//set raytracer ambient light
+	for(int i = 0; i < raytracer.list_lights.size(); i++) {
+		if(raytracer.list_lights[i]->type == 2) {
+			raytracer.amb = (AmbientLight*) raytracer.list_lights[i];
+		}
+	}
 
 	/////// DEBUGGING
 	cout << "Eye Position: "; raytracer.eye.print(); cout << endl;
