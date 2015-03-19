@@ -12,13 +12,16 @@ bool AggregatePrimitive::intersect(Ray& ray, float* thit, Intersection* in) {
 	float current_hit;
 	float min_hit = INFINITY;
 	bool intersected = false;
+	Intersection inter;
 	for(int i = 0; i < list_primitives.size(); i++) {
 		Primitive* shape = list_primitives[i];
 
-		if(shape->intersect(ray, &current_hit, in)) {
+		if(shape->intersect(ray, &current_hit, &inter)) {
+			//cout << "current_hit: " << current_hit << " min_hit: " << min_hit << endl;
 			if(current_hit < min_hit) {
-				current_hit = min_hit;
-				in->primitive = shape; // set the primitive it hits to the current shape if it's the current min
+				min_hit = current_hit;
+				*in = inter;
+				//in->primitive = shape; // set the primitive it hits to the current shape if it's the current mins
 			}
 			intersected = true;
 		}
@@ -27,13 +30,13 @@ bool AggregatePrimitive::intersect(Ray& ray, float* thit, Intersection* in) {
 	return intersected;
 }
 
-bool AggregatePrimitive::intersectP(Ray& ray) {
+bool AggregatePrimitive::intersectP(Ray& ray, Primitive* currShape) {
 	bool intersected = false;
+	//cout << "Intersect ray: "; ray.print(); cout << endl;
 	for(int i = 0; i < list_primitives.size(); i++) {
 		Primitive* shape = list_primitives[i];
-		//cout << "shape->intersect P is " << list_primitives[i]->intersectP(ray) << endl;
 
-		if(shape->intersectP(ray)) {
+		if(shape != currShape && shape->intersectP(ray)) {
 			//cout << "intersection happened." << endl;
 			intersected = true;
 		}

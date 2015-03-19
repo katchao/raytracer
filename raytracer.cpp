@@ -25,11 +25,15 @@ void Raytracer::trace(Ray& ray, int depth, Color *color) {
 	Color lcolor = Color();
 	*color = Color(0.0f, 0.0f, 0.0f); //reset color
 
+	float meh;
+	Intersection meh2;
+
 	for(int i = 0; i < list_lights.size(); i++) {
 		list_lights[i]->generateLightRay(in.local, &lray, &lcolor);
-		
-		if (!in.primitive->intersectP(lray)) { // If not blocked by anything
-		//if (!group.intersectP(lray)) { // If not blocked by anything
+		//if (!in.primitive->intersectP(lray)) { // If not blocked by anything
+		//if (!group.intersect(lray, &meh, &meh2)) { // If not blocked by anything
+		if (!group.intersectP(lray, in.primitive)) {
+			//cout << "Raytracer light ray: "; lray.print(); cout << endl << endl;
 			color->add(shading(in.local, brdf, lray, lcolor, *list_lights[i]));
 		}
 		 else {

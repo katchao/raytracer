@@ -13,3 +13,7 @@ Ray::Ray(Vector ipos, Vector idir) {
 	t_min = 0.0f;
 	t_max = 100.0f;
 }
+
+void Ray::print() {
+	cout << "Ray start: "; start.print(); cout << " dir: "; dir.print();
+}

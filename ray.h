@@ -17,6 +17,7 @@ class Ray {
 
 	  Ray();
 	  Ray(Vector, Vector);
+	  void print();
 };
 
 #endif

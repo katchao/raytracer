@@ -18,7 +18,7 @@ class AggregatePrimitive {
 	  AggregatePrimitive();
 	  AggregatePrimitive(vector<Primitive*> list);
 	  bool intersect(Ray& ray, float* thit, Intersection* in);
-	  bool intersectP(Ray& ray);
+	  bool intersectP(Ray& ray, Primitive*);
 };
 
 #endif
