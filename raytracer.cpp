@@ -37,11 +37,11 @@ void Raytracer::trace(Ray& ray, int depth, Color *color) {
 		}
 		 else {
 		 	//add the ambient light for shadows
-			//cout << "current light: "; list_lights[i]->print();
-			//cout << "current position: "; in.local.pos.print(); cout << endl;
+			cout << "current light: "; list_lights[i]->print();
+			cout << "current position: "; in.local.pos.print(); cout << endl;
 			//cout << "lray3: "; ray2.print(); cout << endl;
 		 	*color = Color(amb->color.r * brdf.ka.r, amb->color.g * brdf.ka.g, amb->color.b * brdf.ka.b);
-			//cout << "=========================" << endl;
+			cout << "=========================" << endl;
 		 }
 	}
 
@@ -108,6 +108,7 @@ Color Raytracer::shading(LocalGeo& local, BRDF& brdf, Ray& lray, Color& lcolor, 
 
 	// add ambient term if ambient light
 	if(light.type == 2) {
+		//cout << "Always false" << endl;
 		Color ambient = Color(lcolor.r * brdf.ka.r, lcolor.g * brdf.ka.g, lcolor.b * brdf.ka.b);
 		color.add(ambient);
 	}
@@ -116,22 +117,21 @@ Color Raytracer::shading(LocalGeo& local, BRDF& brdf, Ray& lray, Color& lcolor, 
 		// l = direction of light, lray.dir vector
 		// 	point light - l = location of light - current location on sphere (ijz)
 		// 	diffuse light - l = xyz input from command line
-	Vector l = Vector();
-	if(light.type == 0) { // directional
-		l = light_pos;
-	}
-	if(light.type == 1) { // point
-		l = lray.dir;
-	}
-	float dotProdln = dot_product(local.normal, l);
-	float maxdotProd = max(dotProdln, 0.0f);
 
-	diffuse.r = brdf.kd.r * lcolor.r * maxdotProd;
-	diffuse.g = brdf.kd.g * lcolor.g * maxdotProd;
-	diffuse.b = brdf.kd.b * lcolor.b * maxdotProd;
+	 // same computation for directional and point light?
 
+	//if(light.type != 2) { // same computation for directional and point light?
+		float dotProdln = dot_product(local.normal, light_pos);
+		float maxdotProd = max(dotProdln, 0.0f);
+
+		diffuse.r = brdf.kd.r * lcolor.r * maxdotProd;
+		diffuse.g = brdf.kd.g * lcolor.g * maxdotProd;
+		diffuse.b = brdf.kd.b * lcolor.b * maxdotProd;
+	//}
 
 	//   Specular term = ks* I * max(r*v, 0)^p
+		// n = local.normal
+		// v = eye
 	Vector neg_lightPos = light_pos * -1.0f;
 	Vector viewer = local.pos - eye;
 	viewer.normalize();
@@ -144,7 +144,7 @@ Color Raytracer::shading(LocalGeo& local, BRDF& brdf, Ray& lray, Color& lcolor, 
 	}
 	r.normalize();
 		
-	float dotProdrv = r.dot_product(viewer);
+	float dotProdrv = r.dot_product(viewer); // TO DO: right now we're hardcoding the eye :(
 	float dotProdrvmax = pow(max(dotProdrv, 0.0f), brdf.sp);
 
 	specular.r = brdf.ks.r * lcolor.r * dotProdrvmax;
