@@ -7,11 +7,23 @@
 
 using namespace std;
 
+
 class Matrix {
   public:
 	  float items [4][4];
 
-	  Matrix();
+	  Matrix(); //initializes diagonal matrix (1's down the diagonal)
+	  void print();
+	  void transpose();
 };
+
+float radians(float);
+float degrees(float);
+
+Matrix create_translation(float, float, float);
+Matrix create_scale(float, float, float);
+Matrix create_rotation_x(float);
+Matrix create_rotation_y(float);
+Matrix create_rotation_z(float);
 
 #endif

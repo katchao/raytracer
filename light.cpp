@@ -4,12 +4,6 @@ void Light::print() {
 	cout << "Light pos: "; pos.print(); cout << " color: "; color.print(); cout << "type: " << type << endl;
 }
 
-/*
-Light::Light(Vector ipos, Color rgb) {
-	pos = ipos;
-	color = rgb;
-}*/
-
 DirLight::DirLight(Vector ipos, Color irgb) : Light() {
 	pos = ipos;
 	color = irgb;
@@ -52,16 +46,19 @@ void Light::generateLightRay(LocalGeo& local, Ray* lray, Color* lcolor) {
 	// local.pos = current position
 	lray->start = local.pos;
 
-	// direction of light ray = currentPos - source of light
+	// direction of light ray = source of light - currPos
 	Vector direction = pos - local.pos;
+	//cout << "Current position: "; local.pos.print(); cout << endl;
+	//cout << "Light position: "; pos.print(); cout << endl;
+	//cout << "Lray Direction: "; direction.print(); cout << endl << endl;
 	lray->dir = direction;
-	if(type == 1) { // if directional light, multiply by -1
+	if(type == 0) { // if directional light, multiply by -1
 		lray->dir = direction * -1.0f;
 	}
 	if(type == 0) {
 		lray->t_max = INFINITY;
 	}
-
+	//cout << "Lray1: "; lray->print(); cout << endl;
 	*lcolor = color;
 }
 

@@ -67,15 +67,9 @@ bool Sphere::intersect(Ray &ray, float* thit, Intersection* in) {
 	}
 
 	// build localGeo
-	// currPos = e + thit *d
-	Vector currPos = Vector();
-	Vector prod = Vector(); prod.scalar_multiply(d, *thit);
-	currPos.add(e, prod);
-	// normal = 2(p - c)/R
-	Vector normal = Vector();
-	normal.subtract(currPos, c);
-	//normal.scalar_multiply(normal, 2.0f);
-	normal.scalar_divide(normal, r);
+	Vector currPos = e + d * (*thit);
+	// normal = 2(p - c) or (p-c)/r
+	Vector normal = (currPos - c)/r;
 
 	LocalGeo local = LocalGeo(currPos, normal);
 	*in = Intersection(local, this);

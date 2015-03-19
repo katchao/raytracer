@@ -19,6 +19,7 @@
 #include "material.h"
 #include <vector>
 #include "objparser.h"
+#include "matrix.h"
 
 using namespace std;
 

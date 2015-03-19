@@ -1,8 +1,8 @@
 #include "scene.h"
 
 Scene::Scene() {
-	dim_x = 100;
-	dim_y = 100;
+	dim_x = 50;
+	dim_y = 50;
 	UL = Vector(-1,  1, -3);
 	UR = Vector( 1,  1, -3);
 	LR = Vector( 1, -1, -3);
@@ -31,41 +31,6 @@ void Scene::render() {
 	Raytracer raytracer = Raytracer(camera.eye);
 	raytracer.list_lights = list_lights;
 	raytracer.list_primitives = list_primitives;
-	
-	
-	// // Sphere1
-	// Color ka = Color(0.1f, 0.1f, 0.1f); Color kd = Color(1.0f, 0.0f, 1.0f); Color ks = Color(1.0f, 1.0f, 1.0f); Color kr = Color(0.0f, 0.0f, 0.0f); float sp = 50.0f;
-	// BRDF brdf = BRDF(ka, kd, ks, kr, sp);
-	// Material mat1 = Material(&brdf);
-	// Sphere sphere1 = Sphere(Vector(0.0f, 0.0f, -20.0f), 3.0f, &mat1); raytracer.list_primitives.push_back(&sphere1);
-
-	// // Sphere2
-	// Color ka2 = Color(0.1f, 0.1f, 0.1f); Color kd2 = Color(1.0f, 1.0f, 0.0f); Color ks2 = Color(1.0f, 1.0f, 1.0f); Color kr2 = Color(0.0f, 0.0f, 0.0f); float sp2 = 50.0f;
-	// BRDF brdf2 = BRDF(ka2, kd2, ks2, kr2, sp2);
-	// Material mat2 = Material(&brdf2);
-	// Sphere sphere2 = Sphere(Vector(-2.0f, 2.0f, -15.0f), 1.0f, &mat2); raytracer.list_primitives.push_back(&sphere2);
-
-	// // Sphere3
-	// Color ka3 = Color(0.1f, 0.1f, 0.1f); Color kd3 = Color(0.0f, 1.0f, 1.0f); Color ks3 = Color(1.0f, 1.0f, 1.0f); Color kr3 = Color(0.0f, 0.0f, 0.0f); float sp3 = 50.0f;
-	// BRDF brdf3 = BRDF(ka3, kd3, ks3, kr3, sp3);
-	// Material mat3 = Material(&brdf3);
-	// Sphere sphere3 = Sphere(Vector(-2.0f, -2.0f, -15.0f), 1.0f, &mat3); raytracer.list_primitives.push_back(&sphere3);
-
-	//// Triangle
-	//Color ka4 = Color(0.1f, 0.1f, 0.1f); Color kd4 = Color(0.1f, 0.1f, 0.1f); Color ks4 = Color(1.0f, 1.0f, 1.0f); Color kr4 = Color(1.0f, 1.0f, 1.0f); float sp4 = 50.0f;
-	//BRDF brdf4 = BRDF(ka4, kd4, ks4, kr4, sp4);
-	//Material mat4 = Material(&brdf4);
-	//Triangle triangle1 = Triangle(Vector(5.0f, 5.0f, -17.0f), Vector(1.0f, 4.0f, -20.0f), Vector(6.0f, -1.0f, -20.0f), &mat4); raytracer.list_primitives.push_back(&triangle1);
-	//
-
-	// // Lights
-	// DirLight dl1 = DirLight(Vector(0.57735027f, -0.57735027f, -0.57735027f), Color(1.0f, 1.0f, 1.0f));
-	// DirLight dl2 = DirLight(Vector(0.57735027f, 0.57735027f, -0.57735027f), Color(0.0f, 0.0f, 1.0f));
-	// raytracer.list_lights.push_back(&dl1);
-	// raytracer.list_lights.push_back(&dl2);
-	// AmbientLight amb = AmbientLight(Color(1.0f, 1.0f, 1.0f));
-	// raytracer.list_lights.push_back(&amb);
-	
 
 	/////// DEBUGGING
 	cout << "Eye Position: "; raytracer.eye.print(); cout << endl;
@@ -97,6 +62,32 @@ void Scene::render() {
 
 
 int main(int argc, const char* argv[]) {
+	/* Matrix debugging */
+	Matrix test = Matrix();
+	test.print();
+
+	cout << endl;
+
+	Matrix translation = create_translation(1.0f, 2.0f, 3.0f);
+	translation.print();
+
+	cout << endl;
+
+	translation.transpose();
+	translation.print();
+
+	cout << endl;
+
+	Matrix scale = create_scale(1.0f, 2.0f, 3.0f);
+	scale.print();
+
+	cout << endl;
+
+	Matrix rotate_x = create_rotation_x(90.0f);
+	rotate_x.print();
+
+	cout << endl;
+	/////////////////////
 
 	Scene scene = Scene();
 	bool fileExists = false;

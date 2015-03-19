@@ -30,17 +30,18 @@ void Raytracer::trace(Ray& ray, int depth, Color *color) {
 
 	for(int i = 0; i < list_lights.size(); i++) {
 		list_lights[i]->generateLightRay(in.local, &lray, &lcolor);
-		//if (!in.primitive->intersectP(lray)) { // If not blocked by anything
-		//if (!group.intersect(lray, &meh, &meh2)) { // If not blocked by anything
-		if (!group.intersectP(lray, in.primitive)) {
-			//cout << "Raytracer light ray: "; lray.print(); cout << endl << endl;
-			color->add(shading(in.local, brdf, lray, lcolor, *list_lights[i]));
+		Ray ray2 = lray;
+		if (!group.intersectP(ray2, in.primitive)) {
+			//cout << "lray1: "; lray.print(); cout << endl;
+			color->add(shading(in.local, brdf, ray2, lcolor, *list_lights[i]));
 		}
 		 else {
 		 	//add the ambient light for shadows
-		// 	//cout << "shadows";
-		// 	//*color = Color(0.0f, 0.0f, 0.0f);
+			cout << "current light: "; list_lights[i]->print();
+			cout << "current position: "; in.local.pos.print(); cout << endl;
+			cout << "lray3: "; ray2.print(); cout << endl;
 		 	*color = brdf.ka;
+			cout << "=========================" << endl;
 		 }
 	}
 
@@ -102,8 +103,7 @@ Color Raytracer::shading(LocalGeo& local, BRDF& brdf, Ray& lray, Color& lcolor, 
 	Color diffuse = Color();
 	Color specular = Color();
 
-	light.pos.normalize();
-	local.normal.normalize();
+	Vector light_pos = Vector(light.pos.x, light.pos.y, light.pos.z); light_pos.normalize();
 
 	// add ambient term if ambient light
 	if(light.type == 2) {
@@ -120,7 +120,7 @@ Color Raytracer::shading(LocalGeo& local, BRDF& brdf, Ray& lray, Color& lcolor, 
 	 // same computation for directional and point light?
 
 	//if(light.type != 2) { // same computation for directional and point light?
-		float dotProdln = dot_product(local.normal, light.pos);
+		float dotProdln = dot_product(local.normal, light_pos);
 		float maxdotProd = max(dotProdln, 0.0f);
 
 		diffuse.r = brdf.kd.r * lcolor.r * maxdotProd;
@@ -129,9 +129,7 @@ Color Raytracer::shading(LocalGeo& local, BRDF& brdf, Ray& lray, Color& lcolor, 
 	//}
 
 	//   Specular term = ks* I * max(r*v, 0)^p
-		// n = local.normal
-		// v = eye
-	Vector neg_lightPos = light.pos * -1.0f;
+	Vector neg_lightPos = light_pos * -1.0f;
 	Vector viewer = local.pos - eye;
 	viewer.normalize();
 
