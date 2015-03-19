@@ -25,26 +25,19 @@ void Raytracer::trace(Ray& ray, int depth, Color *color) {
 	Color lcolor = Color();
 	*color = Color(0.0f, 0.0f, 0.0f); //reset color
 
-	// loop through all the lights
-	// cout << "Number of Lights in trace = " << list_lights.size() << endl;
-	// for (int k = 0; k < list_lights.size(); k++) {
-	// 	cout << "Light Num = " << k + 1 << endl;
-	// 	cout << "Light Type = " << list_lights[k]->type << endl;
-	// 	cout << "Light Color (" << list_lights[k]->color.r << ", " << list_lights[k]->color.g << ", " << list_lights[k]->color.b << ")" << endl;
-	// }
 	for(int i = 0; i < list_lights.size(); i++) {
 		list_lights[i]->generateLightRay(in.local, &lray, &lcolor);
 		
-		//if (!in.primitive->intersectP(lray)) { // If not blocked by anything
+		if (!in.primitive->intersectP(lray)) { // If not blocked by anything
 		//if (!group.intersectP(lray)) { // If not blocked by anything
 			color->add(shading(in.local, brdf, lray, lcolor, *list_lights[i]));
-		// }
-		// else {
-		// 	//add the ambient light for shadows
+		}
+		 else {
+		 	//add the ambient light for shadows
 		// 	//cout << "shadows";
 		// 	//*color = Color(0.0f, 0.0f, 0.0f);
-		// 	*color = brdf.ka;
-		// }
+		 	*color = brdf.ka;
+		 }
 	}
 
 	//Reflections: if the current Primitive is reflective
@@ -57,7 +50,7 @@ void Raytracer::trace(Ray& ray, int depth, Color *color) {
 	//At max Depth = 1
 	// Max Depth not yet been reached
 		// cout << "My Max depth has not been reached" << endl;
-		cout << "Point on shape (" << in.local.pos.x << ", " << in.local.pos.y << ", " << in.local.pos.z << ")\n";
+		//cout << "Point on shape (" << in.local.pos.x << ", " << in.local.pos.y << ", " << in.local.pos.z << ")\n";
 		Color* reflColor = new Color();
 		//r = d - 2*(d dot n)*n
 		//n - normal to current point
@@ -70,8 +63,8 @@ void Raytracer::trace(Ray& ray, int depth, Color *color) {
 		//const double ERR = 1e-12; // - Need to offset the reflection rays
 		Vector currPos = Vector(); currPos.add(n_normal, lray.start);
 		Ray newRay = Ray(currPos, r);
-		cout << "Ray origin (" << newRay.start.x << ", " << newRay.start.y << ", " << newRay.start.z << ")\n";
-		cout << "Ray Direction (" << newRay.dir.x << ", " << newRay.dir.y << ", " << newRay.dir.z << ") \n";
+		//cout << "Ray origin (" << newRay.start.x << ", " << newRay.start.y << ", " << newRay.start.z << ")\n";
+		//cout << "Ray Direction (" << newRay.dir.x << ", " << newRay.dir.y << ", " << newRay.dir.z << ") \n";
 
 		
 		//recursive step
@@ -139,20 +132,15 @@ Color Raytracer::shading(LocalGeo& local, BRDF& brdf, Ray& lray, Color& lcolor, 
 	viewer.normalize();
 
 	// calculate r = reflected direction, r = -l + 2(l*n)n
-	// l = lray.dir or light.pos?
 	Vector r = (neg_lightPos * -1.0f) + local.normal*(2*dot_product(neg_lightPos, local.normal));
-	/*
-		Vector r = Vector();
-		float dotprodln = dot_product(lray.dir, local.normal);
-		Vector term2 = Vector(); term2.scalar_multiply(local.normal, 2.0f * dotprodln);
-		r.add(lray.dir * -1.0f, term2);*/
-		if(light.type == 0) { // if directional light
-			r.scalar_multiply(r, -1.0f);
-		}
-		r.normalize();
+
+	if(light.type == 0) { // if directional light
+		r.scalar_multiply(r, -1.0f);
+	}
+	r.normalize();
 		
-		float dotProdrv = r.dot_product(viewer); // TO DO: right now we're hardcoding the eye :(
-		float dotProdrvmax = pow(max(dotProdrv, 0.0f), brdf.sp);
+	float dotProdrv = r.dot_product(viewer); // TO DO: right now we're hardcoding the eye :(
+	float dotProdrvmax = pow(max(dotProdrv, 0.0f), brdf.sp);
 
 	specular.r = brdf.ks.r * lcolor.r * dotProdrvmax;
 	specular.g = brdf.ks.g * lcolor.g * dotProdrvmax;

@@ -13,7 +13,6 @@ Scene::Scene() {
 Scene::Scene(int x, int y) {
 	dim_x = x;
 	dim_y = y;
-	//dim_z = z;
 	UL = Vector(-1,  1, -3);
 	UR = Vector( 1,  1, -3);
 	LR = Vector( 1, -1, -3);
@@ -32,18 +31,6 @@ void Scene::render() {
 	Raytracer raytracer = Raytracer(camera.eye);
 	raytracer.list_lights = list_lights;
 	raytracer.list_primitives = list_primitives;
-	// cout << "Triangles in List Primitives in Render :" << endl;
-	// Triangle* triangle = (Triangle*) list_primitives[0];
-	// cout << "Vertex Num 1" << " : (" << triangle->v1.x << ", " << triangle->v1.y << ", " << triangle->v1.z << ")" << endl;
-	// cout << "Vertex Num 2" << " : (" << triangle->v2.x << ", " << triangle->v2.y << ", " << triangle->v2.z << ")" << endl;
-	// cout << "Vertex Num 3" << " : (" << triangle->v3.x << ", " << triangle->v3.y << ", " << triangle->v3.z << ")" << endl;
-	
-	// cout << "Triangles in RayTracer List Primitives in Scene Render :" << endl;
-	// Triangle* triangle1 = (Triangle*) raytracer.list_primitives[0];
-	// cout << "Vertex Num 1" << " : (" << triangle1->v1.x << ", " << triangle1->v1.y << ", " << triangle1->v1.z << ")" << endl;
-	// cout << "Vertex Num 2" << " : (" << triangle1->v2.x << ", " << triangle1->v2.y << ", " << triangle1->v2.z << ")" << endl;
-	// cout << "Vertex Num 3" << " : (" << triangle1->v3.x << ", " << triangle1->v3.y << ", " << triangle1->v3.z << ")" << endl;
-	
 	
 	
 	// // Sphere1
@@ -64,12 +51,12 @@ void Scene::render() {
 	// Material mat3 = Material(&brdf3);
 	// Sphere sphere3 = Sphere(Vector(-2.0f, -2.0f, -15.0f), 1.0f, &mat3); raytracer.list_primitives.push_back(&sphere3);
 
-	// Triangle
-	Color ka4 = Color(0.1f, 0.1f, 0.1f); Color kd4 = Color(0.1f, 0.1f, 0.1f); Color ks4 = Color(1.0f, 1.0f, 1.0f); Color kr4 = Color(1.0f, 1.0f, 1.0f); float sp4 = 50.0f;
-	BRDF brdf4 = BRDF(ka4, kd4, ks4, kr4, sp4);
-	Material mat4 = Material(&brdf4);
-	Triangle triangle1 = Triangle(Vector(5.0f, 5.0f, -17.0f), Vector(1.0f, 4.0f, -20.0f), Vector(6.0f, -1.0f, -20.0f), &mat4); raytracer.list_primitives.push_back(&triangle1);
-	
+	//// Triangle
+	//Color ka4 = Color(0.1f, 0.1f, 0.1f); Color kd4 = Color(0.1f, 0.1f, 0.1f); Color ks4 = Color(1.0f, 1.0f, 1.0f); Color kr4 = Color(1.0f, 1.0f, 1.0f); float sp4 = 50.0f;
+	//BRDF brdf4 = BRDF(ka4, kd4, ks4, kr4, sp4);
+	//Material mat4 = Material(&brdf4);
+	//Triangle triangle1 = Triangle(Vector(5.0f, 5.0f, -17.0f), Vector(1.0f, 4.0f, -20.0f), Vector(6.0f, -1.0f, -20.0f), &mat4); raytracer.list_primitives.push_back(&triangle1);
+	//
 
 	// // Lights
 	// DirLight dl1 = DirLight(Vector(0.57735027f, -0.57735027f, -0.57735027f), Color(1.0f, 1.0f, 1.0f));
@@ -111,28 +98,15 @@ void Scene::render() {
 
 int main(int argc, const char* argv[]) {
 	/* Vector Debugging */
-	Vector test = Vector(1.0f, 2.0f, 3.0f);
-	Vector add = test + test;
-	cout << "add rseult: "; add.print(); cout << endl;
-	Vector sub = test - test;
-	cout << "sub rseult: "; sub.print(); cout << endl;
-	Vector mult = test * test;
-	cout << "mult rseult: "; mult.print(); cout << endl;
-	Vector mult_f = test * 2.0f;
-	cout << "mult rseult: "; mult_f.print(); cout << endl;
-	Vector div = test / add;
-	cout << "div rseult: "; div.print(); cout << endl;
-	Vector div_f = test / 2.0f;
-	cout << "div float rseult: "; div_f.print(); cout << endl;
-	float dot_prod = dot_product(add, mult);
-	cout << "dot prod rseult: "<< dot_prod << endl;
 
 	Scene scene = Scene();
 	bool fileExists = false;
+
 	// parse input file
 	if(argc == 2) {
 		scene.parse_input(argv[1], fileExists);
 	}
+
 	//if there is a file then parse the file
 	if (fileExists) {
 		ObjParser objparser = ObjParser(scene.file);

@@ -1,7 +1,7 @@
 #include "light.h"
 
 void Light::print() {
-	cout << "Light pos: "; pos.print(); cout << " color: "; color.print(); cout << endl;
+	cout << "Light pos: "; pos.print(); cout << " color: "; color.print(); cout << "type: " << type << endl;
 }
 
 /*
@@ -58,7 +58,6 @@ void Light::generateLightRay(LocalGeo& local, Ray* lray, Color* lcolor) {
 	if(type == 1) { // if directional light, multiply by -1
 		lray->dir = direction * -1.0f;
 	}
-
 	if(type == 0) {
 		lray->t_max = INFINITY;
 	}
