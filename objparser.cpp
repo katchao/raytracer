@@ -28,7 +28,7 @@ ObjParser::ObjParser(string ifile) {
 vector<Primitive*> ObjParser::parse() {
 	vector<Primitive*>  triangles; 
 	ifstream infile;
-	infile.open(file);
+	infile.open(file.c_str());
 	const int num_line_chars = 50;
 //cout << "Open file a second time.\n";
 	string linecontents;
