@@ -2,16 +2,30 @@
 
 Raytracer::Raytracer(Vector ieye) {
 	eye = ieye;
+	number_of_transformations = 0;
+	// Transformation* initializer = new Transformation();
+	// list_transformations.push_back(initializer);
+	// cout << "Printing the size in the raytracer constructor\n";
+	// cout << " Size = " << list_transformations.size() << endl;
 }
 
 void Raytracer::trace(Ray& ray, int depth, Color *color) {
 	float thit;
 	Intersection in = Intersection();
 	const int MAX_DEPTH = 3;
-	AggregatePrimitive group = AggregatePrimitive(list_primitives);
+	//cout << "SegFault Raytracer\n";
+	AggregatePrimitive group = AggregatePrimitive(list_primitives);//, list_transformations);
 
-	bool has_intersected = group.intersect(ray, &thit, &in);
+	bool has_intersected = false;
+	cout << "Size of Transformations = " << number_of_transformations;
+	if (number_of_transformations > 0) {
+	 	cout << "There is a transformation\n";
+	 	has_intersected = group.intersectE(ray, &thit, &in, transform);
 
+	} else {
+		has_intersected = group.intersect(ray, &thit, &in);
+		
+	}
 	// miss
 	if(!has_intersected) {
 		*color = Color(0.0f, 0.0f, 0.0f);

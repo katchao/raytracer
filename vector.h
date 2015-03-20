@@ -8,12 +8,12 @@ using namespace std;
 
 class Vector {
   public:
-	float x, y, z;
+	float x, y, z, w;
 
 	Vector();
 	Vector(int, int, int);
 	Vector(float, float, float);
-	//Vector(float, float, float, float);
+	Vector(float, float, float, float);
 
     void add (Vector, Vector);
 	void subtract (Vector, Vector);

@@ -4,58 +4,49 @@ Vector::Vector() {
 	x = 0;
 	y = 0;
 	z = 0;
-	//w = 0;
 }
 
 Vector::Vector(int ix, int iy, int iz) {
 	x = (float) ix;
 	y = (float) iy;
 	z = (float) iz;
-	//w = 0;
 }
 
 Vector::Vector(float ix, float iy, float iz) {
 	x = ix;
 	y = iy;
 	z = iz;
-	//w = 0;
 }
 
-/*
+
 Vector::Vector(float ix, float iy, float iz, float iw) {
 	x = ix;
 	y = iy;
 	z = iz;
 	w = iw;
 }
-*/
-
 void Vector::add(Vector v1, Vector v2) {
 	x = v1.x + v2.x;
 	y = v1.y + v2.y;
 	z = v1.z + v2.z;
-	//w = v1.w + v2.w;
 }
 
 void Vector::subtract(Vector v1, Vector v2) {
 	x = v1.x - v2.x;
 	y = v1.y - v2.y;
 	z = v1.z - v2.z;
-	//w = v1.w + v2.w;
 }
 
 void Vector::scalar_multiply(Vector v, float scalar) {
 	x = v.x * scalar;
 	y = v.y * scalar;
 	z = v.z * scalar;
-	//w = v.w * scalar;
 }
 
 void Vector::scalar_divide(Vector v, float scalar) {
 	x = v.x / scalar;
 	y = v.y / scalar;
 	z = v.z / scalar;
-	//w = v.w / scalar;
 }
 
 Vector Vector::operator+(const Vector& v) {
@@ -63,7 +54,6 @@ Vector Vector::operator+(const Vector& v) {
 	result.x = this->x + v.x;
 	result.y = this->y + v.y;
 	result.z = this->z + v.z;
-	//result.w = this->w + v.w;
 	return result;
 }
 
@@ -72,7 +62,6 @@ Vector Vector::operator-(const Vector& v) {
 	result.x = this->x - v.x;
 	result.y = this->y - v.y;
 	result.z = this->z - v.z;
-	//result.w = this->w - v.w;
 	return result;
 }
 
@@ -81,7 +70,6 @@ Vector Vector::operator*(const Vector& v) {
 	result.x = this->x * v.x;
 	result.y = this->y * v.y;
 	result.z = this->z * v.z;
-	//result.w = this->w * v.w;
 	return result;
 }
 
@@ -90,7 +78,6 @@ Vector Vector::operator*(float scalar) {
 	result.x = this->x * scalar;
 	result.y = this->y * scalar;
 	result.z = this->z * scalar;
-	//result.w = this->w * scalar;
 	return result;
 }
 
@@ -99,7 +86,6 @@ Vector Vector::operator/(const Vector& v) {
 	result.x = this->x / v.x;
 	result.y = this->y / v.y;
 	result.z = this->z / v.z;
-	//result.w = this->w / v.w;
 	return result;
 }
 
@@ -108,7 +94,6 @@ Vector Vector::operator/(float scalar) {
 	result.x = this->x / scalar;
 	result.y = this->y / scalar;
 	result.z = this->z / scalar;
-	//result.w = this->w / scalar;
 	return result;
 }
 
@@ -120,7 +105,6 @@ void Vector::normalize() {
 		x = x / magnitude;
 		y = y / magnitude;
 		z = z / magnitude;
-		//w = w / magnitude;
 	}
 }
 

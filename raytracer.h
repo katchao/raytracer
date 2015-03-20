@@ -12,6 +12,7 @@
 #include "light.h"
 #include "intersection.h"
 #include "aggregateprimitive.h"
+#include "transformation.h"
 
 using namespace std;
 
@@ -19,8 +20,10 @@ class Raytracer {
   public:
 	  vector<Primitive*> list_primitives;
 	  vector<Light*> list_lights;
+	  vector<Transformation*> list_transformations;
 	  Vector eye;
 	  AmbientLight* amb;
+	  int number_of_transformations;
 
 	  Raytracer(Vector);
 	  void trace(Ray&, int, Color*);

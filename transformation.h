@@ -4,6 +4,7 @@
 #include <iostream>
 #include <cmath>
 #include <vector>
+#include <iomanip>
 #include "matrix.h"
 #include "vector.h"
 
@@ -18,7 +19,11 @@ class Transformation {
 	  Transformation();
 	  Transformation(Matrix);
 
-	  Vector transform(Vector);
+	  Vector transform_dir(Vector);
+	  Vector transform_pos(Vector);
+	  Vector transform_normal(Vector);
+	  Vector vector_multiply(Matrix, Vector);
+	  Matrix inverse(Matrix);
 	  //void print();
 };
 

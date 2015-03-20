@@ -19,7 +19,7 @@
 #include "material.h"
 #include <vector>
 #include "objparser.h"
-#include "matrix.h"
+#include "transformation.h"
 
 using namespace std;
 
@@ -33,10 +33,11 @@ class Scene {
 	Vector LL;
 	Vector UR;
 	Vector LR;
-	int dim_x, dim_y;
+	int dim_x, dim_y, number_of_transformations;
 	vector<Primitive*> list_primitives;
 	vector<Light*> list_lights;
 	vector<Material*> list_materials;
+	vector<Transformation*> list_transformations;
 	string file;
 
 	Scene();

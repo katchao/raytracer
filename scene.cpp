@@ -1,12 +1,13 @@
 #include "scene.h"
 
 Scene::Scene() {
-	dim_x = 1200;
-	dim_y = 1200;
+	dim_x = 200;
+	dim_y = 200;
 	UL = Vector(-1,  1, -3);
 	UR = Vector( 1,  1, -3);
 	LR = Vector( 1, -1, -3);
 	LL = Vector(-1, -1, -3);
+	number_of_transformations = 0;
 	
 }
 
@@ -17,6 +18,7 @@ Scene::Scene(int x, int y) {
 	UR = Vector( 1,  1, -3);
 	LR = Vector( 1, -1, -3);
 	LL = Vector(-1, -1, -3);
+	number_of_transformations = 0;
 }
 
 
@@ -31,7 +33,9 @@ void Scene::render() {
 	Raytracer raytracer = Raytracer(camera.eye);
 	raytracer.list_lights = list_lights;
 	raytracer.list_primitives = list_primitives;
-
+	raytracer.list_transformations = list_transformations;
+	cout << "List Transformations Size" << raytracer.list_transformations.size() << endl;
+	raytracer.number_of_transformations = number_of_transformations;
 	//set raytracer ambient light
 	for(int i = 0; i < raytracer.list_lights.size(); i++) {
 		if(raytracer.list_lights[i]->type == 2) {
@@ -69,31 +73,61 @@ void Scene::render() {
 
 
 int main(int argc, const char* argv[]) {
+	Matrix test1 = Matrix();//test();
+	test1.items[0][0] = 2.0f; test1.items[1][0] = 5; test1.items[2][0] = 3; test1.items[3][0] = 5;
+	test1.items[0][1] = 14.0f; test1.items[1][1] = 9; test1.items[2][1] = 6; test1.items[3][1] = 7.0f;
+	test1.items[0][2] = 4.0f; test1.items[1][2] = 9; test1.items[2][2] = 3; test1.items[3][2] = 2.0f;
+	test1.items[0][3] = 3.0f; test1.items[1][3] = 7; test1.items[2][3] = 8; test1.items[3][3] = 6;
+
+	test1.print();
+	Transformation t = Transformation(test1);
+	Vector v = Vector(1.0f, 2.0f, 3.0f, 4.0f);
+	Vector mult = t.transform_normal(v); //mult.print();
+	Matrix det = t.inverse(test1);
+
+	//test1->test();
+
+	// Matrix translation = create_translation()
 	/* Matrix debugging */
-	Matrix test = Matrix();
-	test.print();
+	// cout << "Original Matrix\n";
+	// Matrix test = Matrix();
+	// test.print();
 
-	cout << endl;
+	// cout << "Test matrix multiplication\n";
+	// Matrix m1 = Matrix();
+	// Matrix m2 = Matrix();
+	// Matrix answer = matrix_multiply(m1, m2);
+	// cout << "Final result\n";
+	// answer.print();
 
-	Matrix translation = create_translation(1.0f, 2.0f, 3.0f);
-	translation.print();
+	// cout << endl;
+	// cout << "create translation matrix\n";
+	// Matrix translation = create_translation(1.0f, 2.0f, 3.0f);
+	// translation.print();
 
-	cout << endl;
+	// cout << endl;
+	// cout << "Transpose of the translation matrix\n"; 
+	// translation.transpose();
+	// translation.print();
 
-	translation.transpose();
-	translation.print();
+	// cout << endl;
+	// cout << "scale Matrix\n";
+	// Matrix scale = create_scale(1.0f, 2.0f, 3.0f);
+	// scale.print();
 
-	cout << endl;
+	// cout << endl;
+	// cout << "X-Rotation matrix\n"; 
+	// Matrix rotate_x = create_rotation_x(90.0f);
+	// rotate_x.print();
 
-	Matrix scale = create_scale(1.0f, 2.0f, 3.0f);
-	scale.print();
+	// cout << "Y-Rotation matrix\n"; 
+	// Matrix rotate_y = create_rotation_y(90.0f);
+	// rotate_y.print();
+	// cout << endl;
 
-	cout << endl;
-
-	Matrix rotate_x = create_rotation_x(90.0f);
-	rotate_x.print();
-
-	cout << endl;
+	// cout << "Z-Rotation matrix\n"; 
+	// Matrix rotate_z = create_rotation_z(90.0f);
+	// rotate_z.print();
 	/////////////////////
 
 	Scene scene = Scene();
@@ -232,6 +266,50 @@ void Scene::parse_input(const char* input_file, bool& isFile) {
 			else if (strcmp(token[i], "obj") == 0) { // obj file_name
 				file = token[i+1];
 				isFile = true;
+			}
+
+			else if (strcmp(token[i], "xfr") == 0) { // rotaion matrix
+				cout << " You entered a rotaion \n";
+				Matrix rotate_x = create_rotation_x((double) atof(token[i+1]));
+				Matrix rotate_y = create_rotation_y((double) atof(token[i+2]));
+				Matrix rotate_z = create_rotation_z((double) atof(token[i+3]));
+				//list_matrix.push_back
+				Matrix Rx_Ry = matrix_multiply(rotate_x, rotate_y); //Matrix x * matrix y
+				Matrix Rx_Ry_Rz = matrix_multiply(Rx_Ry, rotate_z); // Matrix x * y * z -in that order
+				cout << "Final Roatation MAtrix:\n";
+				Rx_Ry_Rz.print();
+				//if (token[i+4]) {cout << "Too many arguments!\n";}
+				// cout << endl;
+				// rotate_x.print();
+				// cout << endl;
+				// rotate_y.print();
+				// cout << endl;
+				// rotate_z.print();
+			}
+
+			else if (strcmp(token[i], "xfs") == 0) { // scale matrix
+				cout << "You have asked for a scale\n";
+				Matrix scale = create_scale((float) atof(token[i+1]), (float) atof(token[i+2]), (float) atof(token[i+3]));
+				Transformation* tr_scale = new Transformation(scale);
+				list_transformations.push_back(tr_scale);
+				number_of_transformations++;
+
+				scale.print();
+			}
+
+			else if (strcmp(token[i], "xft") == 0) { //translation matrix
+				cout << "You have asked for a transformation!\n";
+				Matrix translate = create_translation((float) atof(token[i+1]), (float) atof(token[i+2]), (float) atof(token[i+3]));
+				Transformation* tr_translate = new Transformation(translate);
+				list_transformations.push_back(tr_translate);
+				cout << "Size of transformations\n"<< list_transformations.size() << endl;
+				translate.print();
+				number_of_transformations++;
+				//Matrix translate = create_translation();
+			}
+
+			else if(strcmp(token[i], "xfz") == 0) {
+				cout << "You have reset the matrix\n";
 			}
 
 			// else if (token[i]) { // the warning messages for if this string is not something supported
