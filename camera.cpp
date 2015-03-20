@@ -23,6 +23,11 @@ void Camera::generateRay(Sample& sample, Ray* ray) {
 	float v = sample.y/ny;
 	float u = sample.x/nx;
 
+	Vector prod1 = LR*v + UR*(1-v);
+	Vector prod2 = LL*v + UL*(1-v);
+	Vector P = prod1 * u + prod2 * (1-u);
+
+	/*
 	Vector P = Vector();
 	Vector prod1 = Vector(); prod1.scalar_multiply(LR, v);
 	Vector prod2 = Vector(); prod2.scalar_multiply(UR, (1-v));
@@ -33,10 +38,10 @@ void Camera::generateRay(Sample& sample, Ray* ray) {
 	Vector prod4 = Vector(); prod4.scalar_multiply(UL, (1-v));
 	Vector add2 = Vector(); add2.add(prod3, prod4); // <(1, 0, -2>
 	add2.scalar_multiply(add2, (1.0f-u));
+	*/
+	//P.add(add1, add2);
 
-	P.add(add1, add2);
-
-	Vector direction = Vector(); direction.subtract(P, eye); // <0, 0, -2>
+	Vector direction = P - eye; // <0, 0, -2>
 
 	*ray = Ray(eye, direction);
 }

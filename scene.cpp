@@ -1,8 +1,8 @@
 #include "scene.h"
 
 Scene::Scene() {
-	dim_x = 100;
-	dim_y = 100;
+	dim_x = 1200;
+	dim_y = 1200;
 	UL = Vector(-1,  1, -3);
 	UR = Vector( 1,  1, -3);
 	LR = Vector( 1, -1, -3);

@@ -13,6 +13,7 @@ class Vector {
 	Vector();
 	Vector(int, int, int);
 	Vector(float, float, float);
+	//Vector(float, float, float, float);
 
     void add (Vector, Vector);
 	void subtract (Vector, Vector);

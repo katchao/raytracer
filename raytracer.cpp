@@ -25,24 +25,30 @@ void Raytracer::trace(Ray& ray, int depth, Color *color) {
 	Color lcolor = Color();
 	*color = Color(0.0f, 0.0f, 0.0f); //reset color
 
-	float meh;
-	Intersection meh2;
+	// add ambient light
+	color->add(Color(amb->color.r * brdf.ka.r, amb->color.g * brdf.ka.g, amb->color.b * brdf.ka.b));
 
 	for(int i = 0; i < list_lights.size(); i++) {
-		list_lights[i]->generateLightRay(in.local, &lray, &lcolor);
-		Ray ray2 = lray;
-		if (!group.intersectP(ray2, in.primitive)) {
-			//cout << "lray1: "; lray.print(); cout << endl;
-			color->add(shading(in.local, brdf, ray2, lcolor, *list_lights[i]));
+		Light* currLight = list_lights[i];
+
+		//if not ambient light
+		if(currLight->type != 2) {
+			currLight->generateLightRay(in.local, &lray, &lcolor);
+			//if (!in.primitive->intersectP(lray)) {
+			if (!group.intersectP(lray, in.primitive)) {
+				//cout << "lray1: "; lray.print(); cout << endl;
+				color->add(shading(in.local, brdf, lray, lcolor, *list_lights[i]));
+			}
+			 else {
+		 		//add the ambient light for shadows
+				//cout << "current light: "; list_lights[i]->print();
+				//cout << "current position: "; in.local.pos.print(); cout << endl;
+				//cout << "lray3: "; ray2.print(); cout << endl;
+		 		*color = Color(amb->color.r * brdf.ka.r, amb->color.g * brdf.ka.g, amb->color.b * brdf.ka.b);
+				 //*color = brdf.ka;
+				//cout << "=========================" << endl;
+			 }
 		}
-		 else {
-		 	//add the ambient light for shadows
-			cout << "current light: "; list_lights[i]->print();
-			cout << "current position: "; in.local.pos.print(); cout << endl;
-			//cout << "lray3: "; ray2.print(); cout << endl;
-		 	*color = Color(amb->color.r * brdf.ka.r, amb->color.g * brdf.ka.g, amb->color.b * brdf.ka.b);
-			cout << "=========================" << endl;
-		 }
 	}
 
 	//Reflections: if the current Primitive is reflective
@@ -106,13 +112,6 @@ Color Raytracer::shading(LocalGeo& local, BRDF& brdf, Ray& lray, Color& lcolor, 
 	Vector light_pos = Vector(light.pos.x, light.pos.y, light.pos.z);
 	light_pos.normalize();
 
-	// add ambient term if ambient light
-	if(light.type == 2) {
-		//cout << "Always false" << endl;
-		Color ambient = Color(lcolor.r * brdf.ka.r, lcolor.g * brdf.ka.g, lcolor.b * brdf.ka.b);
-		color.add(ambient);
-	}
-
 	//   Diffuse term = kd*I*max(l*n, 0)
 		// l = direction of light, lray.dir vector
 		// 	point light - l = location of light - current location on sphere (ijz)
@@ -121,12 +120,21 @@ Color Raytracer::shading(LocalGeo& local, BRDF& brdf, Ray& lray, Color& lcolor, 
 	 // same computation for directional and point light?
 
 	//if(light.type != 2) { // same computation for directional and point light?
-		float dotProdln = dot_product(local.normal, light_pos);
-		float maxdotProd = max(dotProdln, 0.0f);
-
-		diffuse.r = brdf.kd.r * lcolor.r * maxdotProd;
-		diffuse.g = brdf.kd.g * lcolor.g * maxdotProd;
-		diffuse.b = brdf.kd.b * lcolor.b * maxdotProd;
+	Vector l = Vector();
+	if(light.type == 0) { // directional
+		l = light_pos;
+	}
+	if(light.type == 1) { // point
+		l = lray.dir;
+	}
+	
+	//float dotProdln = dot_product(local.normal, l); FIX 1: Point light behaves incorrectly
+	float dotProdln = dot_product(local.normal, light_pos);
+	float maxdotProd = max(dotProdln, 0.0f);
+	diffuse.r = brdf.kd.r * lcolor.r * maxdotProd;
+	diffuse.g = brdf.kd.g * lcolor.g * maxdotProd;
+	diffuse.b = brdf.kd.b * lcolor.b * maxdotProd;
+		//cout << "diffuse: "; diffuse.print(); cout << endl;
 	//}
 
 	//   Specular term = ks* I * max(r*v, 0)^p
@@ -150,6 +158,7 @@ Color Raytracer::shading(LocalGeo& local, BRDF& brdf, Ray& lray, Color& lcolor, 
 	specular.r = brdf.ks.r * lcolor.r * dotProdrvmax;
 	specular.g = brdf.ks.g * lcolor.g * dotProdrvmax;
 	specular.b = brdf.ks.b * lcolor.b * dotProdrvmax;
+
 	color.add(diffuse); color.add(specular);
 	return color;
 

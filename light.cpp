@@ -48,13 +48,11 @@ void Light::generateLightRay(LocalGeo& local, Ray* lray, Color* lcolor) {
 
 	// direction of light ray = source of light - currPos
 	Vector direction = pos - local.pos;
+	direction = direction * -1.0f; //FIX
 	//cout << "Current position: "; local.pos.print(); cout << endl;
 	//cout << "Light position: "; pos.print(); cout << endl;
 	//cout << "Lray Direction: "; direction.print(); cout << endl << endl;
 	lray->dir = direction;
-	if(type == 0) { // if directional light, multiply by -1
-		lray->dir = direction * -1.0f;
-	}
 	//if(type == 0) {
 	//	lray->t_max = INFINITY;
 	//}
