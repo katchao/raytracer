@@ -18,11 +18,16 @@ void Raytracer::trace(Ray& ray, int depth, Color *color) {
 
 	bool has_intersected = false;
 	cout << "Size of Transformations = " << number_of_transformations;
+	
+
 	if (number_of_transformations > 0) {
 	 	cout << "There is a transformation\n";
+	
+	 	Transformation transform = *list_transformations[0];
 	 	has_intersected = group.intersectE(ray, &thit, &in, transform);
 
 	} else {
+		
 		has_intersected = group.intersect(ray, &thit, &in);
 		
 	}

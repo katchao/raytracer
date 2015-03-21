@@ -7,7 +7,7 @@
 #include "ray.h"
 #include "intersection.h"
 #include "material.h"
-
+#include "transformation.h"
 using namespace std;
 
 class Intersection;
@@ -20,6 +20,7 @@ class Primitive {
 	  bool type; // 0 for sphere, 1 for triangle
 	  Material* mat;
 	  virtual bool intersect(Ray& ray, float* thit, Intersection* in);
+	  virtual bool intersectE(Ray&, float*, Intersection*, Transformation&);
 	  virtual bool intersectP(Ray& ray);
 	  virtual void print();
 };
@@ -33,6 +34,7 @@ class Sphere : public Primitive {
 		Sphere(Vector, float);
 		Sphere(Vector, float, Material*);
 		bool intersect(Ray&, float*, Intersection*);
+		bool intersectE(Ray&, float*, Intersection*, Transformation&);
 		bool intersectP(Ray&);
 		void print();
 

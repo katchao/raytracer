@@ -11,6 +11,10 @@ bool Primitive::intersectP(Ray& ray) {
 	cout << "test";
 }
 
+bool Primitive::intersectE(Ray& ray, float* thit, Intersection* in, Transformation& trans) {
+
+}
+
 void Primitive::print() {
 }
 
@@ -70,6 +74,61 @@ bool Sphere::intersect(Ray &ray, float* thit, Intersection* in) {
 	Vector currPos = e + d * (*thit);
 	// normal = 2(p - c) or (p-c)/r
 	Vector normal = (currPos - c)/r;
+
+	LocalGeo local = LocalGeo(currPos, normal);
+	*in = Intersection(local, this);
+	return true;
+}
+
+bool Sphere::intersectE(Ray &ray, float* thit, Intersection* in, Transformation& trans) {
+	Ray transRay = Ray();
+	transRay.dir = trans.transform_dir(ray.dir);
+	cout << "transRay dir"; transRay.dir.print();
+	transRay.start = trans.transform_pos(ray.start);
+	cout << "transRay.start"; transRay.start.print();
+
+// intersection with the new Transformed Ray
+
+	Vector e = transRay.start;
+	Vector c = center;
+	Vector d = transRay.dir;
+	float r = radius;
+
+	Vector e_c = Vector();
+	e_c.subtract(e, c);
+	float d_dot_d = d.dot_product(d);
+	float discriminant = pow(d.dot_product(e_c), 2) - (d_dot_d * (e_c.dot_product(e_c) - pow(r,2)));
+	cout << " can find the Discriminant :" << discriminant << " \n";
+	if (discriminant < 0) { // the ray doesn't intersect the polygon (imaginary number)
+	cout << "I am false?\n";
+		return false;
+
+	}
+	float det = sqrt(discriminant);
+	Vector minus_d = Vector();
+	minus_d.scalar_multiply(d, -1.0);
+	float t1 = (minus_d.dot_product(e_c) + det)/d_dot_d;
+	float t2 = (minus_d.dot_product(e_c) - det)/d_dot_d;
+	cout << "Before Segfault";
+	// get the smallest thit value
+	*thit = min(t1, t2);
+
+	if(*thit < 0.00004) { // shadow bias
+		return false;
+	}
+
+	if(*thit < ray.t_min || *thit > ray.t_max) {
+		return false;
+	}
+
+	// Build Local Geo with the old ray
+	Vector orig_e = ray.start;
+	Vector orig_d = ray.dir; 
+	Vector currPos = orig_e + orig_d * (*thit);
+	//THE NORMAL MUST CHANGE
+	// normal = 2(p - c) or (p-c)/r
+	Vector normal = trans.transform_normal((currPos - c)/r);
+
 
 	LocalGeo local = LocalGeo(currPos, normal);
 	*in = Intersection(local, this);
