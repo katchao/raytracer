@@ -4,18 +4,21 @@ Vector::Vector() {
 	x = 0;
 	y = 0;
 	z = 0;
+	w = 0;
 }
 
 Vector::Vector(int ix, int iy, int iz) {
 	x = (float) ix;
 	y = (float) iy;
 	z = (float) iz;
+	w = 0.0f;
 }
 
 Vector::Vector(float ix, float iy, float iz) {
 	x = ix;
 	y = iy;
 	z = iz;
+	w = 0.0f;
 }
 
 

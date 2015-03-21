@@ -22,12 +22,14 @@ void Raytracer::trace(Ray& ray, int depth, Color *color) {
 
 	if (number_of_transformations > 0) {
 	 	cout << "There is a transformation\n";
-	
+	cout << "============================= Before intersectE ====================================\n";
 	 	Transformation transform = *list_transformations[0];
 	 	has_intersected = group.intersectE(ray, &thit, &in, transform);
 
+	cout << "======================= After intersect E=================================\n";
+
 	} else {
-		
+
 		has_intersected = group.intersect(ray, &thit, &in);
 		
 	}

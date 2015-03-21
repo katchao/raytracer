@@ -82,10 +82,13 @@ bool Sphere::intersect(Ray &ray, float* thit, Intersection* in) {
 
 bool Sphere::intersectE(Ray &ray, float* thit, Intersection* in, Transformation& trans) {
 	Ray transRay = Ray();
+	cout << "original ray direction = "; ray.dir.print(); cout << endl;
+	cout << "original ray start = "; ray.start.print(); cout << endl;
+	
 	transRay.dir = trans.transform_dir(ray.dir);
-	cout << "transRay dir"; transRay.dir.print();
-	transRay.start = trans.transform_pos(ray.start);
-	cout << "transRay.start"; transRay.start.print();
+	cout << "\ntransRay dir   = "; transRay.dir.print(); cout << endl;
+	transRay.start = trans.transform_pos(ray.start); cout << endl;
+	cout << "transRay.start  =  "; transRay.start.print();
 
 // intersection with the new Transformed Ray
 

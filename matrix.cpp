@@ -26,9 +26,9 @@ void Matrix::transpose() {
 }
 
 void Matrix::print() {
-	for(int j = 0; j < 4; j++) {
+	for(int i = 0; i < 4; i++) {
 		cout << "[ ";
-		for(int i = 0; i < 4; i++) {
+		for(int j = 0; j < 4; j++) {
 			cout << items[i][j] << " ";
 		}
 		cout << "]" << endl;
@@ -44,6 +44,11 @@ Matrix create_translation(float tx, float ty, float tz) {
 	result.items[0][3] = tx;
 	result.items[1][3] = ty;
 	result.items[2][3] = tz;
+
+	// result.items[3][0] = tx;
+	// result.items[3][1] = ty;
+	// result.items[3][2] = tz;
+	//result.transpose();
 	return result;
 }
 
@@ -68,6 +73,11 @@ Matrix create_rotation_x(float angle) {
 	result.items[1][2] = -s;
 	result.items[2][1] = s;
 	result.items[2][2] = c;
+
+	// result.items[1][1] = c;
+	// result.items[2][1] = -s;
+	// result.items[1][2] = s;
+	// result.items[2][2] = c;
 	return result;
 }
 
@@ -84,6 +94,10 @@ Matrix create_rotation_y(float angle) {
 	result.items[0][2] = s;
 	result.items[2][0] = -s;
 	result.items[2][2] = c;
+	// result.items[0][0] = c;
+	// result.items[2][0] = s;
+	// result.items[0][2] = -s;
+	// result.items[2][2] = c;
 	return result;
 }
 
@@ -100,6 +114,10 @@ Matrix create_rotation_z(float angle) {
 	result.items[0][1] = -s;
 	result.items[1][0] = s;
 	result.items[1][1] = c;
+	// result.items[0][0] = c;
+	// result.items[1][0] = -s;
+	// result.items[0][1] = s;
+	// result.items[1][1] = c;
 	return result;
 }
 
@@ -134,7 +152,7 @@ Matrix matrix_multiply(Matrix m1, Matrix m2) {
 	newMatrix.items[1][3] = m1.items[0][3]*m2.items[1][0] + m1.items[1][3]*m2.items[1][1] + m1.items[2][3]*m2.items[1][2] + m1.items[3][3]*m2.items[1][3];
 	newMatrix.items[2][3] = m1.items[0][3]*m2.items[2][0] + m1.items[1][3]*m2.items[2][1] + m1.items[2][3]*m2.items[2][2] + m1.items[3][3]*m2.items[2][3];
 	newMatrix.items[3][3] = m1.items[0][3]*m2.items[3][0] + m1.items[1][3]*m2.items[3][1] + m1.items[2][3]*m2.items[3][2] + m1.items[3][3]*m2.items[3][3];
-	newMatrix.transpose();
+	//newMatrix.transpose();
 	return newMatrix;
 }
 

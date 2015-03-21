@@ -52,7 +52,7 @@ void Scene::render() {
 
 
 	cout << "I am about to grab my shapes\n";
-	
+
 	for(int i = 0; i < raytracer.list_primitives.size(); i++) {
 		raytracer.list_primitives[i]->print();
 	}
@@ -81,11 +81,19 @@ int main(int argc, const char* argv[]) {
 	// test1.items[0][1] = 14.0f; test1.items[1][1] = 9; test1.items[2][1] = 6; test1.items[3][1] = 7.0f;
 	// test1.items[0][2] = 4.0f; test1.items[1][2] = 9; test1.items[2][2] = 3; test1.items[3][2] = 2.0f;
 	// test1.items[0][3] = 3.0f; test1.items[1][3] = 7; test1.items[2][3] = 8; test1.items[3][3] = 6;
+	// test1.transpose();
 
 	// test1.print();
 	// Transformation t = Transformation(test1);
 	// Vector v = Vector(1.0f, 2.0f, 3.0f, 4.0f);
-	// Vector mult = t.transform_normal(v); //mult.print();
+	
+	// Vector mult = t.vector_multiply(test1, v);
+	// cout << "Vector Multiply  "; mult.print();
+	
+	// cout << "Normal Transform"; 
+	// Vector norm = t.transform_normal(v); //mult.print();
+	// norm.print();
+	// cout << "Inverse ";
 	// Matrix det = t.inverse(test1);
 
 	//test1->test();
