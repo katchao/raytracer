@@ -156,7 +156,7 @@ Matrix matrix_multiply(Matrix m1, Matrix m2) {
 	return newMatrix;
 }
 
-Matrix test() {
+Matrix Matrix::test() {
 	//simply for testing
 	Matrix result = Matrix();
 	float counter = 1;

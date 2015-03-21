@@ -116,7 +116,7 @@ float Vector::dot_product(Vector v) {
 }
 
 void Vector::print() {
-	cout << "<" << x << ", " << y << ", " << z << ">";
+	cout << "<" << x << ", " << y << ", " << z << " ," << w << ">";
 }
 
 float dot_product(Vector v1, Vector v2) {

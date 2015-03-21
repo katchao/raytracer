@@ -12,6 +12,7 @@ Transformation::Transformation(Matrix m1) {
 
 Vector Transformation::transform_dir(Vector v) {
 	// need help, will the result be a 1x4 vector or 1x3 vector? since currently the vector class only supports 1x3 vectors
+	
 	Vector result = vector_multiply(minvt, v);
 	result.w = 0.0f;
 	return result;
@@ -19,7 +20,8 @@ Vector Transformation::transform_dir(Vector v) {
 
 Vector Transformation::transform_pos(Vector v) {
 	// need help, will the result be a 1x4 vector or 1x3 vector? since currently the vector class only supports 1x3 vectors
-	Vector result = vector_multiply(minvt, v);
+	Vector homogV = v; homogV.w = 1.0f;
+	Vector result = vector_multiply(minvt, homogV);
 	result.w = 1.0f;
 
 	cout << "Point \n";
@@ -43,6 +45,12 @@ Vector Transformation::vector_multiply(Matrix m, Vector v) {
 	result.y = m.items[1][0]*v.x + m.items[1][1]*v.y + m.items[1][2]*v.z + m.items[1][3]*v.w;
 	result.z = m.items[2][0]*v.x + m.items[2][1]*v.y + m.items[2][2]*v.z + m.items[2][3]*v.w;
 	result.w = m.items[3][0]*v.x + m.items[3][1]*v.y + m.items[3][2]*v.z + m.items[3][3]*v.w;
+
+	cout << "What is being multiplied: \n";
+	cout << m.items[0][0] << "*" << v.x << " + " << m.items[0][1] << "*" << v.y << " + " << m.items[0][2] << "*" << v.z << " + " << m.items[0][3] << "*" << v.w << endl;
+	cout << m.items[1][0] << "*" << v.x << " + " << m.items[1][1] << "*" << v.y << " + " << m.items[1][2] << "*" << v.z << " + " << m.items[1][3] << "*" << v.w << endl;
+	cout << m.items[2][0] << "*" << v.x << " + " << m.items[2][1] << "*" << v.y << " + " << m.items[2][2] << "*" << v.z << " + " << m.items[2][3] << "*" << v.w << endl;
+	cout << m.items[3][0] << "*" << v.x << " + " << m.items[3][1] << "*" << v.y << " + " << m.items[3][2] << "*" << v.z << " + " << m.items[3][3] << "*" << v.w << endl;
 	return result;
 }
 

@@ -76,20 +76,41 @@ void Scene::render() {
 
 
 int main(int argc, const char* argv[]) {
-	// Matrix test1 = Matrix();//test();
+	Matrix test1 = Matrix();//test();
 	// test1.items[0][0] = 2.0f; test1.items[1][0] = 5; test1.items[2][0] = 3; test1.items[3][0] = 5;
 	// test1.items[0][1] = 14.0f; test1.items[1][1] = 9; test1.items[2][1] = 6; test1.items[3][1] = 7.0f;
 	// test1.items[0][2] = 4.0f; test1.items[1][2] = 9; test1.items[2][2] = 3; test1.items[3][2] = 2.0f;
 	// test1.items[0][3] = 3.0f; test1.items[1][3] = 7; test1.items[2][3] = 8; test1.items[3][3] = 6;
 	// test1.transpose();
+	test1.items[0][3] = 1.0f;
+	cout << "Example matrix\n";
+	test1.print();
+	Vector pos = Vector(0.0f, 0.0f, 2.0f);
+	cout << "Example Start \n";
+	pos.print();
 
-	// test1.print();
+	Transformation t = Transformation(test1);
+
+	cout <<"THe multiplication of it all = ";
+	Vector ex1 = t.transform_pos(pos);
+	cout << "Resulting Vector = ";
+	ex1.print();
+
+
+	// Matrix num = test1.test();
+	// cout << "Test Matrix\n";
+	// num.print();
+	// //test1.print();
+	// cout << endl;	
 	// Transformation t = Transformation(test1);
-	// Vector v = Vector(1.0f, 2.0f, 3.0f, 4.0f);
+	// Vector v = Vector(1.0f, 2.0f, 3.0f);
 	
-	// Vector mult = t.vector_multiply(test1, v);
+	// Vector mult = t.vector_multiply(num, v);
 	// cout << "Vector Multiply  "; mult.print();
 	
+
+
+	// cout << endl;
 	// cout << "Normal Transform"; 
 	// Vector norm = t.transform_normal(v); //mult.print();
 	// norm.print();
@@ -148,6 +169,16 @@ int main(int argc, const char* argv[]) {
 	if(argc == 2) {
 		scene.parse_input(argv[1], fileExists);
 	}
+
+	//DEBUGG my matrix multiplication stuffffffff
+	// if (number_of_transformations > 0) {
+
+	// 	Transformation t = *list_transformations[0];
+
+
+	// }
+
+
 
 	//if there is a file then parse the file
 	if (fileExists) {
