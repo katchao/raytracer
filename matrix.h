@@ -14,6 +14,7 @@ class Matrix {
 	  Matrix(); //initializes diagonal matrix (1's down the diagonal)
 	  void print();
 	  void transpose();
+	  // Matrix matrix_multiply(Matrix, Matrix);
 
 		Matrix test();
 };

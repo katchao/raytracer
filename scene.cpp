@@ -1,8 +1,8 @@
 #include "scene.h"
 
 Scene::Scene() {
-	dim_x = 200;
-	dim_y = 200;
+	dim_x = 1200;
+	dim_y = 1200;
 	UL = Vector(-1,  1, -3);
 	UR = Vector( 1,  1, -3);
 	LR = Vector( 1, -1, -3);
@@ -33,8 +33,19 @@ void Scene::render() {
 	Raytracer raytracer = Raytracer(camera.eye);
 	raytracer.list_lights = list_lights;
 	raytracer.list_primitives = list_primitives;
+	// if (list_transformations.size() == 2) {
+	// 	Transformation* t1 = list_transformations[0];
+	// 	Transformation* t2 = list_transformations[1];
+	// 	Matrix result = Matrix();
+	// 	result = result.matrix_multiply(t1, t2);
+	// 	Transformation* t3 = new Transformation(result);
+	// 	list_transformations.clear();
+	// 	list_transformations.push_back(t3);
+	// 	number_of_transformations = 1;
+	// }
+
 	raytracer.list_transformations = list_transformations;
-	cout << "List Transformations Size" << raytracer.list_transformations.size() << endl;
+	//cout << "List Transformations Size" << raytracer.list_transformations.size() << endl;
 	raytracer.number_of_transformations = number_of_transformations;
 	//set raytracer ambient light
 	for(int i = 0; i < raytracer.list_lights.size(); i++) {
@@ -43,15 +54,15 @@ void Scene::render() {
 		}
 	}
 
-	/////// DEBUGGING
-	cout << "Eye Position: "; raytracer.eye.print(); cout << endl;
-	cout << "LL: "; camera.LL.print(); cout << endl;
-	cout << "LR: "; camera.LR.print(); cout << endl;
-	cout << "UL: "; camera.UL.print(); cout << endl;
-	cout << "UR: "; camera.UR.print(); cout << endl;
+	// /////// DEBUGGING
+	// cout << "Eye Position: "; raytracer.eye.print(); cout << endl;
+	// cout << "LL: "; camera.LL.print(); cout << endl;
+	// cout << "LR: "; camera.LR.print(); cout << endl;
+	// cout << "UL: "; camera.UL.print(); cout << endl;
+	// cout << "UR: "; camera.UR.print(); cout << endl;
 
 
-	cout << "I am about to grab my shapes\n";
+	// cout << "I am about to grab my shapes\n";
 
 	for(int i = 0; i < raytracer.list_primitives.size(); i++) {
 		raytracer.list_primitives[i]->print();
@@ -82,19 +93,19 @@ int main(int argc, const char* argv[]) {
 	// test1.items[0][2] = 4.0f; test1.items[1][2] = 9; test1.items[2][2] = 3; test1.items[3][2] = 2.0f;
 	// test1.items[0][3] = 3.0f; test1.items[1][3] = 7; test1.items[2][3] = 8; test1.items[3][3] = 6;
 	// test1.transpose();
-	test1.items[0][3] = 1.0f;
-	cout << "Example matrix\n";
-	test1.print();
-	Vector pos = Vector(0.0f, 0.0f, 2.0f);
-	cout << "Example Start \n";
-	pos.print();
+	// test1.items[0][3] = 1.0f;
+	// cout << "Example matrix\n";
+	// test1.print();
+	// Vector pos = Vector(0.0f, 0.0f, 2.0f);
+	// cout << "Example Start \n";
+	// pos.print();
 
-	Transformation t = Transformation(test1);
+	// Transformation t = Transformation(test1);
 
-	cout <<"THe multiplication of it all = ";
-	Vector ex1 = t.transform_pos(pos);
-	cout << "Resulting Vector = ";
-	ex1.print();
+	// cout <<"THe multiplication of it all = ";
+	// Vector ex1 = t.transform_pos(pos);
+	// cout << "Resulting Vector = ";
+	// ex1.print();
 
 
 	// Matrix num = test1.test();
@@ -170,30 +181,25 @@ int main(int argc, const char* argv[]) {
 		scene.parse_input(argv[1], fileExists);
 	}
 
-	//DEBUGG my matrix multiplication stuffffffff
-	// if (number_of_transformations > 0) {
-
-	// 	Transformation t = *list_transformations[0];
-
-
-	// }
-
-
-
 	//if there is a file then parse the file
 	if (fileExists) {
+		//ObjParser objparser = ObjParser(scene.file);
 		ObjParser objparser = ObjParser(scene.file);
 		vector<Primitive*> objparser_triangles;
 		objparser_triangles = objparser.parse();
-
+// cout << "SegFault after parsing\n";
 		for (int k = 0; k<objparser_triangles.size();k++) {
+			// cout << "segfaulting in the loop\n";
 		Triangle* triangle1 = (Triangle*) objparser_triangles[k];
+		// cout << "After making a triangle\n";
 		Vector vert1 = Vector(); vert1.x = triangle1->v1.x; vert1.y = triangle1->v1.y; vert1.z = triangle1->v1.z;
 		Vector vert2 = Vector(); vert2.x = triangle1->v2.x; vert2.y = triangle1->v2.y; vert2.z = triangle1->v2.z;
 		Vector vert3 = Vector(); vert3.x = triangle1->v3.x; vert3.y = triangle1->v3.y; vert3.z = triangle1->v3.z;
+		// cout << "Before grabbing materials\n";
 		Triangle triangle = Triangle(vert1, vert2, vert3, scene.list_materials[scene.list_materials.size() - 1]);
-		
+		// cout << "SegFault befpre pushing to the list\n";
 		scene.list_primitives.push_back(&triangle);
+		// cout << "I push back triangle\n";
 
 		}
 	}
@@ -320,6 +326,9 @@ void Scene::parse_input(const char* input_file, bool& isFile) {
 				Matrix Rx_Ry_Rz = matrix_multiply(Rx_Ry, rotate_z); // Matrix x * y * z -in that order
 				cout << "Final Roatation MAtrix:\n";
 				Rx_Ry_Rz.print();
+				Transformation* tr_rotate = new Transformation(Rx_Ry_Rz);
+				list_transformations.push_back(tr_rotate);
+				number_of_transformations++;
 				//if (token[i+4]) {cout << "Too many arguments!\n";}
 				// cout << endl;
 				// rotate_x.print();

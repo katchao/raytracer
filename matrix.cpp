@@ -152,7 +152,7 @@ Matrix matrix_multiply(Matrix m1, Matrix m2) {
 	newMatrix.items[1][3] = m1.items[0][3]*m2.items[1][0] + m1.items[1][3]*m2.items[1][1] + m1.items[2][3]*m2.items[1][2] + m1.items[3][3]*m2.items[1][3];
 	newMatrix.items[2][3] = m1.items[0][3]*m2.items[2][0] + m1.items[1][3]*m2.items[2][1] + m1.items[2][3]*m2.items[2][2] + m1.items[3][3]*m2.items[2][3];
 	newMatrix.items[3][3] = m1.items[0][3]*m2.items[3][0] + m1.items[1][3]*m2.items[3][1] + m1.items[2][3]*m2.items[3][2] + m1.items[3][3]*m2.items[3][3];
-	//newMatrix.transpose();
+	newMatrix.transpose();
 	return newMatrix;
 }
 

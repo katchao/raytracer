@@ -16,7 +16,7 @@ bool AggregatePrimitive::intersect(Ray& ray, float* thit, Intersection* in) {
 	Intersection inter;
 	for(int i = 0; i < list_primitives.size(); i++) {
 		Primitive* shape = list_primitives[i];
-
+// cout << "Segfault here???\n";
 		if(shape->intersect(ray, &current_hit, &inter)) {
 			if(current_hit < min_hit) {
 				min_hit = current_hit;
@@ -34,7 +34,7 @@ bool AggregatePrimitive::intersectE(Ray& ray, float* thit, Intersection* in, Tra
 	float min_hit = INFINITY;
 	bool intersected = false;
 	Intersection inter;
-	cout << "passed to aggregateprimitive\n";
+	// cout << "passed to aggregateprimitive\n";
 	for(int i = 0; i < list_primitives.size(); i++) {
 		Primitive* shape = list_primitives[i];
 
@@ -47,7 +47,7 @@ bool AggregatePrimitive::intersectE(Ray& ray, float* thit, Intersection* in, Tra
 		}
 	}
 	*thit = min_hit;
-	cout << "Segfaulting after intersect\n";
+	// cout << "Segfaulting after intersect\n";
 	return intersected;
 }
 

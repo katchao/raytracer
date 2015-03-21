@@ -49,6 +49,7 @@ class Triangle : public Primitive {
 		Triangle(Vector, Vector, Vector);
 		Triangle(Vector, Vector, Vector, Material*);
 		bool intersect(Ray&, float*, Intersection*);
+		bool intersectE(Ray&, float*, Intersection*, Transformation&);
 		bool intersectP(Ray&);
 		void print();
 

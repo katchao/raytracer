@@ -23,9 +23,6 @@ Vector Transformation::transform_pos(Vector v) {
 	Vector homogV = v; homogV.w = 1.0f;
 	Vector result = vector_multiply(minvt, homogV);
 	result.w = 1.0f;
-
-	cout << "Point \n";
-	result.print();
 	return result;
 }
 
@@ -33,9 +30,9 @@ Vector Transformation::transform_normal(Vector v) {
 	Matrix invTrans = minvt;
 	invTrans.transpose();
 	Vector result = vector_multiply(invTrans, v);
-	cout << endl;
-	cout << "Normal vector \n";
-	result.print();
+	// cout << endl;
+	// cout << "Normal vector \n";
+	// result.print();
 	return result;
 }
 
@@ -46,11 +43,11 @@ Vector Transformation::vector_multiply(Matrix m, Vector v) {
 	result.z = m.items[2][0]*v.x + m.items[2][1]*v.y + m.items[2][2]*v.z + m.items[2][3]*v.w;
 	result.w = m.items[3][0]*v.x + m.items[3][1]*v.y + m.items[3][2]*v.z + m.items[3][3]*v.w;
 
-	cout << "What is being multiplied: \n";
-	cout << m.items[0][0] << "*" << v.x << " + " << m.items[0][1] << "*" << v.y << " + " << m.items[0][2] << "*" << v.z << " + " << m.items[0][3] << "*" << v.w << endl;
-	cout << m.items[1][0] << "*" << v.x << " + " << m.items[1][1] << "*" << v.y << " + " << m.items[1][2] << "*" << v.z << " + " << m.items[1][3] << "*" << v.w << endl;
-	cout << m.items[2][0] << "*" << v.x << " + " << m.items[2][1] << "*" << v.y << " + " << m.items[2][2] << "*" << v.z << " + " << m.items[2][3] << "*" << v.w << endl;
-	cout << m.items[3][0] << "*" << v.x << " + " << m.items[3][1] << "*" << v.y << " + " << m.items[3][2] << "*" << v.z << " + " << m.items[3][3] << "*" << v.w << endl;
+	// cout << "What is being multiplied: \n";
+	// cout << m.items[0][0] << "*" << v.x << " + " << m.items[0][1] << "*" << v.y << " + " << m.items[0][2] << "*" << v.z << " + " << m.items[0][3] << "*" << v.w << endl;
+	// cout << m.items[1][0] << "*" << v.x << " + " << m.items[1][1] << "*" << v.y << " + " << m.items[1][2] << "*" << v.z << " + " << m.items[1][3] << "*" << v.w << endl;
+	// cout << m.items[2][0] << "*" << v.x << " + " << m.items[2][1] << "*" << v.y << " + " << m.items[2][2] << "*" << v.z << " + " << m.items[2][3] << "*" << v.w << endl;
+	// cout << m.items[3][0] << "*" << v.x << " + " << m.items[3][1] << "*" << v.y << " + " << m.items[3][2] << "*" << v.z << " + " << m.items[3][3] << "*" << v.w << endl;
 	return result;
 }
 
@@ -76,11 +73,11 @@ Matrix Transformation::inverse(Matrix m) {
 			  - a12*a21*a33*a44 - a12*a23*a34*a41 - a12*a24*a31*a43
 			  - a13*a21*a34*a42 - a13*a22*a31*a44 - a13*a24*a32*a41
 			  - a14*a21*a32*a43 - a14*a22*a33*a41 - a14*a23*a31*a42;
-	cout << "Determinant = " << det << endl;
+	// cout << "Determinant = " << det << endl;
 	if (det != 0){
 		setprecision(4);
 		double D = 1.0f/det;
-		cout << "1/det" << D << endl;
+		// cout << "1/det" << D << endl;
 		float b11 = a22*a33*a44 + a23*a34*a42 + a24*a32*a43 - a22*a34*a43 - a23*a32*a44 - a24*a33*a42;
 		float b12 = a12*a34*a43 + a13*a32*a44 + a14*a33*a42 - a12*a33*a44 - a13*a34*a42 - a14*a32*a43;
 		float b13 = a12*a23*a44 + a13*a24*a42 + a14*a22*a43 - a12*a24*a43 - a13*a22*a44 - a14*a23*a42;
@@ -102,12 +99,12 @@ Matrix Transformation::inverse(Matrix m) {
 		result.items[0][1] = b21*D; result.items[1][1] = b22*D; result.items[2][1] = b23*D; result.items[3][1] = b24*D;
 		result.items[0][2] = b31*D; result.items[1][2] = b32*D; result.items[2][2] = b33*D; result.items[3][2] = b34*D;
 		result.items[0][3] = b41*D; result.items[1][3] = b42*D; result.items[2][3] = b43*D; result.items[3][3] = b44*D;
-		cout << "The Inverse Matrix\n";
-		result.print();
-		cout << " Elem[3][0] = " << result.items[0][3] << endl;
+		// cout << "The Inverse Matrix\n";
+		// result.print();
+		// cout << " Elem[3][0] = " << result.items[0][3] << endl;
 
 	} else {
-		cout << "Determinant was 0\n";
+		// cout << "Determinant was 0\n";
 	}
 	return result;
 }

@@ -16,17 +16,11 @@ void Raytracer::trace(Ray& ray, int depth, Color *color) {
 	//cout << "SegFault Raytracer\n";
 	AggregatePrimitive group = AggregatePrimitive(list_primitives);//, list_transformations);
 
-	bool has_intersected = false;
-	cout << "Size of Transformations = " << number_of_transformations;
-	
-
+	bool has_intersected = false;	
+	// cout << "Before Group is made??\n";
 	if (number_of_transformations > 0) {
-	 	cout << "There is a transformation\n";
-	cout << "============================= Before intersectE ====================================\n";
 	 	Transformation transform = *list_transformations[0];
 	 	has_intersected = group.intersectE(ray, &thit, &in, transform);
-
-	cout << "======================= After intersect E=================================\n";
 
 	} else {
 
@@ -36,6 +30,7 @@ void Raytracer::trace(Ray& ray, int depth, Color *color) {
 	// miss
 	if(!has_intersected) {
 		*color = Color(0.0f, 0.0f, 0.0f);
+		// cout << "Seg in setting backgound to black\n";
 		return;
 	}
 
@@ -51,12 +46,13 @@ void Raytracer::trace(Ray& ray, int depth, Color *color) {
 
 	for(int i = 0; i < list_lights.size(); i++) {
 		Light* currLight = list_lights[i];
-
+// cout << "Seg in Lights array\n";
 		//if not ambient light
 		if(currLight->type != 2) {
 			currLight->generateLightRay(in.local, &lray, &lcolor);
 			//if (!in.primitive->intersectP(lray)) {
 			if (!group.intersectP(lray, in.primitive)) {
+				// cout << "Seg in interscetP\n";
 				//cout << "lray1: "; lray.print(); cout << endl;
 				color->add(shading(in.local, brdf, lray, lcolor, *list_lights[i]));
 			}

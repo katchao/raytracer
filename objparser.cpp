@@ -61,7 +61,7 @@ vector<Primitive*> ObjParser::parse() {
 				}
 				//cout << "last Elem = " << currflt << endl;
 				vertex.push_back(atof(currflt.c_str()));// this gets the last element
-				cout << "Vertex " << verticies.size() + 1 << ": ( " << vertex[0] << ", " << vertex[1] << ", " << vertex[2] << ")" << endl;
+				// cout << "Vertex " << verticies.size() + 1 << ": ( " << vertex[0] << ", " << vertex[1] << ", " << vertex[2] << ")" << endl;
 				verticies.push_back(vertex);
 
 			// if a face
@@ -114,7 +114,7 @@ vector<Primitive*> ObjParser::parse() {
 				Vector vert3 = Vector(); vert3.x = face[2][0]; vert3.y = face[2][1]; vert3.z = face[2][2];
 				Triangle triangle = Triangle(vert1, vert2, vert3);
 				triangles.push_back(&triangle);
-				//faces.push_back(face);
+				faces.push_back(face);
 
 	// 			cout << endl;
 	// 			cout << "Triangle " << triangles.size() << ": " << endl;
@@ -127,6 +127,7 @@ vector<Primitive*> ObjParser::parse() {
 		}
 	}
 	infile.close();
+	// cout << "SEgfault before returning the triangle list from oobjparser\n";
 	return triangles;
 }
 
